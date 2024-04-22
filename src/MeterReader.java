@@ -1,14 +1,11 @@
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
-import javax.naming.spi.DirStateFactory.Result;
+
 
 public class MeterReader {
 	private int ID;
 	private float usage;
 	private float previousReading;
 	private float currentReading;
-	private Connection con;
+	
 
 	public MeterReader(int ID, float usage, float previousReading, float currentReading) {
 		this.ID = ID;
@@ -56,21 +53,10 @@ public class MeterReader {
 		return usage;
 	}
 
+	
+
 	public float viewUsage() {
-		//DataBase version
-		 try {
-            Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("select meterUsage from MeterReader");
-			
-        if (rs.next()) {
-            // Retrieve the value from the result set
-            usage = rs.getFloat("meterUsage");
-        }
-			
-        } catch (Exception e) {
-            System.err.println("DATABASE QUERY ERROR: " + e.toString());
-        }
-		return usage;
+		return usage = calculateUsage();
 	}
 
 	public float setTimeInterval() {

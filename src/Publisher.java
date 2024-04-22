@@ -3,5 +3,5 @@ public interface Publisher {
 
 	public void removeObserver(Observer observer);
 
-	public boolean checkDueDate();
+	public void checkDueDate();
 }
