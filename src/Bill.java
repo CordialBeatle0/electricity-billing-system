@@ -1,10 +1,11 @@
 
+import java.sql.Statement;
+import java.sql.Connection;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
+
 
 public class Bill implements Publisher {
 	private static ArrayList<Observer> observers;
@@ -14,7 +15,7 @@ public class Bill implements Publisher {
 	private String custName;
 	private String custAddress;
 	private static GregorianCalendar dueDate= new GregorianCalendar(2024, 5, 1);
-	private Connection con;
+
 
 	public Bill(int ID, float totalAmount, Date date, String custName, String custAddress) {
 		this.ID = ID;
@@ -65,12 +66,12 @@ public class Bill implements Publisher {
 		this.custAddress = custAddress;
 	}
 
-	static public GregorianCalendar getDueDate() {
+	public static GregorianCalendar getDueDate() {
 		return dueDate;
 	}
 
-	public void setDueDate(GregorianCalendar dueDate) {
-		this.dueDate = dueDate;
+	public static void setDueDate(GregorianCalendar dueDate) {
+		Bill.dueDate = dueDate;
 	}
 
 	@Override
@@ -86,44 +87,64 @@ public class Bill implements Publisher {
 	public void sendBillingAlert(String message) {
 		for (Observer myobeserveres : observers) {
 			myobeserveres.updateObserver(message);
+			
 		}
 	}
 
 	@Override
-	public boolean checkDueDate() {
+	public void checkDueDate() {
 		GregorianCalendar currentDate = new GregorianCalendar();
-		
+	
 		if (dueDate.get((GregorianCalendar.DAY_OF_MONTH)) == currentDate.get((GregorianCalendar.DAY_OF_MONTH))) {
-			// resets the new due date to the one of next month
-			dueDate.add((GregorianCalendar.MONTH), 1);;
 			// call send billing alert that alerts all observers of a pending bill
 			sendBillingAlert("You have Pending Fees to pay!");
-			return true;
+			// resets the new due date to the one of next month
+			dueDate.add((GregorianCalendar.MONTH), 1);;
+			
 		}
-		else
-			return false;
+		
 	}
 
-	public void calculateBill(float amount, Customer customer) {
-		//TODO: still needs implemetation 
-		// check the logic for finding the category from observers arraylist
-		try {
-			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("select custCategory from Customer where subscriptionStatus = true");
-			
-        if (rs.next()) {
-			// Retrieve the value from the result set
-			
-            
-        }
-			
-        } catch (Exception e) {
-            System.err.println("DATABASE QUERY ERROR: " + e.toString());
-        }
+	public void calculateBill(float amount) {
+		// will carry the result from the databse function with all the customers that are subscribed
+		ArrayList<Customer> allCustomers = Customer.getCustomersFromDB("subscriptionStatus = true");
+		for (Customer customer : allCustomers) {
+			// retriving the tax calculatio per each category
+			float customerTax = customer.getCategory().calculateTax();
+			// retriving the usage
+			float customerUsage= customer.getMeterReader().calculateUsage();
+			// setting the bills total amount
+			setTotalAmount(customerUsage * customerTax);
+			// set the outstanding fees for the customer ie: adding to the already pending fees incase customer didnt pay
+			customer.setOutstandingFees(totalAmount+customer.getOutstandingFees());
+		}
+		// checking if its the due date to send the billing alert
+		checkDueDate();
+	 
 	}
 
-	public ArrayList<Bill> viewBillingHistory() {
-		//TODO: Add implementation
+	public ArrayList<Bill> viewBillingHistory(int custID) {
+		ArrayList<Bill> allCustomerHistory = new ArrayList<>();
+		try{
+			Connection connection = DatabaseSingleton.getInstance().getConnection();
+			Statement statement = connection.createStatement();
+			ResultSet result = statement.executeQuery("SELECT * FROM bill WHERE customer_id = " + custID);
+			while (result.next()) {
+				int sqlcustID = result.getInt("customer_id");
+				int sqlbillId = result.getInt("id");
+				float sqltotalamount = result.getFloat("totalAmount");
+				String sqldate = result.getString("date");
+				Customer mycustomer= Customer.getCustomersFromDB(custID).get(0);
+				String sqlcustAdress = mycustomer.getAddress();
+				Bill retrivalbill = new Bill(sqlbillId, sqltotalamount, date, sqldate, sqlcustAdress);
+				allCustomerHistory.add(retrivalbill);
+			}
+
+		}
+		catch (Exception e) {
+			// TODO: write exception GUI joptionpayne
+		}
+		return allCustomerHistory;
 	}
 
 	public ArrayList<Bill> viewAllCustomerBills() {
