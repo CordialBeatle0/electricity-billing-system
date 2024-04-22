@@ -1,4 +1,6 @@
 import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 public class Inquiry implements InquiryROI {
@@ -11,6 +13,16 @@ public class Inquiry implements InquiryROI {
 	private String employeeName;
 	private String employeeType;
 	private String date;
+
+	public Inquiry() {}
+
+	public Inquiry(String question, String custCategory, String custName, int custID, String date) {
+		this.question = question;
+		this.custCategory = custCategory;
+		this.custName = custName;
+		this.custID = custID;
+		this.date = date;
+	}
 
 	public Inquiry(String question, int ID, String custCategory, String custName, String date) {
 		this.question = question;
@@ -118,6 +130,19 @@ public class Inquiry implements InquiryROI {
 		// hat5od el inquiry mn el GUI then add it to the db table inquiry
 		DatabaseSingleton db = DatabaseSingleton.getInstance();
 		Connection conn = db.getConnection();
+		try {
+			// Create the SQL query using values from the Inquiry object
+			String query = "INSERT INTO inquiry (question, custCategory, custName, custID, employeeName, employeeType, date) " +
+					"VALUES ('" + this.getQuestion() + "', '" + this.getCustCategory() + "', '" + this.getCustName() + "', " +
+					this.getCustID() + ", '" + this.getEmployeeName() + "', '" + this.getEmployeeType() + "', '" + this.getDate() + "')";
+
+			Statement stmt = conn.createStatement();
+			stmt.executeUpdate(query);
+			System.out.println("Inquiry added successfully to the database.");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
 
 		Employee emp = new CustomerService();
 		emp.handle(this);

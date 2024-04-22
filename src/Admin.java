@@ -1,3 +1,7 @@
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 public class Admin extends Employee {
@@ -26,6 +30,24 @@ public class Admin extends Employee {
 
 	@Override
 	public void handle(Inquiry inquiry) {
-		//TODO: Add implementation
+		int custID = inquiry.getCustID();
+		DatabaseSingleton db = DatabaseSingleton.getInstance();
+		Connection conn = db.getConnection();
+		try {
+			Statement stmt = conn.createStatement();
+			String sql = "SELECT * FROM customer WHERE id = " + custID;
+			ResultSet rs = stmt.executeQuery(sql);
+			if (rs.next()) {
+				String custCategory = rs.getString("custCategory");
+				if (custCategory.equals("Company")) {
+					this.assignEmployee(inquiry);
+				}
+			}
+			else {
+				System.out.println("Customer with ID " + custID + " not found.");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 }

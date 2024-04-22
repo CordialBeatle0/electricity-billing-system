@@ -1,3 +1,6 @@
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 public abstract class Employee {
@@ -97,6 +100,15 @@ public abstract class Employee {
 	public abstract void handle(Inquiry inquiry);
 
 	public void assignEmployee(Inquiry inquiry) {
-		//TODO: Add implementation
+		inquiry.setEmployeeType(this.getClass().getName());
+		DatabaseSingleton db = DatabaseSingleton.getInstance();
+		Connection conn = db.getConnection();
+		try {
+			Statement stmt = conn.createStatement();
+			String sql = "UPDATE inquiry SET employeeType = '" + this.getClass().getName() + "' WHERE ID = " + inquiry.getID();
+			stmt.executeUpdate(sql);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 }
