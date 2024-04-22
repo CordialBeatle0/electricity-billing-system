@@ -14,7 +14,6 @@ public abstract class Employee {
 	private char gender;
 	private float salary;
 	private Account account;
-	private static Connection connection;
 	
 	public Employee(int ID, String name, int age, String address, String phoneNumber, char gender, float salary, Account account) {
 		assignedInquiries = new ArrayList<>();
@@ -119,6 +118,7 @@ public abstract class Employee {
 	public static ArrayList<Employee> getEmployeesFromDB(String condition) {
 		ArrayList<Employee> employees = new ArrayList<>();
 		try {
+			Connection connection = DatabaseSingleton.getInstance().getConnection();
 			Statement statement = connection.createStatement();
 			ResultSet result = statement.executeQuery("SELECT * FROM employee WHERE " + condition);
 			while (result.next()) {

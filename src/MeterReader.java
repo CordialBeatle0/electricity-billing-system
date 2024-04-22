@@ -78,6 +78,7 @@ public class MeterReader {
 	
 	public static MeterReader getMeterReaderFromDB(String id) {
 		try {
+			Connection connection = DatabaseSingleton.getInstance().getConnection();
 			Statement statement = connection.createStatement();
 			ResultSet result = statement.executeQuery("SELECT * FROM meterreader WHERE id = " + id);
 			

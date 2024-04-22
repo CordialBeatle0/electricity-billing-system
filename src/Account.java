@@ -8,7 +8,6 @@ public class Account {
 	private int ID;
 	private String username;
 	private String password;
-	private static Connection connection;
 
 	public Account(int ID, String username, String password) {
 		this.ID = ID;
@@ -68,6 +67,7 @@ public class Account {
 	
 	public static Account getAccountFromDB(String id) {
 		try {
+			Connection connection = DatabaseSingleton.getInstance().getConnection();
 			Statement statement = connection.createStatement();
 			ResultSet result = statement.executeQuery("SELECT * FROM account WHERE id = " + id);
 			int sqlID = result.getInt("id");

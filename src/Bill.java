@@ -1,10 +1,10 @@
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.GregorianCalendar;
+import javax.swing.*;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class Bill implements Publisher {
 	private static ArrayList<Observer> observers;
@@ -13,16 +13,14 @@ public class Bill implements Publisher {
 	private Date date;
 	private String custName;
 	private String custAddress;
-	private static GregorianCalendar dueDate= new GregorianCalendar(2024, 5, 1);
-	private Connection con;
-
+	private static GregorianCalendar dueDate = new GregorianCalendar(2024, 5, 1);
+	
 	public Bill(int ID, float totalAmount, Date date, String custName, String custAddress) {
 		this.ID = ID;
 		this.totalAmount = totalAmount;
 		this.date = date;
 		this.custName = custName;
 		this.custAddress = custAddress;
-		
 	}
 
 	public int getID() {
@@ -65,11 +63,11 @@ public class Bill implements Publisher {
 		this.custAddress = custAddress;
 	}
 
-	static public GregorianCalendar getDueDate() {
+	public static GregorianCalendar getDueDate() {
 		return dueDate;
 	}
 
-	public void setDueDate(GregorianCalendar dueDate) {
+	public static void setDueDate(GregorianCalendar dueDate) {
 		this.dueDate = dueDate;
 	}
 
@@ -128,5 +126,34 @@ public class Bill implements Publisher {
 
 	public ArrayList<Bill> viewAllCustomerBills() {
 		//TODO: Add implementation
+	}
+	
+	public static ArrayList<Bill> getBillsFromDB(String id) {
+		ArrayList<Bill> bills = new ArrayList<>();
+		try {
+			connection = DatabaseSingleton.getInstance().getConnection();
+			Statement statement = connection.createStatement();
+			ResultSet result = statement.executeQuery("SELECT * FROM bill WHERE customer_id = " + id);
+			while (result.next()) {
+				int sqlID = result.getInt("id");
+				float sqlTotalAmount = result.getFloat("totalAmount");
+				
+				// translates string to long and from long to date (built in)
+				String date_String = result.getString("date");
+				long date_long = Long.getLong(date_String);
+				Date sqlDate = new Date(date_long);
+				
+				int custID = result.getInt("customer_id");
+				Customer customer = Customer.getCustomersFromDB("id = " + custID).get(0);
+				String sqlCustName= customer.getName();
+				String sqlCustAddress = customer.getAddress();
+				
+				Bill bill = new Bill(sqlID, sqlTotalAmount, sqlDate, sqlCustName, sqlCustAddress);
+				bills.add(bill);
+			}
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "Error retrieving bill from database");
+		}
+		return bills;
 	}
 }

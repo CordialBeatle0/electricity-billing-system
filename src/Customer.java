@@ -164,6 +164,7 @@ public class Customer implements Observer {
 	public static ArrayList<Customer> getCustomersFromDB(String condition) {
 		ArrayList<Customer> customers = new ArrayList<>();
 		try {
+			Connection connection = DatabaseSingleton.getInstance().getConnection();
 			Statement statement = connection.createStatement();
 			ResultSet result;
 			// if condition is empty get all customers
