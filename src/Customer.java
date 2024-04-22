@@ -1,3 +1,7 @@
+import javax.swing.*;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 public class Customer implements Observer {
@@ -16,12 +20,28 @@ public class Customer implements Observer {
 	private Account account;
 	private Payment paymentType;
 	private Subscription subscription;
+	private static Connection connection;
 
 	// TODO: Add constructor(s) and add these lines in all constructors
 	// notifications = new ArrayList<>();
 	// billHistory = new ArrayList<>();
 	// inquiryHistory = new ArrayList<>();
-
+	
+	
+	public Customer(int ID, String name, String address, String phoneNumber, int cardNumber, boolean isTimeToPay, Category category, MeterReader meterReader, float outstandingFees, Account account, Subscription subscription) {
+		this.ID = ID;
+		this.name = name;
+		this.address = address;
+		this.phoneNumber = phoneNumber;
+		this.cardNumber = cardNumber;
+		this.isTimeToPay = isTimeToPay;
+		this.category = category;
+		this.meterReader = meterReader;
+		this.outstandingFees = outstandingFees;
+		this.account = account;
+		this.subscription = subscription;
+	}
+	
 	public int getID() {
 		return ID;
 	}
@@ -134,5 +154,65 @@ public class Customer implements Observer {
 	public void updateObserver(String message) {
 		//TODO: Add implementation
 		// probably just add the message to the notifications
+	}
+	
+	/**
+	 *
+	 * @param condition if empty, selects all customers in the database <br>
+	 *                     otherwise should be the exact statement written after a WHERE clause
+	 * @return ArrayList of all customers retrieved from the query
+	 */
+	public static ArrayList<Customer> getCustomersFromDB(String condition) {
+		ArrayList<Customer> customers = new ArrayList<>();
+		try {
+			Statement statement = connection.createStatement();
+			ResultSet result;
+			// if condition is empty get all customers
+			if (condition.isEmpty()){
+				result = statement.executeQuery("SELECT * FROM customer");
+			}
+			// if condition exists
+			else {
+				result = statement.executeQuery("SELECT * FROM customer WHERE " + condition);
+			}
+			while (result.next()) {
+				int sqlID = result.getInt("id");
+				String sqlName = result.getString("name");
+				String sqlAddress = result.getString("address");
+				String sqlPhoneNumber = result.getString("phone");
+				int sqlCardNumber = result.getInt("cardNumber");
+				boolean sqlIsTimeToPay = result.getBoolean("isTimeToPay");
+				
+				// category
+				String category = result.getString("custCategory");
+				Category sqlCategory = switch (category) {
+					case "Individual" -> new Individual();
+					case "Company" -> new Company();
+					case "Factory" -> new Factory();
+					default -> null;
+				};
+				
+				// meter reader
+				int meterReaderID_INT = result.getInt("meterReader_id");
+				String meterReaderID_String = Integer.toString(meterReaderID_INT);
+				MeterReader sqlMeterReader = MeterReader.getMeterReaderFromDB(meterReaderID_String);
+				
+				float sqlOutstandingFees = result.getFloat("outstandingFees");
+				
+				// account
+				int accountID_INT = result.getInt("account_id");
+				String accountID_String = Integer.toString(accountID_INT);
+				Account sqlAccount = Account.getAccountFromDB(accountID_String);
+				
+				// subscription
+				boolean subscriptionStatus_Bool = result.getBoolean("subscriptionStatus");
+				Subscription sqlSubscription = new Subscription(subscriptionStatus_Bool);
+				
+				customers.add(new Customer(sqlID, sqlName, sqlAddress, sqlPhoneNumber, sqlCardNumber, sqlIsTimeToPay, sqlCategory, sqlMeterReader, sqlOutstandingFees, sqlAccount, sqlSubscription));
+			}
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "Error retrieving customer from database");
+		}
+		return customers;
 	}
 }
