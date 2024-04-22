@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class Account {
 	private int ID;
 	private String username;
@@ -37,11 +39,27 @@ public class Account {
 		//TODO: Add implementation
 	}
 
-	public Customer custLogin(String username, String password) {
-		//TODO: Add implementation
+	public static Customer custLogin(String username, String password) {
+		ArrayList<Customer> customers;
+		//TODO: Get all customer accounts from database and put it in customers
+		for (Customer customer : customers) {
+			Account account = customer.getAccount();
+			if (account.username.equals(username) && account.password.equals(password)) {
+				return customer;
+			}
+		}
+		return null;
 	}
 
-	public Employee empLogin(String username, String password) {
-		//TODO: Add implementation
+	public static Employee empLogin(String username, String password) {
+		ArrayList<Employee> employees;
+		//TODO: Get all customer accounts from database and put it in customers
+		for (Employee employee : employees) {
+			Account account = employee.getAccount();
+			if (account.username.equals(username) && account.password.equals(password)) {
+				return employee;
+			}
+		}
+		return null;
 	}
 }
