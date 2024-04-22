@@ -1,3 +1,4 @@
+import java.sql.Connection;
 import java.util.ArrayList;
 
 public class Inquiry implements InquiryROI {
@@ -6,7 +7,9 @@ public class Inquiry implements InquiryROI {
 	private int ID;
 	private String custCategory;
 	private String custName;
+	private int custID;
 	private String employeeName;
+	private String employeeType;
 	private String date;
 
 	public Inquiry(String question, int ID, String custCategory, String custName, String date) {
@@ -57,12 +60,28 @@ public class Inquiry implements InquiryROI {
 		this.custName = custName;
 	}
 
+	public int getCustID() {
+		return custID;
+	}
+
+	public void setCustID(int custID) {
+		this.custID = custID;
+	}
+
 	public String getEmployeeName() {
 		return employeeName;
 	}
 
 	public void setEmployeeName(String employeeName) {
 		this.employeeName = employeeName;
+	}
+
+	public String getEmployeeType() {
+		return employeeType;
+	}
+
+	public void setEmployeeType(String employeeType) {
+		this.employeeType = employeeType;
 	}
 
 	public String getDate() {
@@ -74,6 +93,21 @@ public class Inquiry implements InquiryROI {
 	}
 
 	@Override
+	public String toString() {
+		return "Inquiry{" +
+				"question='" + question + '\'' +
+				", response='" + response + '\'' +
+				", ID=" + ID +
+				", custCategory='" + custCategory + '\'' +
+				", custName='" + custName + '\'' +
+				", custID=" + custID +
+				", employeeName='" + employeeName + '\'' +
+				", employeeType='" + employeeType + '\'' +
+				", date='" + date + '\'' +
+				'}';
+	}
+
+	@Override
 	public Inquiry viewInquiry() {
 		//TODO: Add implementation
 	}
@@ -81,6 +115,12 @@ public class Inquiry implements InquiryROI {
 	@Override
 	public void addInquiry() {
 		//TODO: Add implementation
+		// hat5od el inquiry mn el GUI then add it to the db table inquiry
+		DatabaseSingleton db = DatabaseSingleton.getInstance();
+		Connection conn = db.getConnection();
+
+		Employee emp = new CustomerService();
+		emp.handle(this);
 	}
 
 	public void respondToInquiry(String response, String employeeName) {

@@ -8,7 +8,7 @@ public class DatabaseSingleton {
 
 	// Database connection variables
 	private Connection connection;
-	private final String url = "jdbc:mysql://localhost:3306/dbName"; // change the dbName to ours
+	private final String url = "jdbc:mysql://localhost:3306/electricity_billing_db"; // change the dbName to ours
 	private final String username = "username"; // Change to your MySQL username
 	private final String password = "password"; // Change to your MySQL password
 

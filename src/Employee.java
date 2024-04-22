@@ -10,6 +10,8 @@ public abstract class Employee {
 	private float salary;
 	private Account account;
 
+	public Employee nextEmp;
+
 	public Employee(int ID, String name, int age, String phoneNumber, char gender, float salary, Account account) {
 		assignedInquiries = new ArrayList<>();
 		this.ID = ID;
@@ -19,6 +21,9 @@ public abstract class Employee {
 		this.gender = gender;
 		this.salary = salary;
 		this.account = account;
+	}
+
+	public Employee() {
 	}
 
 	public int getID() {
