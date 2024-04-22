@@ -132,7 +132,10 @@ public class Customer implements Observer {
 
 	@Override
 	public void updateObserver(String message) {
-		//TODO: Add implementation
+
 		// probably just add the message to the notifications
+		notifications.add(message);
 	}
+	
+
 }
