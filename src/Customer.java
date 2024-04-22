@@ -20,7 +20,6 @@ public class Customer implements Observer {
 	private Account account;
 	private Payment paymentType;
 	private Subscription subscription;
-	private static Connection connection;
 
 	// TODO: Add constructor(s) and add these lines in all constructors
 	// notifications = new ArrayList<>();
@@ -152,8 +151,8 @@ public class Customer implements Observer {
 
 	@Override
 	public void updateObserver(String message) {
-		//TODO: Add implementation
 		// probably just add the message to the notifications
+		notifications.add(message);
 	}
 	
 	/**

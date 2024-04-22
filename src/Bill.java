@@ -1,5 +1,10 @@
+
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.GregorianCalendar;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
 public class Bill implements Publisher {
 	private static ArrayList<Observer> observers;
@@ -8,15 +13,16 @@ public class Bill implements Publisher {
 	private Date date;
 	private String custName;
 	private String custAddress;
-	private Date dueDate;
+	private static GregorianCalendar dueDate= new GregorianCalendar(2024, 5, 1);
+	private Connection con;
 
-	public Bill(int ID, float totalAmount, Date date, String custName, String custAddress, Date dueDate) {
+	public Bill(int ID, float totalAmount, Date date, String custName, String custAddress) {
 		this.ID = ID;
 		this.totalAmount = totalAmount;
 		this.date = date;
 		this.custName = custName;
 		this.custAddress = custAddress;
-		this.dueDate = dueDate;
+		
 	}
 
 	public int getID() {
@@ -59,11 +65,11 @@ public class Bill implements Publisher {
 		this.custAddress = custAddress;
 	}
 
-	public Date getDueDate() {
+	static public GregorianCalendar getDueDate() {
 		return dueDate;
 	}
 
-	public void setDueDate(Date dueDate) {
+	public void setDueDate(GregorianCalendar dueDate) {
 		this.dueDate = dueDate;
 	}
 
@@ -78,16 +84,42 @@ public class Bill implements Publisher {
 	}
 
 	public void sendBillingAlert(String message) {
-		//TODO: Add implementation
+		for (Observer myobeserveres : observers) {
+			myobeserveres.updateObserver(message);
+		}
 	}
 
 	@Override
 	public boolean checkDueDate() {
-		//TODO: Add implementation
+		GregorianCalendar currentDate = new GregorianCalendar();
+		
+		if (dueDate.get((GregorianCalendar.DAY_OF_MONTH)) == currentDate.get((GregorianCalendar.DAY_OF_MONTH))) {
+			// resets the new due date to the one of next month
+			dueDate.add((GregorianCalendar.MONTH), 1);;
+			// call send billing alert that alerts all observers of a pending bill
+			sendBillingAlert("You have Pending Fees to pay!");
+			return true;
+		}
+		else
+			return false;
 	}
 
 	public void calculateBill(float amount, Customer customer) {
-		//TODO: Add implementation
+		//TODO: still needs implemetation 
+		// check the logic for finding the category from observers arraylist
+		try {
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("select custCategory from Customer where subscriptionStatus = true");
+			
+        if (rs.next()) {
+			// Retrieve the value from the result set
+			
+            
+        }
+			
+        } catch (Exception e) {
+            System.err.println("DATABASE QUERY ERROR: " + e.toString());
+        }
 	}
 
 	public ArrayList<Bill> viewBillingHistory() {
