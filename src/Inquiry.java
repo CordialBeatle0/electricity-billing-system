@@ -1,158 +1,222 @@
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
 public class Inquiry implements InquiryROI {
-	private String question;
-	private String response;
-	private int ID;
-	private String custCategory;
-	private String custName;
-	private int custID;
-	private String employeeName;
-	private String employeeType;
-	private String date;
+    private String question;
+    private String response;
+    private int ID;
+    private String custCategory;
+    private String custName;
+    private int custID;
+    private String employeeName;
+    private String employeeType;
+    private String date;
 
-	public Inquiry() {}
+    public Inquiry() {
+    }
 
-	public Inquiry(String question, String custCategory, String custName, int custID, String date) {
-		this.question = question;
-		this.custCategory = custCategory;
-		this.custName = custName;
-		this.custID = custID;
-		this.date = date;
-	}
+    public Inquiry(String question, String custCategory, String custName, int custID, String date) {
+        this.question = question;
+        this.custCategory = custCategory;
+        this.custName = custName;
+        this.custID = custID;
+        this.date = date;
+    }
 
-	public Inquiry(String question, int ID, String custCategory, String custName, String date) {
-		this.question = question;
-		this.ID = ID;
-		this.custCategory = custCategory;
-		this.custName = custName;
-		this.date = date;
-	}
+    public Inquiry(String question, int ID, String custCategory, String custName, String date) {
+        this.question = question;
+        this.ID = ID;
+        this.custCategory = custCategory;
+        this.custName = custName;
+        this.date = date;
+    }
 
-	public String getQuestion() {
-		return question;
-	}
+    public Inquiry(String question, String custCategory, String custName, int custID, String employeeName, String employeeType, String date) {
+        this.question = question;
+        this.custCategory = custCategory;
+        this.custName = custName;
+        this.custID = custID;
+        this.employeeName = employeeName;
+        this.employeeType = employeeType;
+        this.date = date;
+    }
 
-	public void setQuestion(String question) {
-		this.question = question;
-	}
+    public String getQuestion() {
+        return question;
+    }
 
-	public String getResponse() {
-		return response;
-	}
+    public void setQuestion(String question) {
+        this.question = question;
+    }
 
-	public void setResponse(String response) {
-		this.response = response;
-	}
+    public String getResponse() {
+        return response;
+    }
 
-	public int getID() {
-		return ID;
-	}
+    public void setResponse(String response) {
+        this.response = response;
+    }
 
-	public void setID(int ID) {
-		this.ID = ID;
-	}
+    public int getID() {
+        return ID;
+    }
 
-	public String getCustCategory() {
-		return custCategory;
-	}
+    public void setID(int ID) {
+        this.ID = ID;
+    }
 
-	public void setCustCategory(String custCategory) {
-		this.custCategory = custCategory;
-	}
+    public String getCustCategory() {
+        return custCategory;
+    }
 
-	public String getCustName() {
-		return custName;
-	}
+    public void setCustCategory(String custCategory) {
+        this.custCategory = custCategory;
+    }
 
-	public void setCustName(String custName) {
-		this.custName = custName;
-	}
+    public String getCustName() {
+        return custName;
+    }
 
-	public int getCustID() {
-		return custID;
-	}
+    public void setCustName(String custName) {
+        this.custName = custName;
+    }
 
-	public void setCustID(int custID) {
-		this.custID = custID;
-	}
+    public int getCustID() {
+        return custID;
+    }
 
-	public String getEmployeeName() {
-		return employeeName;
-	}
+    public void setCustID(int custID) {
+        this.custID = custID;
+    }
 
-	public void setEmployeeName(String employeeName) {
-		this.employeeName = employeeName;
-	}
+    public String getEmployeeName() {
+        return employeeName;
+    }
 
-	public String getEmployeeType() {
-		return employeeType;
-	}
+    public void setEmployeeName(String employeeName) {
+        this.employeeName = employeeName;
+    }
 
-	public void setEmployeeType(String employeeType) {
-		this.employeeType = employeeType;
-	}
+    public String getEmployeeType() {
+        return employeeType;
+    }
 
-	public String getDate() {
-		return date;
-	}
+    public void setEmployeeType(String employeeType) {
+        this.employeeType = employeeType;
+    }
 
-	public void setDate(String date) {
-		this.date = date;
-	}
+    public String getDate() {
+        return date;
+    }
 
-	@Override
-	public String toString() {
-		return "Inquiry{" +
-				"question='" + question + '\'' +
-				", response='" + response + '\'' +
-				", ID=" + ID +
-				", custCategory='" + custCategory + '\'' +
-				", custName='" + custName + '\'' +
-				", custID=" + custID +
-				", employeeName='" + employeeName + '\'' +
-				", employeeType='" + employeeType + '\'' +
-				", date='" + date + '\'' +
-				'}';
-	}
+    public void setDate(String date) {
+        this.date = date;
+    }
 
-	@Override
-	public Inquiry viewInquiry() {
-		//TODO: Add implementation
-	}
+    @Override
+    public String toString() {
+        return "Inquiry{" +
+                "question='" + question + '\'' +
+                ", response='" + response + '\'' +
+                ", ID=" + ID +
+                ", custCategory='" + custCategory + '\'' +
+                ", custName='" + custName + '\'' +
+                ", custID=" + custID +
+                ", employeeName='" + employeeName + '\'' +
+                ", employeeType='" + employeeType + '\'' +
+                ", date='" + date + '\'' +
+                '}';
+    }
 
-	@Override
-	public void addInquiry() {
-		//TODO: Add implementation
-		// hat5od el inquiry mn el GUI then add it to the db table inquiry
-		DatabaseSingleton db = DatabaseSingleton.getInstance();
-		Connection conn = db.getConnection();
-		try {
-			// Create the SQL query using values from the Inquiry object
-			String query = "INSERT INTO inquiry (question, custCategory, custName, custID, employeeName, employeeType, date) " +
-					"VALUES ('" + this.getQuestion() + "', '" + this.getCustCategory() + "', '" + this.getCustName() + "', " +
-					this.getCustID() + ", '" + this.getEmployeeName() + "', '" + this.getEmployeeType() + "', '" + this.getDate() + "')";
+    @Override
+    public ArrayList<Inquiry> viewInquiriesByID(int custID) {
+        ArrayList<Inquiry> inquiries = new ArrayList<>();
+        DatabaseSingleton db = DatabaseSingleton.getInstance();
+        Connection conn = db.getConnection();
+        try {
+            Statement stmt = conn.createStatement();
+            String sql = "SELECT id, question, custCategory, custName, date  FROM inquiry, Customer WHERE Inquiry(id) = Customer(id) AND custID = " + custID;
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                Inquiry inquiry = new Inquiry(
+                        rs.getString("question"),
+                        rs.getString("custCategory"),
+                        rs.getString("name"),
+                        rs.getInt("id"), // Assuming custID corresponds to the ID of the customer
+//                        rs.getString("employeeName"),
+//                        rs.getString("employeeType"),
+                        rs.getString("date")
+                );
+                inquiries.add(inquiry);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return inquiries;
+    }
 
-			Statement stmt = conn.createStatement();
-			stmt.executeUpdate(query);
-			System.out.println("Inquiry added successfully to the database.");
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+    // this method is used to view all inquiries in the database by the Admin only
+    static public ArrayList<Inquiry> viewInquiries() {
+        ArrayList<Inquiry> inquiries = new ArrayList<>();
+        DatabaseSingleton db = DatabaseSingleton.getInstance();
+        Connection conn = db.getConnection();
+        try {
+            Statement stmt = conn.createStatement();
+            String sql = "SELECT id, question, custCategory, custName, date  FROM inquiry, Customer WHERE Inquiry(id) = Customer(id)";
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                Inquiry inquiry = new Inquiry(
+                        rs.getString("question"),
+                        rs.getString("custCategory"),
+                        rs.getString("name"), // thats the customer name
+                        rs.getInt("id"), // Assuming custID corresponds to the ID of the customer
+//                        rs.getString("employeeName"),
+//                        rs.getString("employeeType"),
+                        rs.getString("date")
+                );
+                inquiries.add(inquiry);
+            }
+            // Close resources
+            rs.close();
+            stmt.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return inquiries;
+    }
 
 
-		Employee emp = new CustomerService();
-		emp.handle(this);
-	}
+    @Override
+    public void addInquiry() {
+        // hat5od el inquiry mn el GUI then add it to the db table inquiry
+        DatabaseSingleton db = DatabaseSingleton.getInstance();
+        Connection conn = db.getConnection();
+        try {
+            // Create the SQL query using values from the Inquiry object
+            String query = "INSERT INTO inquiry (question, custCategory, custName, custID, employeeName, employeeType, date) " +
+                    "VALUES ('" + this.getQuestion() + "', '" + this.getCustCategory() + "', '" + this.getCustName() + "', " +
+                    this.getCustID() + ", '" + this.getEmployeeName() + "', '" + this.getEmployeeType() + "', '" + this.getDate() + "')";
 
-	public void respondToInquiry(String response, String employeeName) {
-		//TODO: Add implementation
-	}
+            Statement stmt = conn.createStatement();
+            stmt.executeUpdate(query);
+            System.out.println("Inquiry added successfully to the database.");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
-	public ArrayList<Inquiry> inquiryHistory() {
-		//TODO: Add implementation
-	}
+        // you give the inquiry to the Employee to handle it
+        Employee emp = new CustomerService();
+        emp.handle(this);
+    }
+
+    public void respondToInquiry(String response, String employeeName) {
+        //TODO: Add implementation
+    }
+
+    public ArrayList<Inquiry> inquiryHistory() {
+        //TODO: Add implementation
+    }
 }
