@@ -3,20 +3,16 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 public class Technician extends Employee {
-    //TODO: REMOVE
-
-    public ArrayList<Technician> technicians = new ArrayList();
     private static int maxCapacity;
     private String assignedLocation;
-    private ArrayList<Request> requestedServices;
+    
 
     public Technician() {
     }
 
-    public Technician(int ID, String name, int age, String phoneNumber, char gender, float salary, Account account, String assignedLocation) {
-        super(ID, name, age, phoneNumber, gender, salary, account);
+    public Technician(int ID, String name, int age,String address, String phoneNumber, char gender, float salary, Account account, String assignedLocation) {
+        super(ID, name, age,address, phoneNumber, gender, salary, account);
         this.assignedLocation = assignedLocation;
-        requestedServices = new ArrayList<>();
     }
 
     public static int getMaxCapacity() {
@@ -33,14 +29,6 @@ public class Technician extends Employee {
 
     public void setAssignedLocation(String assignedLocation) {
         this.assignedLocation = assignedLocation;
-    }
-
-    public void addRequest(Request request) {
-        requestedServices.add(request);
-    }
-
-    public void removeRequest(Request request) {
-        requestedServices.remove(request);
     }
 
     public void assignTechnician(Request request) {
