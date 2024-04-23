@@ -133,6 +133,7 @@ public class Bill implements Publisher {
 				int sqlcustID = result.getInt("customer_id");
 				int sqlbillId = result.getInt("id");
 				float sqltotalamount = result.getFloat("totalAmount");
+				//TODO : STEAL LONG CONVERSION
 				String sqldate = result.getString("date");
 				Customer mycustomer= Customer.getCustomersFromDB(custID).get(0);
 				String sqlcustAdress = mycustomer.getAddress();
