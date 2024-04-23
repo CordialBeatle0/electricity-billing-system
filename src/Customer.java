@@ -148,11 +148,50 @@ public class Customer implements Observer {
 	public void addInquiry(Inquiry inquiry) {
 		inquiryHistory.add(inquiry);
 	}
-
+	
+	@Override
+	public String toString() {
+		return "Customer{" +
+				"ID=" + ID +
+				", name='" + name + '\'' +
+				", address='" + address + '\'' +
+				", phoneNumber='" + phoneNumber + '\'' +
+				", cardNumber=" + cardNumber +
+				", isTimeToPay=" + isTimeToPay +
+				", category=" + category +
+				", meterReader=" + meterReader +
+				", outstandingFees=" + outstandingFees +
+				", account=" + account +
+				", paymentType=" + paymentType +
+				", subscription=" + subscription +
+				'}';
+	}
+	
 	@Override
 	public void updateObserver(String message) {
-		// probably just add the message to the notifications
 		notifications.add(message);
+		addNotificationToDB(message);
+		isTimeToPay = true;
+	}
+	
+	public void addNotificationToDB(String message) {
+		try {
+			Connection connection = DatabaseSingleton.getInstance().getConnection();
+			Statement statement = connection.createStatement();
+			statement.executeUpdate("INSERT INTO notification (message, customer_id) VALUES ('" + message + "', " + ID + ");");
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "Error adding notification to database");
+		}
+	}
+	
+	public void removeNotificationFromDB(int id) {
+		try {
+			Connection connection = DatabaseSingleton.getInstance().getConnection();
+			Statement statement = connection.createStatement();
+			statement.executeUpdate("DELETE FROM notification WHERE id = " + id);
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "Error removing notification from database");
+		}
 	}
 	
 	/**
@@ -214,5 +253,19 @@ public class Customer implements Observer {
 			JOptionPane.showMessageDialog(null, "Error retrieving customer from database");
 		}
 		return customers;
+	}
+	
+	public static boolean doesCustomerExist(int id) {
+		try {
+			Connection connection = DatabaseSingleton.getInstance().getConnection();
+			Statement statement = connection.createStatement();
+			ResultSet result = statement.executeQuery("SELECT name FROM customer WHERE " + id);
+			if (result.next()) {
+				return true;
+			}
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "Error retrieving customer from database");
+		}
+		return false;
 	}
 }

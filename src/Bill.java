@@ -68,7 +68,7 @@ public class Bill implements Publisher {
 	}
 
 	public static void setDueDate(GregorianCalendar dueDate) {
-		this.dueDate = dueDate;
+		Bill.dueDate = dueDate;
 	}
 
 	@Override
@@ -128,10 +128,10 @@ public class Bill implements Publisher {
 		//TODO: Add implementation
 	}
 	
-	public static ArrayList<Bill> getBillsFromDB(String id) {
+	public static ArrayList<Bill> getBillsFromDB(int id) {
 		ArrayList<Bill> bills = new ArrayList<>();
 		try {
-			connection = DatabaseSingleton.getInstance().getConnection();
+			Connection connection = DatabaseSingleton.getInstance().getConnection();
 			Statement statement = connection.createStatement();
 			ResultSet result = statement.executeQuery("SELECT * FROM bill WHERE customer_id = " + id);
 			while (result.next()) {

@@ -38,7 +38,16 @@ public class Account {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
+	
+	@Override
+	public String toString() {
+		return "Account{" +
+				"ID=" + ID +
+				", username='" + username + '\'' +
+				", password='" + password + '\'' +
+				'}';
+	}
+	
 	public void updateAccount(String username, String password) {
 		//TODO: Add implementation
 	}

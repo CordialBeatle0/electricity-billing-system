@@ -47,7 +47,17 @@ public class MeterReader {
 	public void setCurrentReading(float currentReading) {
 		this.currentReading = currentReading;
 	}
-
+	
+	@Override
+	public String toString() {
+		return "MeterReader{" +
+				"ID=" + ID +
+				", usage=" + usage +
+				", previousReading=" + previousReading +
+				", currentReading=" + currentReading +
+				'}';
+	}
+	
 	public float calculateUsage() {
 		// sets the usage by subtracting the current - previous readings
 		// returns the usage
