@@ -1,5 +1,7 @@
 
 import javax.swing.JOptionPane;
+import java.sql.Connection;
+import java.sql.Statement;
 
 public class Subscription {
 
@@ -23,8 +25,16 @@ public class Subscription {
             //make customer a subscriber
             customer.setSubscription(new Subscription(true));
             //TODO: DATABASE update subscription of customer in DB
-            //TODO: Database add customer to the table of uncategorized customers instead
-            Category.addUncategorizedCust(customer);
+            try{
+                Connection connection = DatabaseSingleton.getInstance().getConnection();
+                Statement statement= connection.createStatement();
+                statement.executeUpdate("'UPDATE customer set subscriptionStatus= true");
+            }
+            catch(Exception e){
+                // TODO: exception layout needs to be added joptionpayne
+            }
+            // TODO: Category.addUncategorizedCust(customer); this should be removed 
+            //as we will add all the customers in the table and admin will filter to get false status to set the category
             return true;
         } else {
             return false;

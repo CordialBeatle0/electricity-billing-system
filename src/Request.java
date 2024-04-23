@@ -1,5 +1,8 @@
 
 import java.time.LocalDate;
+import java.sql.Connection;
+import java.sql.Statement;
+
 
 public class Request {
 
@@ -55,5 +58,17 @@ public class Request {
     public void requestHomeService() {
         Technician tech = new Technician();
         tech.assignTechnician(this);
+    }
+
+    public void addRequesttoDB(){
+        try{
+            Connection connection= DatabaseSingleton.getInstance().getConnection();
+            Statement statement=  connection.createStatement();
+            statement.executeUpdate("INSERT INTO request(custID, custName, requestType, location, date) values("+ custID+",'"+ custName +"','"+ requestType +"','"+ location+"','"+ date +"')");
+                }
+                    catch(Exception e){
+                    // TODO: write exception logic
+                    }
+                            
     }
 }

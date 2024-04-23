@@ -7,6 +7,7 @@ public class Cash implements Payment {
                 //create a new Request
                 Request req = new Request(1,customer.getID(), customer.getName(),"Cash Payment", customer.getAddress(),java.time.LocalDate.now());
                 //TODO: DATABASE add request to DB
+                req.addRequesttoDB();
                 req.requestHomeService();
                 
 	}

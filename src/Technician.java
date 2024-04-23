@@ -51,7 +51,7 @@ public class Technician extends Employee {
                 //if the technician can take more requests
                 if (tech.requestedServices.size() < maxCapacity) {
                     //TODO: DATABASE add request to DB of the technician instead
-                    tech.requestedServices.add(request);
+                    request.addRequesttoDB();
                     //TODO: JOptionPane to confirm
                     JOptionPane.showMessageDialog(null, "Your request has been made successfully");
                 } //if technician can not take any more requests, end the process
