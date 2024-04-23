@@ -1,53 +1,59 @@
+
+import java.time.LocalDate;
+
 public class Request {
-	private int ID;
-	private int custID;
-	private String custName;
-	private String requestType;
-	private String location;
-	private String date;
 
-	public Request(int ID, int custID, String custName, String requestType, String location, String date) {
-		this.ID = ID;
-		this.custID = custID;
-		this.custName = custName;
-		this.requestType = requestType;
-		this.location = location;
-		this.date = date;
-	}
+    private int ID;
+    private int custID;
+    private String custName;
+    private String requestType;
+    private String location;
+    private LocalDate date;
 
-	public int getID() {
-		return ID;
-	}
+    public Request(int ID, int custID, String custName, String requestType, String location, LocalDate date) {
+        this.ID = ID;
+        this.custID = custID;
+        this.custName = custName;
+        this.requestType = requestType;
+        this.location = location;
+        this.date = date;
+    }
 
-	public int getCustID() {
-		return custID;
-	}
+    public int getID() {
+        return ID;
+    }
 
-	public String getCustName() {
-		return custName;
-	}
+    public int getCustID() {
+        return custID;
+    }
 
-	public String getRequestType() {
-		return requestType;
-	}
+    public String getCustName() {
+        return custName;
+    }
 
-	public String getLocation() {
-		return location;
-	}
+    public String getRequestType() {
+        return requestType;
+    }
 
-	public String getDate() {
-		return date;
-	}
+    public String getLocation() {
+        return location;
+    }
 
-	public void addRequest() {
-		//TODO: Add implementation
-	}
+    public LocalDate getDate() {
+        return date;
+    }
 
-	public Request viewRequest() {
-		//TODO: Add implementation
-	}
+    public void addRequest() {
+        //TODO: Add implementation
+    }
 
-	public void requestHomeService() {
-		//TODO: Add implementation
-	}
+    public Request viewRequest() {
+        //TODO: Add implementation
+        return null;
+    }
+
+    public void requestHomeService() {
+        Technician tech = new Technician();
+        tech.assignTechnician(this);
+    }
 }
