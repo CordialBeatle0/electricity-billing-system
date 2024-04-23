@@ -1,5 +1,6 @@
 
 import java.util.ArrayList;
+import javax.management.modelmbean.ModelMBean;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
@@ -44,6 +45,7 @@ public class ViewInquiriesByAdminGUI extends javax.swing.JFrame {
         CustIDTextField = new javax.swing.JTextField();
         SearchBtn = new javax.swing.JButton();
         viewAll_InquiryBtn = new javax.swing.JButton();
+        responeBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -95,6 +97,13 @@ public class ViewInquiriesByAdminGUI extends javax.swing.JFrame {
             }
         });
 
+        responeBtn.setText("Respond");
+        responeBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                responeBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -102,6 +111,7 @@ public class ViewInquiriesByAdminGUI extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(100, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 639, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(38, 38, 38)
                         .addComponent(viewAll_InquiryBtn)
@@ -110,22 +120,29 @@ public class ViewInquiriesByAdminGUI extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(CustIDTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(36, 36, 36)
-                        .addComponent(SearchBtn))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 639, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(responeBtn)
+                            .addComponent(SearchBtn))))
                 .addGap(95, 95, 95))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(54, Short.MAX_VALUE)
+                .addContainerGap(41, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(SearchLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(CustIDTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(viewAll_InquiryBtn)
-                    .addComponent(SearchBtn))
-                .addGap(39, 39, 39))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(SearchLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(CustIDTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(viewAll_InquiryBtn))
+                        .addGap(39, 39, 39))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(SearchBtn)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(responeBtn)
+                        .addGap(12, 12, 12))))
         );
 
         pack();
@@ -164,6 +181,10 @@ public class ViewInquiriesByAdminGUI extends javax.swing.JFrame {
         }
         InquiriesJTable.setModel(model);
     }//GEN-LAST:event_SearchBtnActionPerformed
+
+    private void responeBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_responeBtnActionPerformed
+
+    }//GEN-LAST:event_responeBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -206,6 +227,7 @@ public class ViewInquiriesByAdminGUI extends javax.swing.JFrame {
     private javax.swing.JButton SearchBtn;
     private javax.swing.JLabel SearchLabel;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton responeBtn;
     private javax.swing.JButton viewAll_InquiryBtn;
     // End of variables declaration//GEN-END:variables
 }
