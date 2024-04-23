@@ -1,11 +1,13 @@
-
+import javax.swing.*;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
 public class MeterReader {
 	private int ID;
 	private float usage;
 	private float previousReading;
 	private float currentReading;
-	
 
 	public MeterReader(int ID, float usage, float previousReading, float currentReading) {
 		this.ID = ID;
@@ -45,7 +47,17 @@ public class MeterReader {
 	public void setCurrentReading(float currentReading) {
 		this.currentReading = currentReading;
 	}
-
+	
+	@Override
+	public String toString() {
+		return "MeterReader{" +
+				"ID=" + ID +
+				", usage=" + usage +
+				", previousReading=" + previousReading +
+				", currentReading=" + currentReading +
+				'}';
+	}
+	
 	public float calculateUsage() {
 		// sets the usage by subtracting the current - previous readings
 		// returns the usage
@@ -53,13 +65,29 @@ public class MeterReader {
 		return usage;
 	}
 
-	
-
 	public float viewUsage() {
 		return usage = calculateUsage();
 	}
 
 	public float setTimeInterval() {
 		//TODO: Add implementation
+	}
+	
+	public static MeterReader getMeterReaderFromDB(String id) {
+		try {
+			Connection connection = DatabaseSingleton.getInstance().getConnection();
+			Statement statement = connection.createStatement();
+			ResultSet result = statement.executeQuery("SELECT * FROM meterreader WHERE id = " + id);
+			
+			int sqlID = result.getInt("id");
+			float sqlUsage = result.getFloat("meterUsage");
+			float sqlPreviousReading = result.getFloat("previousReading");
+			float sqlCurrentReading = result.getFloat("currentReading");
+			
+			return new MeterReader(sqlID, sqlUsage, sqlPreviousReading, sqlCurrentReading);
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "Error retrieving meter reader from database");
+		}
+		return null;
 	}
 }

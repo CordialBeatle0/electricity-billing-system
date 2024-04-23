@@ -29,3 +29,6 @@ nbproject/
 .vscode/
 /build/
 nbbuild.xml
+
+# other
+src/DatabaseSingleton.java

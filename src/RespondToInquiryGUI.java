@@ -1,8 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
-
 import javax.swing.*;
 
 /**
@@ -145,6 +140,9 @@ public class RespondToInquiryGUI extends javax.swing.JFrame {
 			JOptionPane.showMessageDialog(this, "Response can not be empty");
 			return;
 		}
+		
+		inquiry.setResponse(response);
+		inquiry.setEmployeeName(employee.getName());
 		
 		// put text in inquiry
 		// take employee back to their page
