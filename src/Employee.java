@@ -129,6 +129,7 @@ public abstract class Employee {
 				String employeeType = result.getString("employeeType");
 				String sqlName = result.getString("name");
 				int sqlAge = result.getInt("age");
+				String sqlAddress = result.getString("address");
 				String sqlPhoneNumber = result.getString("phoneNumber");
 				char sqlGender = result.getString("gender").charAt(0);
 				float sqlSalary = result.getFloat("salary");
@@ -143,11 +144,11 @@ public abstract class Employee {
 				String sqlAssignedLocation = null;
 				if (employeeType.equals("Technician")) {
 					sqlAssignedLocation = result.getString("technicianAssignedLocation");
-					employee = new CustomerService(sqlID, sqlName, sqlAge, sqlPhoneNumber, sqlGender, sqlSalary, sqlAccount);
+					employee = new CustomerService(sqlID, sqlName, sqlAge, sqlAddress, sqlPhoneNumber, sqlGender, sqlSalary, sqlAccount);
 				} else if (employeeType.equals("Admin")) {
-					employee = new Admin(sqlID, sqlName, sqlAge, sqlPhoneNumber, sqlGender, sqlSalary, sqlAccount);
+					employee = new Admin(sqlID, sqlName, sqlAge, sqlAddress, sqlPhoneNumber, sqlGender, sqlSalary, sqlAccount);
 				} else {
-					employee = new CustomerService(sqlID, sqlName, sqlAge, sqlPhoneNumber, sqlGender, sqlSalary, sqlAccount);
+					employee = new CustomerService(sqlID, sqlName, sqlAge,  sqlAddress, sqlPhoneNumber, sqlGender, sqlSalary, sqlAccount);
 				}
 				employees.add(employee);
 			}
