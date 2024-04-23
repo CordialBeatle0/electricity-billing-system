@@ -1,8 +1,11 @@
+
+
 public class MeterReader {
 	private int ID;
 	private float usage;
 	private float previousReading;
 	private float currentReading;
+	
 
 	public MeterReader(int ID, float usage, float previousReading, float currentReading) {
 		this.ID = ID;
@@ -44,11 +47,16 @@ public class MeterReader {
 	}
 
 	public float calculateUsage() {
-		//TODO: Add implementation
+		// sets the usage by subtracting the current - previous readings
+		// returns the usage
+		setUsage(currentReading - previousReading);
+		return usage;
 	}
 
+	
+
 	public float viewUsage() {
-		//TODO: Add implementation
+		return usage = calculateUsage();
 	}
 
 	public float setTimeInterval() {
