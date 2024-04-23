@@ -66,20 +66,7 @@ public class MeterReader {
 	}
 
 	public float viewUsage() {
-		//DataBase version
-		 try {
-            Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("select meterUsage from MeterReader");
-			
-        if (rs.next()) {
-            // Retrieve the value from the result set
-            usage = rs.getFloat("meterUsage");
-        }
-			
-        } catch (Exception e) {
-            System.err.println("DATABASE QUERY ERROR: " + e.toString());
-        }
-		return usage;
+		return usage = calculateUsage();
 	}
 
 	public float setTimeInterval() {

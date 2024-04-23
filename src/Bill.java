@@ -88,36 +88,33 @@ public class Bill implements Publisher {
 	}
 
 	@Override
-	public boolean checkDueDate() {
+	public void checkDueDate() {
 		GregorianCalendar currentDate = new GregorianCalendar();
-		
+	
 		if (dueDate.get((GregorianCalendar.DAY_OF_MONTH)) == currentDate.get((GregorianCalendar.DAY_OF_MONTH))) {
-			// resets the new due date to the one of next month
-			dueDate.add((GregorianCalendar.MONTH), 1);;
 			// call send billing alert that alerts all observers of a pending bill
 			sendBillingAlert("You have Pending Fees to pay!");
-			return true;
+			// resets the new due date to the one of next month
+			dueDate.add((GregorianCalendar.MONTH), 1);;
 		}
-		else
-			return false;
 	}
 
-	public void calculateBill(float amount, Customer customer) {
-		//TODO: still needs implemetation 
-		// check the logic for finding the category from observers arraylist
-		try {
-			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("select custCategory from Customer where subscriptionStatus = true");
-			
-        if (rs.next()) {
-			// Retrieve the value from the result set
-			
-            
-        }
-			
-        } catch (Exception e) {
-            System.err.println("DATABASE QUERY ERROR: " + e.toString());
-        }
+	public void calculateBill(float amount) {
+		// will carry the result from the databse function with all the customers that are subscribed
+		ArrayList<Customer> allCustomers = Customer.getCustomersFromDB("subscriptionStatus = true");
+		for (Customer customer : allCustomers) {
+			// retriving the tax calculatio per each category
+			float customerTax = customer.getCategory().calculateTax();
+			// retriving the usage
+			float customerUsage= customer.getMeterReader().calculateUsage();
+			// setting the bills total amount
+			setTotalAmount(customerUsage * customerTax);
+			// set the outstanding fees for the customer ie: adding to the already pending fees incase customer didnt pay
+			customer.setOutstandingFees(totalAmount+customer.getOutstandingFees());
+		}
+		// checking if its the due date to send the billing alert
+		checkDueDate();
+	 
 	}
 
 	public ArrayList<Bill> viewBillingHistory() {

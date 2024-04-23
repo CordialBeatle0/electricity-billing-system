@@ -17,6 +17,10 @@ public abstract class Category {
 			JOptionPane.showMessageDialog(null, "Error updating customer in database");
 		}
 	}
+        
+        public static void addUncategorizedCust(Customer customer) {
+		//TODO: DATABASE Add customer to database list
+	}
 
 	public abstract float calculateTax();
 }

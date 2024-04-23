@@ -14,7 +14,10 @@ public abstract class Employee {
 	private char gender;
 	private float salary;
 	private Account account;
-	
+
+	public Employee() {
+	}
+        
 	public Employee(int ID, String name, int age, String address, String phoneNumber, char gender, float salary, Account account) {
 		assignedInquiries = new ArrayList<>();
 		this.ID = ID;
