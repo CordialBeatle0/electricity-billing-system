@@ -8,9 +8,7 @@ public class Admin extends Employee {
 		uncategorizedCustomers = new ArrayList<>();
 	}
 
-	public void addUncategorizedCust(Customer customer) {
-		//TODO: Add implementation
-	}
+	
 
 	public void removeUncategorizedCustomer(Customer customer) {
 		//TODO: Add implementation

@@ -8,7 +8,7 @@ public class Customer implements Observer {
 	private String name;
 	private String address;
 	private String phoneNumber;
-	private int cardNumber;
+	private int cardNumber; //TODO: remove mee
 	private boolean isTimeToPay;
 	private Category category;
 	private MeterReader meterReader;
