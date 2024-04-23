@@ -1,3 +1,7 @@
+import javax.swing.*;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 public class Account {
@@ -34,14 +38,22 @@ public class Account {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
+	
+	@Override
+	public String toString() {
+		return "Account{" +
+				"ID=" + ID +
+				", username='" + username + '\'' +
+				", password='" + password + '\'' +
+				'}';
+	}
+	
 	public void updateAccount(String username, String password) {
 		//TODO: Add implementation
 	}
 
 	public static Customer custLogin(String username, String password) {
-		ArrayList<Customer> customers;
-		//TODO: Get all customer accounts from database and put it in customers
+		ArrayList<Customer> customers = Customer.getCustomersFromDB("");
 		for (Customer customer : customers) {
 			Account account = customer.getAccount();
 			if (account.username.equals(username) && account.password.equals(password)) {
@@ -52,13 +64,28 @@ public class Account {
 	}
 
 	public static Employee empLogin(String username, String password) {
-		ArrayList<Employee> employees;
-		//TODO: Get all customer accounts from database and put it in customers
+		ArrayList<Employee> employees = Employee.getEmployeesFromDB("");
 		for (Employee employee : employees) {
 			Account account = employee.getAccount();
 			if (account.username.equals(username) && account.password.equals(password)) {
 				return employee;
 			}
+		}
+		return null;
+	}
+	
+	public static Account getAccountFromDB(String id) {
+		try {
+			Connection connection = DatabaseSingleton.getInstance().getConnection();
+			Statement statement = connection.createStatement();
+			ResultSet result = statement.executeQuery("SELECT * FROM account WHERE id = " + id);
+			int sqlID = result.getInt("id");
+			String sqlUsername = result.getString("username");
+			String sqlPassword = result.getString("password");
+			
+			return new Account(sqlID, sqlUsername, sqlPassword);
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "Error retrieving account from database");
 		}
 		return null;
 	}

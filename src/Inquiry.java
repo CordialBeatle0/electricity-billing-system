@@ -44,45 +44,45 @@ public class Inquiry implements InquiryROI {
         this.date = date;
     }
 
-    public String getQuestion() {
-        return question;
-    }
+	public String getQuestion() {
+		return question;
+	}
 
-    public void setQuestion(String question) {
-        this.question = question;
-    }
+	public void setQuestion(String question) {
+		this.question = question;
+	}
 
-    public String getResponse() {
-        return response;
-    }
+	public String getResponse() {
+		return response;
+	}
 
-    public void setResponse(String response) {
-        this.response = response;
-    }
+	public void setResponse(String response) {
+		this.response = response;
+	}
 
-    public int getID() {
-        return ID;
-    }
+	public int getID() {
+		return ID;
+	}
 
-    public void setID(int ID) {
-        this.ID = ID;
-    }
+	public void setID(int ID) {
+		this.ID = ID;
+	}
 
-    public String getCustCategory() {
-        return custCategory;
-    }
+	public String getCustCategory() {
+		return custCategory;
+	}
 
-    public void setCustCategory(String custCategory) {
-        this.custCategory = custCategory;
-    }
+	public void setCustCategory(String custCategory) {
+		this.custCategory = custCategory;
+	}
 
-    public String getCustName() {
-        return custName;
-    }
+	public String getCustName() {
+		return custName;
+	}
 
-    public void setCustName(String custName) {
-        this.custName = custName;
-    }
+	public void setCustName(String custName) {
+		this.custName = custName;
+	}
 
     public int getCustID() {
         return custID;
@@ -96,9 +96,9 @@ public class Inquiry implements InquiryROI {
         return employeeName;
     }
 
-    public void setEmployeeName(String employeeName) {
-        this.employeeName = employeeName;
-    }
+	public void setEmployeeName(String employeeName) {
+		this.employeeName = employeeName;
+	}
 
     public String getEmployeeType() {
         return employeeType;
@@ -112,9 +112,9 @@ public class Inquiry implements InquiryROI {
         return date;
     }
 
-    public void setDate(String date) {
-        this.date = date;
-    }
+	public void setDate(String date) {
+		this.date = date;
+	}
 
     @Override
     public String toString() {
@@ -212,11 +212,12 @@ public class Inquiry implements InquiryROI {
         emp.handle(this);
     }
 
-    public void respondToInquiry(String response, String employeeName) {
-        //TODO: Add implementation
-    }
+	public void respondToInquiry(String response, String employeeName) {
+		//TODO: Add implementation
+		//TODO: get employee's inquiry from database and remove the inquiry from their list
+	}
 
-    public ArrayList<Inquiry> inquiryHistory() {
-        //TODO: Add implementation
-    }
+	public ArrayList<Inquiry> inquiryHistory() {
+		//TODO: Add implementation
+	}
 }

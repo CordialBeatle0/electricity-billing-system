@@ -4,6 +4,11 @@ public class Cash implements Payment {
 
 	@Override
 	public void makePayment(Customer customer, float amount) {
-		//TODO: Add implementation
+                //create a new Request
+                Request req = new Request(1,customer.getID(), customer.getName(),"Cash Payment", customer.getAddress(),java.time.LocalDate.now());
+                //add request to DB
+                req.addRequesttoDB();
+                req.requestHomeService();
+                
 	}
 }
