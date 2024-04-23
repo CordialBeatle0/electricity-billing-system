@@ -67,6 +67,5 @@ public class Subscription {
         else {
             JOptionPane.showMessageDialog(null, "You cannot pay now, wait for a notification when it's time to pay");
         }
-
     }
 }
