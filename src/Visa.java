@@ -10,19 +10,16 @@ public class Visa implements Payment {
 
     @Override
     public void makePayment(Customer customer, float amount) {
-        //TODO: Check card info logic
-
         //update the outstanding fees of the customer
         customer.setOutstandingFees(customer.getOutstandingFees() - amount);
-        customer.isTimeToPay = false;
+        customer.setTimeToPay(false);
         //TODO: DATABASE update outstanding fees for customer
         try {
-            Connection connection= DatabaseSingleton.getInstance().getConnection();
-            Statement statement= connection.createStatement();
-            statement.executeUpdate("UPDATE customer set outstandingFees="+ customer.getOutstandingFees()+""); 
-            statement.executeUpdate("UPDATE customer set isTimeToPay="+ customer.isTimeToPay+""); 
-        }
-        catch(Exception e){
+            Connection connection = DatabaseSingleton.getInstance().getConnection();
+            Statement statement = connection.createStatement();
+            statement.executeUpdate("UPDATE customer set outstandingFees=" + customer.getOutstandingFees() + "");
+            statement.executeUpdate("UPDATE customer set isTimeToPay=" + customer.isTimeToPay() + "");
+        } catch (Exception e) {
             // TODO: write exception logic joptionpayne
         }
         //TODO: JOptionPane to confirm payment

@@ -98,11 +98,17 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="View Inquiries"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="viewInquiryButtonActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="viewBillButton">
       <Properties>
         <Property name="text" type="java.lang.String" value="View Bills"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="viewBillButtonActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="calculateBillButton">
       <Properties>
@@ -113,16 +119,25 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Update Account"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="updateAccountButtonActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="SetChainButton">
       <Properties>
         <Property name="text" type="java.lang.String" value="Set Respond Chain"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="SetChainButtonActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="categorizeCustomerButton1">
       <Properties>
         <Property name="text" type="java.lang.String" value="Categorize Customer"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="categorizeCustomerButton1ActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>
