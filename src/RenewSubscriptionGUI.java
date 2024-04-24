@@ -44,6 +44,7 @@ public class RenewSubscriptionGUI extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         cashRadio = new javax.swing.JRadioButton();
         visaRadio = new javax.swing.JRadioButton();
+        backButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -81,6 +82,13 @@ public class RenewSubscriptionGUI extends javax.swing.JFrame {
         buttonGroup1.add(visaRadio);
         visaRadio.setText("Visa");
 
+        backButton.setText("Back");
+        backButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -103,7 +111,9 @@ public class RenewSubscriptionGUI extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(124, 124, 124)
+                        .addContainerGap()
+                        .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(39, 39, 39)
                         .addComponent(jButton1))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(86, 86, 86)
@@ -125,13 +135,19 @@ public class RenewSubscriptionGUI extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cardText, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
-                .addGap(19, 19, 19)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cashRadio)
-                    .addComponent(visaRadio))
-                .addGap(18, 18, 18)
-                .addComponent(jButton1)
-                .addGap(28, 28, 28))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(19, 19, 19)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(cashRadio)
+                            .addComponent(visaRadio))
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton1)
+                        .addGap(28, 28, 28))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(backButton)
+                        .addContainerGap())))
         );
 
         pack();
@@ -167,6 +183,13 @@ public class RenewSubscriptionGUI extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "A Payment Method must be selected");
         }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
+        // TODO add your handling code here:
+        CustomerDashboardGUI dashboard = new CustomerDashboardGUI(customer);
+        dashboard.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_backButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -205,6 +228,7 @@ public class RenewSubscriptionGUI extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField amountText;
+    private javax.swing.JButton backButton;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JTextField cardText;
     private javax.swing.JRadioButton cashRadio;

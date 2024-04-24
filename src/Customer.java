@@ -138,7 +138,15 @@ public class Customer implements Observer {
 	@Override
 	public void updateObserver(String message) {
 		addNotificationToDB(message);
-		isTimeToPay = true;
+		try{
+			Connection connection = DatabaseSingleton.getInstance().getConnection();
+			Statement statement = connection.createStatement();
+			String isTimeToPayTrue = "UPDATE customer SET isTimeToPay = TRUE WHERE id = " + ID;
+			statement.executeQuery(isTimeToPayTrue);
+		}
+		catch (Exception e) {
+			//TOD: write exception joptionpayne
+		}
 	}
 	
 	public void addNotificationToDB(String message) {

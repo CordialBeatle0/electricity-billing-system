@@ -23,6 +23,7 @@ public class CustomerServiceDashboardGUI extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         customerService = custService;
         customerServiceNameText.setText(customerService.getName());
+        customerServiceNameText.setEditable(false);
     }
 
     /**

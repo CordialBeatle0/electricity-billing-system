@@ -2,6 +2,7 @@
 import java.time.LocalDate;
 import java.sql.Connection;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 
 public class Request {
@@ -58,8 +59,8 @@ public class Request {
         //TODO: Add implementation
     }
 
-    public Request viewRequest() {
-        //TODO: Add implementation
+    public ArrayList<Request> viewRequest() {
+        //TODO: DATABASE retrieve all TAKE CODE FROM AMIR
         return null;
     }
 

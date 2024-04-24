@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -15,6 +16,9 @@ public class Bill implements Publisher {
 	private String custAddress;
 	private static GregorianCalendar dueDate = new GregorianCalendar(2024, 5, 1);
 	
+	public Bill() {
+	}
+
 	public Bill(int ID, float totalAmount, Date date, String custName, String custAddress) {
 		this.ID = ID;
 		this.totalAmount = totalAmount;
@@ -99,7 +103,8 @@ public class Bill implements Publisher {
 		}
 	}
 
-	public void calculateBill(float amount) {
+	public void calculateBill() {
+
 		// will carry the result from the databse function with all the customers that are subscribed
 		ArrayList<Customer> allCustomers = Customer.getCustomersFromDB("subscriptionStatus = true");
 		for (Customer customer : allCustomers) {
@@ -108,9 +113,34 @@ public class Bill implements Publisher {
 			// retriving the usage
 			float customerUsage= customer.getMeterReader().calculateUsage();
 			// setting the bills total amount
-			setTotalAmount(customerUsage * customerTax);
+			float billtotalAmount = customerUsage * customerTax;
+			// creating the bill in the database
+			try{
+				Connection connection = DatabaseSingleton.getInstance().getConnection();
+				Statement statement = connection.createStatement();
+				statement.executeUpdate("INSERT INTO bill(totalAmount, date, customer_id) values("+billtotalAmount+",'"+LocalDate.now()+"',"+customer.getID()+")");
+			}
+			catch (Exception e) {
+				// TODO: write joptionpayne
+                                
+			}
+
 			// set the outstanding fees for the customer ie: adding to the already pending fees incase customer didnt pay
-			customer.setOutstandingFees(totalAmount+customer.getOutstandingFees());
+			customer.setOutstandingFees(billtotalAmount + customer.getOutstandingFees());
+			// updating the outstanding fees of the custmer
+			// creating the bill in the database
+			try{
+				Connection connection = DatabaseSingleton.getInstance().getConnection();
+				Statement statement = connection.createStatement();
+				statement.executeUpdate("UPDATE customer set outstandingFees="+ customer.getOutstandingFees()+" WHERE id=' "+customer.getID()+"'");
+				
+			}
+			catch (Exception e) {
+				// TODO: write joptionpayne
+			}
+
+
+			
 		}
 		// checking if its the due date to send the billing alert
 		checkDueDate();
