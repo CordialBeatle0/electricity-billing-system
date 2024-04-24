@@ -1,5 +1,7 @@
-public interface InquiryROI {
-	public Inquiry viewInquiry();
+import java.util.ArrayList;
 
-	public void addInquiry();
+public interface InquiryROI {
+    public ArrayList<Inquiry> viewInquiriesByID(int custID);
+
+    public void addInquiry();
 }

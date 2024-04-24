@@ -118,11 +118,27 @@ public class Bill implements Publisher {
 	}
 
 	public ArrayList<Bill> viewBillingHistory() {
-		//TODO: Add implementation
-	}
-
-	public ArrayList<Bill> viewAllCustomerBills() {
-		//TODO: Add implementation
+		ArrayList<Bill> allCustomerHistory = new ArrayList<>();
+		try{
+			Connection connection = DatabaseSingleton.getInstance().getConnection();
+			Statement statement = connection.createStatement();
+			ResultSet result = statement.executeQuery("SELECT * FROM bill WHERE customer_id = " + custID);
+			while (result.next()) {
+				int sqlcustID = result.getInt("customer_id");
+				int sqlbillId = result.getInt("id");
+				float sqltotalamount = result.getFloat("totalAmount");
+				//TODO : STEAL LONG CONVERSION
+				String sqldate = result.getString("date");
+				Customer mycustomer= Customer.getCustomersFromDB(custID).get(0);
+				String sqlcustAdress = mycustomer.getAddress();
+				Bill retrivalbill = new Bill(sqlbillId, sqltotalamount, date, sqldate, sqlcustAdress);
+				allCustomerHistory.add(retrivalbill);
+			}
+		}
+		catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "Error retrieving bill from database");
+		}
+		return allCustomerHistory;
 	}
 	
 	public static ArrayList<Bill> getBillsFromDB(int id) {

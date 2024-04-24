@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public abstract class Employee {
@@ -15,11 +16,8 @@ public abstract class Employee {
 	private float salary;
 	private Account account;
 
-        private Employee nextEmp;
-        
-	public Employee() {
-	}
-        
+	public Employee nextEmp;
+
 	public Employee(int ID, String name, int age, String address, String phoneNumber, char gender, float salary, Account account) {
 		assignedInquiries = new ArrayList<>();
 		this.ID = ID;
@@ -31,6 +29,9 @@ public abstract class Employee {
 		this.salary = salary;
 		this.account = account;
 	}
+
+    public Employee() {
+    }
 
 	public int getID() {
 		return ID;
@@ -55,11 +56,11 @@ public abstract class Employee {
 	public void setAge(int age) {
 		this.age = age;
 	}
-	
+
 	public String getAddress() {
 		return address;
 	}
-	
+
 	public void setAddress(String address) {
 		this.address = address;
 	}
@@ -112,9 +113,18 @@ public abstract class Employee {
 	public abstract void handle(Inquiry inquiry);
 
 	public void assignEmployee(Inquiry inquiry) {
-		//TODO: Add implementation
+		inquiry.setEmployeeType(this.getClass().getName());
+		DatabaseSingleton db = DatabaseSingleton.getInstance();
+		Connection conn = db.getConnection();
+		try {
+			Statement stmt = conn.createStatement();
+			String sql = "UPDATE inquiry SET employeeType = '" + this.getClass().getName() + "' WHERE ID = " + inquiry.getID();
+			stmt.executeUpdate(sql);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
-	
+
 	/**
 	 *
 	 * @param condition if empty, selects all customers in the database <br>
@@ -132,25 +142,26 @@ public abstract class Employee {
 				String employeeType = result.getString("employeeType");
 				String sqlName = result.getString("name");
 				int sqlAge = result.getInt("age");
+				String sqlAddress = result.getString("address");
 				String sqlPhoneNumber = result.getString("phoneNumber");
 				char sqlGender = result.getString("gender").charAt(0);
 				float sqlSalary = result.getFloat("salary");
-				
+
 				// account
 				int accountID_INT = result.getInt("account_id");
 				String accountID_String = Integer.toString(accountID_INT);
 				Account sqlAccount = Account.getAccountFromDB(accountID_String);
-				
+
 				Employee employee;
-				
+
 				String sqlAssignedLocation = null;
 				if (employeeType.equals("Technician")) {
 					sqlAssignedLocation = result.getString("technicianAssignedLocation");
-					employee = new CustomerService(sqlID, sqlName, sqlAge, sqlPhoneNumber, sqlGender, sqlSalary, sqlAccount);
+					employee = new CustomerService(sqlID, sqlName, sqlAge, sqlAddress, sqlPhoneNumber, sqlGender, sqlSalary, sqlAccount);
 				} else if (employeeType.equals("Admin")) {
-					employee = new Admin(sqlID, sqlName, sqlAge, sqlPhoneNumber, sqlGender, sqlSalary, sqlAccount);
+					employee = new Admin(sqlID, sqlName, sqlAge, sqlAddress, sqlPhoneNumber, sqlGender, sqlSalary, sqlAccount);
 				} else {
-					employee = new CustomerService(sqlID, sqlName, sqlAge, sqlPhoneNumber, sqlGender, sqlSalary, sqlAccount);
+					employee = new CustomerService(sqlID, sqlName, sqlAge,  sqlAddress, sqlPhoneNumber, sqlGender, sqlSalary, sqlAccount);
 				}
 				employees.add(employee);
 			}

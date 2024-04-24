@@ -5,14 +5,10 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 public class Customer implements Observer {
-	private ArrayList<String> notifications;
-	private ArrayList<Bill> billHistory;
-	private ArrayList<InquiryROI> inquiryHistory;
 	private int ID;
 	private String name;
 	private String address;
 	private String phoneNumber;
-	private int cardNumber; //TODO: remove mee
 	private boolean isTimeToPay;
 	private Category category;
 	private MeterReader meterReader;
@@ -21,18 +17,11 @@ public class Customer implements Observer {
 	private Payment paymentType;
 	private Subscription subscription;
 
-	// TODO: Add constructor(s) and add these lines in all constructors
-	// notifications = new ArrayList<>();
-	// billHistory = new ArrayList<>();
-	// inquiryHistory = new ArrayList<>();
-	
-	
-	public Customer(int ID, String name, String address, String phoneNumber, int cardNumber, boolean isTimeToPay, Category category, MeterReader meterReader, float outstandingFees, Account account, Subscription subscription) {
+	public Customer(int ID, String name, String address, String phoneNumber, boolean isTimeToPay, Category category, MeterReader meterReader, float outstandingFees, Account account, Subscription subscription) {
 		this.ID = ID;
 		this.name = name;
 		this.address = address;
 		this.phoneNumber = phoneNumber;
-		this.cardNumber = cardNumber;
 		this.isTimeToPay = isTimeToPay;
 		this.category = category;
 		this.meterReader = meterReader;
@@ -71,14 +60,6 @@ public class Customer implements Observer {
 
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
-	}
-
-	public int getCardNumber() {
-		return cardNumber;
-	}
-
-	public void setCardNumber(int cardNumber) {
-		this.cardNumber = cardNumber;
 	}
 
 	public boolean isTimeToPay() {
@@ -136,18 +117,6 @@ public class Customer implements Observer {
 	public void setSubscription(Subscription subscription) {
 		this.subscription = subscription;
 	}
-
-	public void addNotification(String message) {
-		notifications.add(message);
-	}
-
-	public void addBill(Bill bill) {
-		billHistory.add(bill);
-	}
-
-	public void addInquiry(Inquiry inquiry) {
-		inquiryHistory.add(inquiry);
-	}
 	
 	@Override
 	public String toString() {
@@ -156,7 +125,6 @@ public class Customer implements Observer {
 				", name='" + name + '\'' +
 				", address='" + address + '\'' +
 				", phoneNumber='" + phoneNumber + '\'' +
-				", cardNumber=" + cardNumber +
 				", isTimeToPay=" + isTimeToPay +
 				", category=" + category +
 				", meterReader=" + meterReader +
@@ -169,7 +137,6 @@ public class Customer implements Observer {
 	
 	@Override
 	public void updateObserver(String message) {
-		notifications.add(message);
 		addNotificationToDB(message);
 		isTimeToPay = true;
 	}
@@ -219,7 +186,6 @@ public class Customer implements Observer {
 				String sqlName = result.getString("name");
 				String sqlAddress = result.getString("address");
 				String sqlPhoneNumber = result.getString("phone");
-				int sqlCardNumber = result.getInt("cardNumber");
 				boolean sqlIsTimeToPay = result.getBoolean("isTimeToPay");
 				
 				// category
@@ -247,7 +213,7 @@ public class Customer implements Observer {
 				boolean subscriptionStatus_Bool = result.getBoolean("subscriptionStatus");
 				Subscription sqlSubscription = new Subscription(subscriptionStatus_Bool);
 				
-				customers.add(new Customer(sqlID, sqlName, sqlAddress, sqlPhoneNumber, sqlCardNumber, sqlIsTimeToPay, sqlCategory, sqlMeterReader, sqlOutstandingFees, sqlAccount, sqlSubscription));
+				customers.add(new Customer(sqlID, sqlName, sqlAddress, sqlPhoneNumber, sqlIsTimeToPay, sqlCategory, sqlMeterReader, sqlOutstandingFees, sqlAccount, sqlSubscription));
 			}
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "Error retrieving customer from database");
