@@ -100,6 +100,7 @@ public class Bill implements Publisher {
 	}
 
 	public void calculateBill(float amount) {
+
 		// will carry the result from the databse function with all the customers that are subscribed
 		ArrayList<Customer> allCustomers = Customer.getCustomersFromDB("subscriptionStatus = true");
 		for (Customer customer : allCustomers) {
@@ -109,8 +110,32 @@ public class Bill implements Publisher {
 			float customerUsage= customer.getMeterReader().calculateUsage();
 			// setting the bills total amount
 			setTotalAmount(customerUsage * customerTax);
+			// creating the bill in the database
+			try{
+				Connection connection = DatabaseSingleton.getInstance().getConnection();
+				Statement statement = connection.createStatement();
+				statement.executeUpdate("INSERT INTO bill(totalAmount, date, customer_id) values("+getTotalAmount()+",'"+getDate()+"',"+customer.getID()+")");
+			}
+			catch (Exception e) {
+				// TODO: write joptionpayne
+			}
+
 			// set the outstanding fees for the customer ie: adding to the already pending fees incase customer didnt pay
-			customer.setOutstandingFees(totalAmount+customer.getOutstandingFees());
+			customer.setOutstandingFees(totalAmount + customer.getOutstandingFees());
+			// updating the outstanding fees of the custmer
+			// creating the bill in the database
+			try{
+				Connection connection = DatabaseSingleton.getInstance().getConnection();
+				Statement statement = connection.createStatement();
+				statement.executeUpdate("UPDATE customer set outstandingFees="+ customer.getOutstandingFees()+" WHERE id=' "+customer.getID()+"'");
+				
+			}
+			catch (Exception e) {
+				// TODO: write joptionpayne
+			}
+
+
+			
 		}
 		// checking if its the due date to send the billing alert
 		checkDueDate();
