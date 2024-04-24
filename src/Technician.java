@@ -40,7 +40,7 @@ public class Technician extends Employee {
             Connection connection = DatabaseSingleton.getInstance().getConnection();
             Statement statement = connection.createStatement();
             // TODO: add where condition after request status gets added to database
-            ResultSet result = statement.executeQuery("SELECT COUNT(*) FROM request WHERE id = " + request.getID());
+            ResultSet result = statement.executeQuery("SELECT COUNT(*) FROM request WHERE location = '" + technician.assignedLocation + "'");
             int numberOfRequests = result.getInt(0);
             if (numberOfRequests < maxCapacity) {
                 //TODO: DATABASE add request to DB of the technician instead
@@ -78,7 +78,7 @@ public class Technician extends Employee {
                 System.out.println("Customer with ID " + custID + " not found.");
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error retrieving customer from database");
         }
     }
 
@@ -113,7 +113,7 @@ public class Technician extends Employee {
                 JOptionPane.showMessageDialog(null, "Customer with ID " + custID + " not found.");
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error editing or retrieving customer from database");
         }
     }
 }

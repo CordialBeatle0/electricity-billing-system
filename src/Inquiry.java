@@ -1,3 +1,4 @@
+import javax.swing.*;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -162,7 +163,7 @@ public class Inquiry implements InquiryROI {
                 inquiries.add(inquiry);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error retrieving inquiry from database");
         }
         return inquiries;
     }
@@ -197,7 +198,7 @@ public class Inquiry implements InquiryROI {
                 inquiries.add(inquiry);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error retrieving inquiry from database");
         }
         return inquiries;
     }
@@ -218,7 +219,7 @@ public class Inquiry implements InquiryROI {
             stmt.executeUpdate(query);
             System.out.println("Inquiry added successfully to the database.");
         } catch (SQLException e) {
-            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error adding inquiry to database");
         }
 
         // you give the inquiry to the Employee to handle it

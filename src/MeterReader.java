@@ -74,7 +74,7 @@ public class MeterReader {
 		return 0;
 	}
 	
-	public static MeterReader getMeterReaderFromDB(String id) {
+	public static MeterReader getMeterReaderFromDB(int id) {
 		try {
 			Connection connection = DatabaseSingleton.getInstance().getConnection();
 			Statement statement = connection.createStatement();

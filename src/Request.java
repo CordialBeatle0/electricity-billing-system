@@ -1,4 +1,4 @@
-
+import javax.swing.JOptionPane;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -15,7 +15,7 @@ public class Request {
     private String requestType;
     private String location;
     private LocalDate date;
-
+    
     public Request(int custID, String custName, String requestType, String location, LocalDate date) {
         this.custID = custID;
         this.custName = custName;
@@ -23,7 +23,7 @@ public class Request {
         this.location = location;
         this.date = date;
     }
-
+    
     public Request(int ID, int custID, String custName, String requestType, String location, LocalDate date) {
         this.ID = ID;
         this.custID = custID;
@@ -99,12 +99,12 @@ public class Request {
 
     public void addRequesttoDB() {
         try {
-            Connection connection = DatabaseSingleton.getInstance().getConnection();
-            Statement statement = connection.createStatement();
+            Connection connection= DatabaseSingleton.getInstance().getConnection();
+            Statement statement=  connection.createStatement();
             statement.executeUpdate("INSERT INTO request(custID, custName, requestType, location, date) values(" + custID + ",'" + custName + "','" + requestType + "','" + location + "','" + date + "')");
-        } catch (Exception e) {
-            // TODO: write exception logic
         }
-
+        catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error adding request to database");
+        }
     }
 }

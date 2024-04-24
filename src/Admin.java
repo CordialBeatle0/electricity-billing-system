@@ -1,8 +1,8 @@
+import javax.swing.*;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
 
 public class Admin extends Employee {
 	
@@ -45,7 +45,7 @@ public class Admin extends Employee {
                 System.out.println("Customer with ID " + custID + " not found.");
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Error retrieving customer from database");
         }
     }
 }

@@ -27,7 +27,7 @@ public class UpdateAccount extends javax.swing.JFrame {
      public UpdateAccount(Employee e) {
         initComponents();
         emp=e;
-        Account empAccount= Account.getAccountFromDB("id= "+ emp.getID());
+        Account empAccount= Account.getAccountFromDB(emp.getID());
         usernamefield.setText(empAccount.getUsername());
         passwordfield.setText(empAccount.getPassword());
         
@@ -35,7 +35,7 @@ public class UpdateAccount extends javax.swing.JFrame {
       public UpdateAccount(Customer c) {
         initComponents();
         cust= c;
-        Account custAccount = Account.getAccountFromDB("id= "+cust.getID());
+        Account custAccount = Account.getAccountFromDB(cust.getID());
         usernamefield.setText(custAccount.getUsername());
         passwordfield.setText(custAccount.getPassword());
     }

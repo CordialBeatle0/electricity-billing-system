@@ -6,7 +6,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public abstract class Employee {
-	private ArrayList<Inquiry> assignedInquiries;
 	private int ID;
 	private String name;
 	private int age;
@@ -19,7 +18,6 @@ public abstract class Employee {
 	public Employee nextEmp;
 
 	public Employee(int ID, String name, int age, String address, String phoneNumber, char gender, float salary, Account account) {
-		assignedInquiries = new ArrayList<>();
 		this.ID = ID;
 		this.name = name;
 		this.age = age;
@@ -97,14 +95,6 @@ public abstract class Employee {
 		this.account = account;
 	}
 
-	public void addInquiry(Inquiry inquiry) {
-		assignedInquiries.add(inquiry);
-	}
-
-	public void removeInquiry(Inquiry inquiry) {
-		assignedInquiries.remove(inquiry);
-	}
-
 	public void setHandler(Employee employee) {
 		//TODO: Add implementation
                 nextEmp = employee;
@@ -121,7 +111,7 @@ public abstract class Employee {
 			String sql = "UPDATE inquiry SET employeeType = '" + this.getClass().getName() + "' WHERE ID = " + inquiry.getID();
 			stmt.executeUpdate(sql);
 		} catch (SQLException e) {
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Error updating inquiry in database");
 		}
 	}
 
@@ -149,15 +139,13 @@ public abstract class Employee {
 
 				// account
 				int accountID_INT = result.getInt("account_id");
-				String accountID_String = Integer.toString(accountID_INT);
-				Account sqlAccount = Account.getAccountFromDB(accountID_String);
+				Account sqlAccount = Account.getAccountFromDB(accountID_INT);
 
 				Employee employee;
-
-				String sqlAssignedLocation = null;
+				
 				if (employeeType.equals("Technician")) {
-					sqlAssignedLocation = result.getString("technicianAssignedLocation");
-					employee = new CustomerService(sqlID, sqlName, sqlAge, sqlAddress, sqlPhoneNumber, sqlGender, sqlSalary, sqlAccount);
+					String sqlAssignedLocation = result.getString("technicianAssignedLocation");
+					employee = new Technician(sqlID, sqlName, sqlAge, sqlAddress, sqlPhoneNumber, sqlGender, sqlSalary, sqlAccount, sqlAssignedLocation);
 				} else if (employeeType.equals("Admin")) {
 					employee = new Admin(sqlID, sqlName, sqlAge, sqlAddress, sqlPhoneNumber, sqlGender, sqlSalary, sqlAccount);
 				} else {
