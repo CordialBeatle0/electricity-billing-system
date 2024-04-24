@@ -147,7 +147,7 @@ public class Inquiry implements InquiryROI {
 
         try {
             Statement stmt = conn.createStatement();
-            String sql = "SELECT id, question, custCategory, custName, date  FROM inquiry, Customer WHERE Inquiry(id) = Customer(id) AND custCategory = " + custCategoryy;
+            String sql = "SELECT inquiry.id, question, inquiry.custCategory, name, date  FROM inquiry, Customer WHERE inquiry.customer_id = customer.id AND inquiry.custCategory = '" + custCategoryy + "' AND customer.id = " + custID;
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
                 Inquiry inquiry = new Inquiry(
@@ -182,7 +182,7 @@ public class Inquiry implements InquiryROI {
         }
         try {
             Statement stmt = conn.createStatement();
-            String sql = "SELECT id, question, custCategory, custName, date  FROM inquiry, Customer WHERE custCategory = " + custCategoryy;
+            String sql = "SELECT inquiry.id, question, inquiry.custCategory, name, date  FROM inquiry, Customer WHERE inquiry.customer_id = customer.id AND inquiry.custCategory = '" + custCategoryy + "'";
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
                 Inquiry inquiry = new Inquiry(
@@ -224,14 +224,5 @@ public class Inquiry implements InquiryROI {
         // you give the inquiry to the Employee to handle it
         Employee emp = new CustomerService();
         emp.handle(this);
-    }
-
-    public void respondToInquiry(String response, String employeeName) {
-        //TODO: Add implementation
-        //TODO: get employee's inquiry from database and remove the inquiry from their list
-    }
-
-    public ArrayList<Inquiry> inquiryHistory() {
-        //TODO: Add implementation
     }
 }
