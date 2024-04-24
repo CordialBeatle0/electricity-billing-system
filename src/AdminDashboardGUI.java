@@ -123,7 +123,8 @@ public class AdminDashboardGUI extends javax.swing.JFrame {
 
     private void calculateBillButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calculateBillButtonActionPerformed
         // TODO add your handling code here:
-       Bill.calculateBill();
+        Bill calculatingBills= new Bill();
+        calculatingBills.calculateBill();
        JOptionPane.showMessageDialog(this, "All Bills have been Calculated.");
        
     }//GEN-LAST:event_calculateBillButtonActionPerformed
