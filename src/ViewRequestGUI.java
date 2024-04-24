@@ -1,19 +1,45 @@
+
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-
 /**
- *
  * @author Shero
  */
 public class ViewRequestGUI extends javax.swing.JFrame {
+
+    Technician technician;
 
     /**
      * Creates new form ViewRequestGUI
      */
     public ViewRequestGUI() {
         initComponents();
+    }
+
+    public ViewRequestGUI(Technician tech) {
+        initComponents();
+        technician = tech;
+        TableModel model = new DefaultTableModel();
+        int row = 0;
+        int col;
+        for (Request r : Request.viewRequest(tech)) {
+            col = 0;
+            model.setValueAt(r.getID(), row, col++);
+            model.setValueAt(r.getCustID(), row, col++);
+            model.setValueAt(r.getLocation(), row, col++);
+            model.setValueAt(r.getRequestType(), row, col++);
+            row++;
+        }
+        jTable1.setModel(model);
     }
 
     /**
@@ -29,9 +55,9 @@ public class ViewRequestGUI extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        RequestIDTextField = new javax.swing.JTextField();
+        FinalizeServiceBtn = new javax.swing.JButton();
+        ConfirmCashPaymentBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -70,9 +96,19 @@ public class ViewRequestGUI extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel2.setText("Request ID");
 
-        jButton1.setText("Finalize Service");
+        FinalizeServiceBtn.setText("Finalize Service");
+        FinalizeServiceBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                FinalizeServiceBtnActionPerformed(evt);
+            }
+        });
 
-        jButton2.setText("Confirm Cash Payment");
+        ConfirmCashPaymentBtn.setText("Confirm Cash Payment");
+        ConfirmCashPaymentBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ConfirmCashPaymentBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -87,14 +123,14 @@ public class ViewRequestGUI extends javax.swing.JFrame {
                         .addGap(112, 112, 112)
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(RequestIDTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(28, 28, 28)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(ConfirmCashPaymentBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(FinalizeServiceBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(32, Short.MAX_VALUE))
         );
@@ -108,16 +144,44 @@ public class ViewRequestGUI extends javax.swing.JFrame {
                 .addGap(29, 29, 29)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(RequestIDTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(ConfirmCashPaymentBtn)
+                    .addComponent(FinalizeServiceBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(52, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void ConfirmCashPaymentBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConfirmCashPaymentBtnActionPerformed
+        String requestID = RequestIDTextField.getText();
+        Connection conn = DatabaseSingleton.getInstance().getConnection();
+        try {
+            Statement stat = conn.createStatement();
+            ResultSet result = stat.executeQuery("SELECT * FROM request WHERE id = " + requestID);
+            if (result.next()) {
+                Request request = new Request(result.getInt("id"), result.getInt("custID"), result.getString("location"), result.getString("requestType"));
+                ConfirmCashPaymentGUI confirmCashPaymentGUI = new ConfirmCashPaymentGUI(technician, request);
+                confirmCashPaymentGUI.setVisible(true);
+                this.dispose();
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error retrieving request from database");
+        }
+    }//GEN-LAST:event_ConfirmCashPaymentBtnActionPerformed
+
+    private void FinalizeServiceBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FinalizeServiceBtnActionPerformed
+        String requestID = RequestIDTextField.getText();
+        Connection conn = DatabaseSingleton.getInstance().getConnection();
+        try {
+            Statement stat = conn.createStatement();
+            stat.executeQuery("DELETE FROM request WHERE id = " + requestID);
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error retrieving deleting request from database");
+        }
+    }//GEN-LAST:event_FinalizeServiceBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -126,7 +190,7 @@ public class ViewRequestGUI extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -155,12 +219,12 @@ public class ViewRequestGUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton ConfirmCashPaymentBtn;
+    private javax.swing.JButton FinalizeServiceBtn;
+    private javax.swing.JTextField RequestIDTextField;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }
