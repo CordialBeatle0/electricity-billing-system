@@ -1,5 +1,7 @@
-
-import java.util.ArrayList;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import javax.swing.JOptionPane;
 
 public class Technician extends Employee {
@@ -15,21 +17,21 @@ public class Technician extends Employee {
         this.assignedLocation = assignedLocation;
     }
 
-    public static int getMaxCapacity() {
-        return maxCapacity;
-    }
+	public static int getMaxCapacity() {
+		return maxCapacity;
+	}
 
-    public static void setMaxCapacity(int maxCapacity) {
-        Technician.maxCapacity = maxCapacity;
-    }
+	public static void setMaxCapacity(int maxCapacity) {
+		Technician.maxCapacity = maxCapacity;
+	}
 
-    public String getAssignedLocation() {
-        return assignedLocation;
-    }
+	public String getAssignedLocation() {
+		return assignedLocation;
+	}
 
-    public void setAssignedLocation(String assignedLocation) {
-        this.assignedLocation = assignedLocation;
-    }
+	public void setAssignedLocation(String assignedLocation) {
+		this.assignedLocation = assignedLocation;
+	}
 
     public void assignTechnician(Request request) {
         //TODO: DATABASE get the techniician for this location from the database instead of for - if (1st one)
@@ -53,10 +55,58 @@ public class Technician extends Employee {
 
     @Override
     public void handle(Inquiry inquiry) {
-        //TODO: Add implementation
+        int custID = inquiry.getCustID();
+        DatabaseSingleton db = DatabaseSingleton.getInstance();
+        Connection conn = db.getConnection();
+        try {
+            Statement stmt = conn.createStatement();
+            String sql = "SELECT * FROM customer WHERE id = " + custID;
+            ResultSet rs = stmt.executeQuery(sql);
+            if (rs.next()) {
+                String custCategory = rs.getString("custCategory");
+                if (custCategory.equals("Factory")) {
+                    this.assignEmployee(inquiry);
+                }
+            } else {
+                System.out.println("Customer with ID " + custID + " not found.");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
-    public void confirmCashPayment(Request request) {
-        //TODO: Add implementation
+    public void confirmCashPayment(Request request, float payedAmount) {
+        int custID = request.getCustID();
+        DatabaseSingleton db = DatabaseSingleton.getInstance();
+        Connection conn = db.getConnection();
+        try {
+            Statement stmt = conn.createStatement();
+            String sql = "SELECT * FROM customer WHERE id = " + custID;
+            ResultSet rs = stmt.executeQuery(sql);
+            if (rs.next()) {
+                float outstandingFees = rs.getFloat("outstandingFees");
+                if (outstandingFees == 0.0) {
+                    JOptionPane.showMessageDialog(null, "Customer with ID "
+                            + custID + " has no outstanding fees.");
+                } else {
+                    // Update the customer's outstanding fees to 0
+                    String update = "UPDATE customer SET outstandingFees = "
+                            + (outstandingFees - payedAmount) + " WHERE id = " + custID;
+                    stmt.executeUpdate(update);
+                    String delete = "DELETE FROM request WHERE id = " + request.getID();
+                    stmt.executeUpdate(delete);
+                    String isTimeToPayFalse = "UPDATE customer SET isTimeToPay = FALSE WHERE id = " + custID;
+                    stmt.executeUpdate(isTimeToPayFalse);
+                    JOptionPane.showMessageDialog(null, "Customer with ID "
+                            + custID + " has paid "
+                            + payedAmount + " remaining fees: " + (outstandingFees - payedAmount) + "$. ");
+                }
+            } else {
+                System.out.println("Customer with ID " + custID + " not found.");
+                JOptionPane.showMessageDialog(null, "Customer with ID " + custID + " not found.");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
