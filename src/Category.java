@@ -1,22 +1,32 @@
 import javax.swing.*;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.Statement;
 
 public abstract class Category {
-	public Category() {
-	}
+    public Category() {
+    }
 
-	public void categorizeCustomer(Customer customer) {
-		customer.setCategory(this);
-		
-		try {
-			Connection connection = DatabaseSingleton.getInstance().getConnection();
-			Statement statement = connection.createStatement();
-			statement.executeUpdate("UPDATE customer SET custCategory = " + this.getClass().getName() + " WHERE id = " + customer.getID());
-		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, "Error updating customer in database");
-		}
-	}
+    public void categorizeCustomer(Customer customer) {
+        customer.setCategory(this);
+        ResultSet generatedKeys = null;
+        try {
 
-	public abstract float calculateTax();
+            Connection connection = DatabaseSingleton.getInstance().getConnection();
+            Statement statement = connection.createStatement();
+            statement.executeUpdate("UPDATE customer SET custCategory = '" + this.getClass().getName() + "' WHERE id = " + customer.getID());
+            String qu = "INSERT INTO meterreader (meterUsage, previousReading, currentReading) VALUES (0, 0, 0) ";
+            statement.executeUpdate(qu, Statement.RETURN_GENERATED_KEYS);
+            generatedKeys = statement.getGeneratedKeys();
+            int meterReaderID = -1;
+            if (generatedKeys.next()) {
+                meterReaderID = generatedKeys.getInt(1);
+            }
+            statement.executeUpdate("UPDATE customer SET meterReader_id =  " + meterReaderID + " WHERE id = " + customer.getID());
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error updating customer in database");
+        }
+    }
+
+    public abstract float calculateTax();
 }
