@@ -14,7 +14,7 @@ public class Bill implements Publisher {
 	private Date date;
 	private String custName;
 	private String custAddress;
-	private GregorianCalendar dueDate = new GregorianCalendar(2024, 5, 1);
+	private static GregorianCalendar dueDate = new GregorianCalendar(2024, 5, 1);
 	
 	public Bill() {
 	}
