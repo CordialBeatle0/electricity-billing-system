@@ -107,6 +107,7 @@ public abstract class Employee {
 
 	public void setHandler(Employee employee) {
 		//TODO: Add implementation
+                nextEmp = employee;
 	}
 
 	public abstract void handle(Inquiry inquiry);
