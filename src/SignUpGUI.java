@@ -9,6 +9,7 @@ import java.sql.Statement;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
+
 /**
  * @author Amir
  */
@@ -70,6 +71,11 @@ public class SignUpGUI extends javax.swing.JFrame {
         });
 
         CancelButton.setText("Cancel");
+        CancelButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CancelButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -159,6 +165,14 @@ public class SignUpGUI extends javax.swing.JFrame {
         ResultSet generatedKeys = null;
         try {
             stmt = conn.createStatement();
+            // just to make sure that the username is unique
+            String checkUsernameQuery = "SELECT username FROM account WHERE username = '" + username + "'";
+            ResultSet rs = stmt.executeQuery(checkUsernameQuery);
+            if (rs.next()) {
+                JOptionPane.showMessageDialog(null, "Username already exists");
+                return;
+            }
+
             String createAccountQuery = "INSERT INTO account (username, password) VALUES "
                     + "('" + username + "', '" + password + "')";
             stmt.executeUpdate(createAccountQuery, Statement.RETURN_GENERATED_KEYS);
@@ -177,6 +191,10 @@ public class SignUpGUI extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_CreateBtnActionPerformed
+
+    private void CancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelButtonActionPerformed
+        // TODO: 3ayzen neb2a nshof el cancel hna hatwdy feen
+    }//GEN-LAST:event_CancelButtonActionPerformed
 
     /**
      * @param args the command line arguments
