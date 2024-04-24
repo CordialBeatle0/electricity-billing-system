@@ -32,6 +32,7 @@ public class LoginGUI extends javax.swing.JFrame {
         jTextFieldPassword = new javax.swing.JTextField();
         jButtonLogin = new javax.swing.JButton();
         jLabelTitle = new javax.swing.JLabel();
+        jButtonSignUp = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -55,35 +56,43 @@ public class LoginGUI extends javax.swing.JFrame {
         jLabelTitle.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabelTitle.setText("Login");
 
+        jButtonSignUp.setText("Sign Up");
+        jButtonSignUp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonSignUpActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(89, 89, 89)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(89, 89, 89)
+                        .addComponent(jRadioButtonCustomer)
+                        .addGap(62, 62, 62)
+                        .addComponent(jRadioButtonEmployee))
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabelUsername, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabelPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(24, 24, 24)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextFieldUsername)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jRadioButtonCustomer)
-                                .addGap(62, 62, 62)
-                                .addComponent(jRadioButtonEmployee))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jLabelUsername, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabelPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(24, 24, 24)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextFieldUsername)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jTextFieldPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jLabelTitle))
-                                        .addGap(0, 0, Short.MAX_VALUE))))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(162, 162, 162)
-                        .addComponent(jButtonLogin)))
+                                    .addComponent(jTextFieldPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabelTitle))
+                                .addGap(0, 0, Short.MAX_VALUE)))))
                 .addContainerGap(100, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButtonSignUp)
+                .addGap(35, 35, 35)
+                .addComponent(jButtonLogin)
+                .addGap(113, 113, 113))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -102,9 +111,11 @@ public class LoginGUI extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelPassword)
                     .addComponent(jTextFieldPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(37, 37, 37)
-                .addComponent(jButtonLogin)
-                .addGap(52, 52, 52))
+                .addGap(36, 36, 36)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonLogin)
+                    .addComponent(jButtonSignUp))
+                .addGap(53, 53, 53))
         );
 
         pack();
@@ -150,6 +161,12 @@ public class LoginGUI extends javax.swing.JFrame {
 		}
     }//GEN-LAST:event_jButtonLoginActionPerformed
 
+    private void jButtonSignUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSignUpActionPerformed
+        SignUpGUI gui = new SignUpGUI();
+		gui.setVisible(true);
+		dispose();
+    }//GEN-LAST:event_jButtonSignUpActionPerformed
+
 	/**
 	 * @param args the command line arguments
 	 */
@@ -189,6 +206,7 @@ public class LoginGUI extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton jButtonLogin;
+    private javax.swing.JButton jButtonSignUp;
     private javax.swing.JLabel jLabelPassword;
     private javax.swing.JLabel jLabelTitle;
     private javax.swing.JLabel jLabelUsername;
