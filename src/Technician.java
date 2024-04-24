@@ -7,31 +7,31 @@ import javax.swing.JOptionPane;
 public class Technician extends Employee {
     private static int maxCapacity;
     private String assignedLocation;
-    
+
 
     public Technician() {
     }
 
-    public Technician(int ID, String name, int age,String address, String phoneNumber, char gender, float salary, Account account, String assignedLocation) {
-        super(ID, name, age,address, phoneNumber, gender, salary, account);
+    public Technician(int ID, String name, int age, String address, String phoneNumber, char gender, float salary, Account account, String assignedLocation) {
+        super(ID, name, age, address, phoneNumber, gender, salary, account);
         this.assignedLocation = assignedLocation;
     }
 
-	public static int getMaxCapacity() {
-		return maxCapacity;
-	}
+    public static int getMaxCapacity() {
+        return maxCapacity;
+    }
 
-	public static void setMaxCapacity(int maxCapacity) {
-		Technician.maxCapacity = maxCapacity;
-	}
+    public static void setMaxCapacity(int maxCapacity) {
+        Technician.maxCapacity = maxCapacity;
+    }
 
-	public String getAssignedLocation() {
-		return assignedLocation;
-	}
+    public String getAssignedLocation() {
+        return assignedLocation;
+    }
 
-	public void setAssignedLocation(String assignedLocation) {
-		this.assignedLocation = assignedLocation;
-	}
+    public void setAssignedLocation(String assignedLocation) {
+        this.assignedLocation = assignedLocation;
+    }
 
     public void assignTechnician(Request request) {
         //TODO: DATABASE get the techniician for this location from the database instead of for - if (1st one)
@@ -66,6 +66,9 @@ public class Technician extends Employee {
                 String custCategory = rs.getString("custCategory");
                 if (custCategory.equals("Factory")) {
                     this.assignEmployee(inquiry);
+                } else {
+                    // pass to the next in chain
+                    nextEmp.handle(inquiry);
                 }
             } else {
                 System.out.println("Customer with ID " + custID + " not found.");
