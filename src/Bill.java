@@ -100,7 +100,7 @@ public class Bill implements Publisher {
 		}
 	}
 
-	public static void calculateBill() {
+	public void calculateBill() {
 
 		// will carry the result from the databse function with all the customers that are subscribed
 		ArrayList<Customer> allCustomers = Customer.getCustomersFromDB("subscriptionStatus = true");
