@@ -17,7 +17,7 @@ public class Visa implements Payment {
         try {
             Connection connection = DatabaseSingleton.getInstance().getConnection();
             Statement statement = connection.createStatement();
-            statement.executeUpdate("UPDATE customer set outstandingFees=" + customer.getOutstandingFees() + "");
+            statement.executeUpdate("UPDATE customer set outstandingFees=" + customer.getOutstandingFees() + " WHERE id= "+customer.getID()+"");
             statement.executeUpdate("UPDATE customer set isTimeToPay=" + customer.isTimeToPay() + "");
         } catch (Exception e) {
             // TODO: write exception logic joptionpayne
