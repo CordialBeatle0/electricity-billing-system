@@ -68,11 +68,7 @@ public class ConfirmCashPaymentGUI extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addComponent(ConfirmCashPaymentLabel)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(153, Short.MAX_VALUE)
+                .addContainerGap(125, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -85,14 +81,17 @@ public class ConfirmCashPaymentGUI extends javax.swing.JFrame {
                         .addComponent(confirmBtn)
                         .addGap(65, 65, 65)
                         .addComponent(cancelBtn)
-                        .addGap(143, 143, 143))))
+                        .addGap(143, 143, 143))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(ConfirmCashPaymentLabel)
+                        .addGap(117, 117, 117))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(22, 22, 22)
+                .addGap(49, 49, 49)
                 .addComponent(ConfirmCashPaymentLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(88, 88, 88)
+                .addGap(61, 61, 61)
                 .addComponent(EnterAmountLabel)
                 .addGap(18, 18, 18)
                 .addComponent(EnterAmountTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -112,7 +111,9 @@ public class ConfirmCashPaymentGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_confirmBtnActionPerformed
 
     private void cancelBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelBtnActionPerformed
-        // TODO: where to go if cancel ? // DON'T FORGET
+        TechnicianDashboardGUI gui = new TechnicianDashboardGUI(technician);
+        gui.setVisible(true);
+        dispose();
     }//GEN-LAST:event_cancelBtnActionPerformed
 
     /**

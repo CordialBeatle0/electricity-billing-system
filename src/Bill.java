@@ -121,7 +121,7 @@ public class Bill implements Publisher {
 				statement.executeUpdate("INSERT INTO bill(totalAmount, date, customer_id) values("+billtotalAmount+",'"+LocalDate.now()+"',"+customer.getID()+")");
 			}
 			catch (Exception e) {
-				// TODO: write joptionpayne
+				JOptionPane.showMessageDialog(null, "Error adding bill to database");
                                 
 			}
 
@@ -136,15 +136,11 @@ public class Bill implements Publisher {
 				
 			}
 			catch (Exception e) {
-				// TODO: write joptionpayne
+				JOptionPane.showMessageDialog(null, "Error updating outstanding fees in customer in database");
 			}
-
-
-			
 		}
 		// checking if its the due date to send the billing alert
 		checkDueDate();
-	 
 	}
 	
 	public static ArrayList<Bill> getBillsFromDB(int id) {

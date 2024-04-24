@@ -45,12 +45,6 @@ public class CustomerServiceDashboardGUI extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
         jLabel1.setText("Welcome");
 
-        customerServiceNameText.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                customerServiceNameTextActionPerformed(evt);
-            }
-        });
-
         viewInquiryButton.setText("View Inquiries");
 
         updateAccountButton.setText("Update Account");
@@ -88,10 +82,6 @@ public class CustomerServiceDashboardGUI extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void customerServiceNameTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_customerServiceNameTextActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_customerServiceNameTextActionPerformed
 
     /**
      * @param args the command line arguments

@@ -157,7 +157,9 @@ public class CategorizeCustomerGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelActionPerformed
-        // TODO: take admin to previous page
+        AdminDashboardGUI gui = new AdminDashboardGUI(admin);
+		gui.setVisible(true);
+		dispose();
     }//GEN-LAST:event_jButtonCancelActionPerformed
 
     private void jButtonSetCategoryToCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSetCategoryToCustomerActionPerformed

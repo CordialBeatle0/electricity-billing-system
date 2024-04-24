@@ -32,3 +32,4 @@ nbbuild.xml
 
 # other
 src/DatabaseSingleton.java
+/dist/

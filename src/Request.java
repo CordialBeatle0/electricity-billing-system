@@ -64,12 +64,7 @@ public class Request {
         return date;
     }
 
-    public void addRequest() {
-        //TODO: Add implementation
-    }
-
     public static ArrayList<Request> viewRequest(Technician tech) {
-        //TODO: DATABASE retrieve all TAKE CODE FROM AMIR
         ArrayList<Request> requests = new ArrayList<>();
         DatabaseSingleton db = DatabaseSingleton.getInstance();
         Connection conn = db.getConnection();

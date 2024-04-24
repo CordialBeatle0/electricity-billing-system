@@ -33,23 +33,18 @@ public class Technician extends Employee {
     }
 
     public void assignTechnician(Request request) {
-        //TODO: DATABASE get the techniician for this location from the database instead of for - if (1st one)
         Technician technician = (Technician)Employee.getEmployeesFromDB("employeeType = 'Technician' AND technicianAssignedLocation = " + request.getLocation()).get(0);
         
         try {
             Connection connection = DatabaseSingleton.getInstance().getConnection();
             Statement statement = connection.createStatement();
-            // TODO: add where condition after request status gets added to database
             ResultSet result = statement.executeQuery("SELECT COUNT(*) FROM request WHERE location = '" + technician.assignedLocation + "'");
             int numberOfRequests = result.getInt(0);
             if (numberOfRequests < maxCapacity) {
-                //TODO: DATABASE add request to DB of the technician instead
                 request.addRequesttoDB();
-                //TODO: JOptionPane to confirm
                 JOptionPane.showMessageDialog(null, "Your request has been made successfully");
             } //if technician can not take any more requests, end the process
             else {
-                //TODO: JOptionPane to customer
                 JOptionPane.showMessageDialog(null, "No available technicians");
             }
         } catch (Exception e) {

@@ -56,11 +56,6 @@ public class CustomerDashboardGUI extends javax.swing.JFrame {
         WelcomeLabel.setText("Welcome");
 
         CustomerNameField.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
-        CustomerNameField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CustomerNameFieldActionPerformed(evt);
-            }
-        });
 
         usageButton.setText("Electricity Usage");
         usageButton.addActionListener(new java.awt.event.ActionListener() {
@@ -187,12 +182,8 @@ public class CustomerDashboardGUI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void CustomerNameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CustomerNameFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_CustomerNameFieldActionPerformed
-
     private void inquiryHistoryButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inquiryHistoryButtonActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_inquiryHistoryButtonActionPerformed
 
     private void renewButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_renewButtonActionPerformed

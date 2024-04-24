@@ -121,7 +121,6 @@ public class ViewEachCustomerBillHistory extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void ReturningToCustomerDashActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ReturningToCustomerDashActionPerformed
-        // TODO add your handling code here:
         CustomerDashboardGUI customerdash= new CustomerDashboardGUI(cust);
         customerdash.setVisible(true);
         this.dispose();

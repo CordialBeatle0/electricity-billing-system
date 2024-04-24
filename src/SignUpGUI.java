@@ -193,7 +193,9 @@ public class SignUpGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_CreateBtnActionPerformed
 
     private void CancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelButtonActionPerformed
-        // TODO: 3ayzen neb2a nshof el cancel hna hatwdy feen
+        LoginGUI gui = new LoginGUI();
+        gui.setVisible(true);
+        dispose();
     }//GEN-LAST:event_CancelButtonActionPerformed
 
     /**
