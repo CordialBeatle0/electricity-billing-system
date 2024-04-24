@@ -2,6 +2,7 @@
 import java.time.LocalDate;
 import java.sql.Connection;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 
 public class Request {
@@ -12,7 +13,15 @@ public class Request {
     private String requestType;
     private String location;
     private LocalDate date;
-
+    
+    public Request(int custID, String custName, String requestType, String location, LocalDate date) {
+        this.custID = custID;
+        this.custName = custName;
+        this.requestType = requestType;
+        this.location = location;
+        this.date = date;
+    }
+    
     public Request(int ID, int custID, String custName, String requestType, String location, LocalDate date) {
         this.ID = ID;
         this.custID = custID;
@@ -50,8 +59,8 @@ public class Request {
         //TODO: Add implementation
     }
 
-    public Request viewRequest() {
-        //TODO: Add implementation
+    public ArrayList<Request> viewRequest() {
+        //TODO: DATABASE retrieve all TAKE CODE FROM AMIR
         return null;
     }
 

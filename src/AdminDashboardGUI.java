@@ -15,18 +15,19 @@ public class AdminDashboardGUI extends javax.swing.JFrame {
     /**
      * Creates new form AdminDashboardGUI
      */
-    
     Admin admin;
+
     public AdminDashboardGUI() {
         initComponents();
     }
+
     public AdminDashboardGUI(Admin a) {
         initComponents();
-         setLocationRelativeTo(null);
-         admin = a;
-         adminNameText.setText(admin.getName());
-    } 
-    
+        setLocationRelativeTo(null);
+        admin = a;
+        adminNameText.setText(admin.getName());
+        adminNameText.setEditable(false);
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -52,8 +53,18 @@ public class AdminDashboardGUI extends javax.swing.JFrame {
         jLabel1.setText("Welcome");
 
         viewInquiryButton.setText("View Inquiries");
+        viewInquiryButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                viewInquiryButtonActionPerformed(evt);
+            }
+        });
 
         viewBillButton.setText("View Bills");
+        viewBillButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                viewBillButtonActionPerformed(evt);
+            }
+        });
 
         calculateBillButton.setText("Calculate Bill");
         calculateBillButton.addActionListener(new java.awt.event.ActionListener() {
@@ -63,10 +74,25 @@ public class AdminDashboardGUI extends javax.swing.JFrame {
         });
 
         updateAccountButton.setText("Update Account");
+        updateAccountButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateAccountButtonActionPerformed(evt);
+            }
+        });
 
         SetChainButton.setText("Set Respond Chain");
+        SetChainButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SetChainButtonActionPerformed(evt);
+            }
+        });
 
         categorizeCustomerButton1.setText("Categorize Customer");
+        categorizeCustomerButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                categorizeCustomerButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -128,6 +154,34 @@ public class AdminDashboardGUI extends javax.swing.JFrame {
        JOptionPane.showMessageDialog(this, "All Bills have been Calculated.");
        
     }//GEN-LAST:event_calculateBillButtonActionPerformed
+
+    private void viewInquiryButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewInquiryButtonActionPerformed
+        ViewInquiriesByAdminGUI allInquiries = new ViewInquiriesByAdminGUI(admin);
+        allInquiries.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_viewInquiryButtonActionPerformed
+
+    private void viewBillButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewBillButtonActionPerformed
+        ViewAllCustomerBills bills = new ViewAllCustomerBills(admin);
+        bills.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_viewBillButtonActionPerformed
+
+    private void SetChainButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SetChainButtonActionPerformed
+        SetChainGUI setChain = new SetChainGUI(admin);
+        setChain.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_SetChainButtonActionPerformed
+
+    private void categorizeCustomerButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_categorizeCustomerButton1ActionPerformed
+        CategorizeCustomerGUI categorize = new CategorizeCustomerGUI(admin);
+        categorize.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_categorizeCustomerButton1ActionPerformed
+
+    private void updateAccountButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateAccountButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_updateAccountButtonActionPerformed
 
     /**
      * @param args the command line arguments

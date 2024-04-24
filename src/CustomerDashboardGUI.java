@@ -24,6 +24,7 @@ public class CustomerDashboardGUI extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         customer = c;
         CustomerNameField.setText(customer.getName());
+        CustomerNameField.setEditable(false);
     }
     
 
@@ -62,6 +63,11 @@ public class CustomerDashboardGUI extends javax.swing.JFrame {
         });
 
         usageButton.setText("Electricity Usage");
+        usageButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                usageButtonActionPerformed(evt);
+            }
+        });
 
         inquiryHistoryButton.setText("Inquiries");
         inquiryHistoryButton.addActionListener(new java.awt.event.ActionListener() {
@@ -71,6 +77,11 @@ public class CustomerDashboardGUI extends javax.swing.JFrame {
         });
 
         BillingHistoryButton.setText("Billing History");
+        BillingHistoryButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BillingHistoryButtonActionPerformed(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
         jLabel1.setText("View");
@@ -93,6 +104,11 @@ public class CustomerDashboardGUI extends javax.swing.JFrame {
         jLabel2.setText("Subscriptions");
 
         homeServiceButton.setText("Request Home Service");
+        homeServiceButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                homeServiceButtonActionPerformed(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
         jLabel3.setText("Services");
@@ -121,14 +137,12 @@ public class CustomerDashboardGUI extends javax.swing.JFrame {
                     .addComponent(jLabel2)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(240, 240, 240))
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(usageButton, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(43, 43, 43)
-                                .addComponent(inquiryHistoryButton, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(40, 40, 40)))
+                                .addComponent(inquiryHistoryButton, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(40, 40, 40)
                         .addComponent(BillingHistoryButton, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(89, 89, 89)
@@ -183,16 +197,39 @@ public class CustomerDashboardGUI extends javax.swing.JFrame {
 
     private void renewButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_renewButtonActionPerformed
         // TODO add your handling code here:
-        
+        RenewSubscriptionGUI renewGUI = new RenewSubscriptionGUI(customer);
+        renewGUI.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_renewButtonActionPerformed
 
     private void inquiryButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inquiryButtonActionPerformed
         // TODO add your handling code here:
+        AddInquiryGUI inquiry = new AddInquiryGUI(customer);
+        inquiry.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_inquiryButtonActionPerformed
 
     private void subButttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subButttonActionPerformed
         // TODO add your handling code here:
+        SubscribeToElectricity subscribe = new SubscribeToElectricity(customer);
+        subscribe.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_subButttonActionPerformed
+
+    private void homeServiceButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_homeServiceButtonActionPerformed
+        // TODO add your handling code here:
+        RequestHomeService request = new RequestHomeService(customer);
+        request.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_homeServiceButtonActionPerformed
+
+    private void usageButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usageButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_usageButtonActionPerformed
+
+    private void BillingHistoryButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BillingHistoryButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BillingHistoryButtonActionPerformed
 
     /**
      * @param args the command line arguments
