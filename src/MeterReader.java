@@ -71,6 +71,7 @@ public class MeterReader {
 
 	public float setTimeInterval() {
 		//TODO: Add implementation
+		return 0;
 	}
 	
 	public static MeterReader getMeterReaderFromDB(String id) {
