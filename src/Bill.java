@@ -99,7 +99,7 @@ public class Bill implements Publisher {
 			// call send billing alert that alerts all observers of a pending bill
 			sendBillingAlert("You have Pending Fees to pay!");
 			// resets the new due date to the one of next month
-			dueDate.add((GregorianCalendar.MONTH), 1);;
+			dueDate.add((GregorianCalendar.MONTH), 1);
 		}
 	}
 

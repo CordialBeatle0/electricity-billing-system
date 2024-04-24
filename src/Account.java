@@ -74,7 +74,7 @@ public class Account {
 		return null;
 	}
 	
-	public static Account getAccountFromDB(String id) {
+	public static Account getAccountFromDB(int id) {
 		try {
 			Connection connection = DatabaseSingleton.getInstance().getConnection();
 			Statement statement = connection.createStatement();

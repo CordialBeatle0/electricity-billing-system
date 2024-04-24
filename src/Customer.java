@@ -207,15 +207,13 @@ public class Customer implements Observer {
 				
 				// meter reader
 				int meterReaderID_INT = result.getInt("meterReader_id");
-				String meterReaderID_String = Integer.toString(meterReaderID_INT);
-				MeterReader sqlMeterReader = MeterReader.getMeterReaderFromDB(meterReaderID_String);
+				MeterReader sqlMeterReader = MeterReader.getMeterReaderFromDB(meterReaderID_INT);
 				
 				float sqlOutstandingFees = result.getFloat("outstandingFees");
 				
 				// account
 				int accountID_INT = result.getInt("account_id");
-				String accountID_String = Integer.toString(accountID_INT);
-				Account sqlAccount = Account.getAccountFromDB(accountID_String);
+				Account sqlAccount = Account.getAccountFromDB(accountID_INT);
 				
 				// subscription
 				boolean subscriptionStatus_Bool = result.getBoolean("subscriptionStatus");
