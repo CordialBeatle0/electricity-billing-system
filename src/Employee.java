@@ -15,6 +15,8 @@ public abstract class Employee {
 	private float salary;
 	private Account account;
 
+        private Employee nextEmp;
+        
 	public Employee() {
 	}
         
@@ -104,6 +106,7 @@ public abstract class Employee {
 
 	public void setHandler(Employee employee) {
 		//TODO: Add implementation
+                nextEmp = employee;
 	}
 
 	public abstract void handle(Inquiry inquiry);
