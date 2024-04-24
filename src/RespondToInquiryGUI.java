@@ -1,4 +1,6 @@
 import javax.swing.*;
+import java.sql.Connection;
+import java.sql.Statement;
 
 /**
  *
@@ -141,11 +143,27 @@ public class RespondToInquiryGUI extends javax.swing.JFrame {
 			return;
 		}
 		
-		inquiry.setResponse(response);
-		inquiry.setEmployeeName(employee.getName());
+		try {
+			Connection connection = DatabaseSingleton.getInstance().getConnection();
+			Statement statement = connection.createStatement();
+			statement.executeUpdate("UPDATE inquiry SET response = " + response + ", employee_id = " + employee.getID() + " WHERE id = " + inquiry.getID());
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(this, "Error updating inquiry in database");
+		}
 		
-		// put text in inquiry
-		// take employee back to their page
+		switch (employee.getClass().getName()) {
+			case "Admin":
+				AdminDashboardGUI aGui = new AdminDashboardGUI(((Admin) employee));
+				aGui.setVisible(true);
+			case "Technician":
+				TechnicianDashboardGUI tGui = new TechnicianDashboardGUI(((Technician) employee));
+				tGui.setVisible(true);
+			case "CustomerService":
+				CustomerServiceDashboardGUI cGui = new CustomerServiceDashboardGUI(((CustomerService) employee));
+				cGui.setVisible(true);
+			default:
+		}
+		this.dispose();
     }//GEN-LAST:event_jButtonSubmitActionPerformed
 
 	/**
