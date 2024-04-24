@@ -44,45 +44,45 @@ public class Inquiry implements InquiryROI {
         this.date = date;
     }
 
-	public String getQuestion() {
-		return question;
-	}
+    public String getQuestion() {
+        return question;
+    }
 
-	public void setQuestion(String question) {
-		this.question = question;
-	}
+    public void setQuestion(String question) {
+        this.question = question;
+    }
 
-	public String getResponse() {
-		return response;
-	}
+    public String getResponse() {
+        return response;
+    }
 
-	public void setResponse(String response) {
-		this.response = response;
-	}
+    public void setResponse(String response) {
+        this.response = response;
+    }
 
-	public int getID() {
-		return ID;
-	}
+    public int getID() {
+        return ID;
+    }
 
-	public void setID(int ID) {
-		this.ID = ID;
-	}
+    public void setID(int ID) {
+        this.ID = ID;
+    }
 
-	public String getCustCategory() {
-		return custCategory;
-	}
+    public String getCustCategory() {
+        return custCategory;
+    }
 
-	public void setCustCategory(String custCategory) {
-		this.custCategory = custCategory;
-	}
+    public void setCustCategory(String custCategory) {
+        this.custCategory = custCategory;
+    }
 
-	public String getCustName() {
-		return custName;
-	}
+    public String getCustName() {
+        return custName;
+    }
 
-	public void setCustName(String custName) {
-		this.custName = custName;
-	}
+    public void setCustName(String custName) {
+        this.custName = custName;
+    }
 
     public int getCustID() {
         return custID;
@@ -96,9 +96,9 @@ public class Inquiry implements InquiryROI {
         return employeeName;
     }
 
-	public void setEmployeeName(String employeeName) {
-		this.employeeName = employeeName;
-	}
+    public void setEmployeeName(String employeeName) {
+        this.employeeName = employeeName;
+    }
 
     public String getEmployeeType() {
         return employeeType;
@@ -112,9 +112,9 @@ public class Inquiry implements InquiryROI {
         return date;
     }
 
-	public void setDate(String date) {
-		this.date = date;
-	}
+    public void setDate(String date) {
+        this.date = date;
+    }
 
     @Override
     public String toString() {
@@ -132,13 +132,22 @@ public class Inquiry implements InquiryROI {
     }
 
     @Override
-    public ArrayList<Inquiry> viewInquiriesByID(int custID) {
+    public ArrayList<Inquiry> viewInquiriesByID(int custID, String empType) {
         ArrayList<Inquiry> inquiries = new ArrayList<>();
         DatabaseSingleton db = DatabaseSingleton.getInstance();
         Connection conn = db.getConnection();
+        String custCategoryy = "";
+        if (empType.equals("CustomerService")) {
+            custCategoryy = "Individual";
+        } else if (empType.equals("Technician")) {
+            custCategoryy = "Factory";
+        } else if (empType.equals("Admin")) {
+            custCategoryy = "Company";
+        }
+
         try {
             Statement stmt = conn.createStatement();
-            String sql = "SELECT id, question, custCategory, custName, date  FROM inquiry, Customer WHERE Inquiry(id) = Customer(id) AND custID = " + custID;
+            String sql = "SELECT id, question, custCategory, custName, date  FROM inquiry, Customer WHERE Inquiry(id) = Customer(id) AND custCategory = " + custCategoryy;
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
                 Inquiry inquiry = new Inquiry(
@@ -159,19 +168,27 @@ public class Inquiry implements InquiryROI {
     }
 
     // this method is used to view all inquiries in the database by the Admin only
-    static public ArrayList<Inquiry> viewInquiries() {
+    static public ArrayList<Inquiry> viewInquiries(String empType) {
         ArrayList<Inquiry> inquiries = new ArrayList<>();
         DatabaseSingleton db = DatabaseSingleton.getInstance();
         Connection conn = db.getConnection();
+        String custCategoryy = "";
+        if (empType.equals("CustomerService")) {
+            custCategoryy = "Individual";
+        } else if (empType.equals("Technician")) {
+            custCategoryy = "Factory";
+        } else if (empType.equals("Admin")) {
+            custCategoryy = "Company";
+        }
         try {
             Statement stmt = conn.createStatement();
-            String sql = "SELECT id, question, custCategory, custName, date  FROM inquiry, Customer WHERE Inquiry(id) = Customer(id)";
+            String sql = "SELECT id, question, custCategory, custName, date  FROM inquiry, Customer WHERE custCategory = " + custCategoryy;
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
                 Inquiry inquiry = new Inquiry(
                         rs.getString("question"),
                         rs.getString("custCategory"),
-                        rs.getString("name"), // thats the customer name
+                        rs.getString("name"),
                         rs.getInt("id"), // Assuming custID corresponds to the ID of the customer
 //                        rs.getString("employeeName"),
 //                        rs.getString("employeeType"),
@@ -179,9 +196,6 @@ public class Inquiry implements InquiryROI {
                 );
                 inquiries.add(inquiry);
             }
-            // Close resources
-            rs.close();
-            stmt.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -212,12 +226,12 @@ public class Inquiry implements InquiryROI {
         emp.handle(this);
     }
 
-	public void respondToInquiry(String response, String employeeName) {
-		//TODO: Add implementation
-		//TODO: get employee's inquiry from database and remove the inquiry from their list
-	}
+    public void respondToInquiry(String response, String employeeName) {
+        //TODO: Add implementation
+        //TODO: get employee's inquiry from database and remove the inquiry from their list
+    }
 
-	public ArrayList<Inquiry> inquiryHistory() {
-		//TODO: Add implementation
-	}
+    public ArrayList<Inquiry> inquiryHistory() {
+        //TODO: Add implementation
+    }
 }

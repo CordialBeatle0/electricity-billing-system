@@ -152,7 +152,7 @@ public class ViewInquiriesByAdminGUI extends javax.swing.JFrame {
         TableModel model = new DefaultTableModel();
         int row = 0;
         int col;
-        for (Inquiry i : Inquiry.viewInquiries()) {
+        for (Inquiry i : Inquiry.viewInquiries(employee.getClass().getName())) {
             col = 0;
             model.setValueAt(i.getID(), row, col++);
             model.setValueAt(i.getCustName(), row, col++);
@@ -166,7 +166,7 @@ public class ViewInquiriesByAdminGUI extends javax.swing.JFrame {
 
     private void SearchBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchBtnActionPerformed
         String searchTextField = CustIDTextField.getText();
-        ArrayList<Inquiry> inquiriesList = inq.viewInquiriesByID(Integer.parseInt(searchTextField));
+        ArrayList<Inquiry> inquiriesList = inq.viewInquiriesByID(Integer.parseInt(searchTextField), employee.getClass().getName());
         TableModel model = new DefaultTableModel();
         int row = 0;
         int col;
