@@ -4,13 +4,13 @@ import javax.swing.JOptionPane;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 
 /**
- *
  * @author Assar
  */
 public class UpdateAccount extends javax.swing.JFrame {
@@ -20,24 +20,38 @@ public class UpdateAccount extends javax.swing.JFrame {
      */
     Customer cust;
     Employee emp;
-    
+
+    String username;
+    String password;
+    int id;
+
     public UpdateAccount() {
         initComponents();
     }
-     public UpdateAccount(Employee e) {
+
+    public UpdateAccount(Employee e) {
         initComponents();
-        emp=e;
-        Account empAccount= Account.getAccountFromDB(emp.getID());
-        usernamefield.setText(empAccount.getUsername());
-        passwordfield.setText(empAccount.getPassword());
-        
+        setLocationRelativeTo(null);
+        emp = e;
+        username = emp.getAccount().getUsername();
+        password = emp.getAccount().getPassword();
+        id = emp.getID();
+        usernamefield.setText(username);
+        passwordfield.setText(password);
+
     }
-      public UpdateAccount(Customer c) {
+
+    public UpdateAccount(Customer c) {
         initComponents();
-        cust= c;
-        Account custAccount = Account.getAccountFromDB(cust.getID());
-        usernamefield.setText(custAccount.getUsername());
-        passwordfield.setText(custAccount.getPassword());
+        setLocationRelativeTo(null);
+        cust = c;
+
+        username = cust.getAccount().getUsername();
+        password = cust.getAccount().getPassword();
+        id = cust.getID();
+
+        usernamefield.setText(username);
+        passwordfield.setText(password);
     }
 
     /**
@@ -49,12 +63,16 @@ public class UpdateAccount extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         SubmitingAccountDetails = new javax.swing.JButton();
         usernamefield = new javax.swing.JTextField();
         passwordfield = new javax.swing.JTextField();
+        jButton2 = new javax.swing.JButton();
+
+        jButton1.setText("jButton1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -75,46 +93,60 @@ public class UpdateAccount extends javax.swing.JFrame {
 
         passwordfield.setToolTipText("");
 
+        jButton2.setText("Cancel");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(78, 78, 78)
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(35, 35, 35)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(31, 31, 31)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(passwordfield, javax.swing.GroupLayout.DEFAULT_SIZE, 113, Short.MAX_VALUE)
-                            .addComponent(usernamefield))))
-                .addContainerGap(65, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(SubmitingAccountDetails)
-                .addGap(14, 14, 14))
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addGap(78, 78, 78)
+                                                .addComponent(jLabel1))
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addGap(35, 35, 35)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addGroup(layout.createSequentialGroup()
+                                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                                .addGap(31, 31, 31)
+                                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                                        .addComponent(passwordfield, javax.swing.GroupLayout.DEFAULT_SIZE, 113, Short.MAX_VALUE)
+                                                                        .addComponent(usernamefield)))
+                                                        .addGroup(layout.createSequentialGroup()
+                                                                .addGap(2, 2, 2)
+                                                                .addComponent(jButton2)))))
+                                .addContainerGap(65, Short.MAX_VALUE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(SubmitingAccountDetails)
+                                .addGap(14, 14, 14))
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addComponent(jLabel1)
-                .addGap(45, 45, 45)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(usernamefield, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(42, 42, 42)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(passwordfield, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
-                .addComponent(SubmitingAccountDetails)
-                .addGap(15, 15, 15))
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addGap(21, 21, 21)
+                                .addComponent(jLabel1)
+                                .addGap(45, 45, 45)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(jLabel2)
+                                        .addComponent(usernamefield, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(42, 42, 42)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(jLabel3)
+                                        .addComponent(passwordfield, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(SubmitingAccountDetails)
+                                        .addComponent(jButton2))
+                                .addGap(15, 15, 15))
         );
 
         pack();
@@ -122,21 +154,44 @@ public class UpdateAccount extends javax.swing.JFrame {
 
     private void SubmitingAccountDetailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SubmitingAccountDetailsActionPerformed
         // retriveing what was written in the text field
-        String newUsername= usernamefield.getText();
-        String newPassword= passwordfield.getText();
-        // update the database 
-        try{
+        String newUsername = usernamefield.getText();
+        String newPassword = passwordfield.getText();
+        // update the database
+        try {
             Connection connection = DatabaseSingleton.getInstance().getConnection();
             Statement statement = connection.createStatement();
-            statement.executeUpdate("UPDATE account set username= '" + newUsername + "'");
-            statement.executeUpdate("UPDATE account set username= '" + newPassword + "'");
+            if (cust != null) {
+
+                statement.executeUpdate("UPDATE account JOIN customer ON account.id = account_id set username= '" + newUsername + "' WHERE customer.id = " + id);
+                statement.executeUpdate("UPDATE account JOIN customer ON account.id = account_id set password= '" + newPassword + "' WHERE customer.id = " + id);
+            } else {
+                statement.executeUpdate("UPDATE account JOIN employee ON account.id = account_id set username= '" + newUsername + "' WHERE employee.id = " + id);
+                statement.executeUpdate("UPDATE account JOIN employee ON account.id = account_id set password= '" + newPassword + "' WHERE employee.id = " + id);
+            }
             JOptionPane.showMessageDialog(this, "Account Updated Successfully!");
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error Submitting acoount Details!");
         }
-        
+
     }//GEN-LAST:event_SubmitingAccountDetailsActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        switch (emp.getClass().getName()) {
+            case "Admin":
+                AdminDashboardGUI aGui = new AdminDashboardGUI(((Admin) emp));
+                aGui.setVisible(true);
+                break;
+            case "Technician":
+                TechnicianDashboardGUI tGui = new TechnicianDashboardGUI(((Technician) emp));
+                tGui.setVisible(true);
+                break;
+            case "CustomerService":
+                CustomerServiceDashboardGUI cGui = new CustomerServiceDashboardGUI(((CustomerService) emp));
+                cGui.setVisible(true);
+            default:
+        }
+        this.dispose();
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -145,7 +200,7 @@ public class UpdateAccount extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -175,6 +230,8 @@ public class UpdateAccount extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton SubmitingAccountDetails;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

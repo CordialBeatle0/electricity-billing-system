@@ -6,7 +6,6 @@ import javax.swing.JOptionPane;
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 /**
- *
  * @author Shero
  */
 public class SubscribeToElectricity extends javax.swing.JFrame {
@@ -88,12 +87,17 @@ public class SubscribeToElectricity extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       //if subscription process is successful
+        //if subscription process is successful
         if (customer.getSubscription().subscribeToElectricity(customer)) {
             JOptionPane.showMessageDialog(this, "Your Subsrciption Request is accepted and processed by our admins");
-
+            CustomerDashboardGUI gui = new CustomerDashboardGUI(customer);
+            gui.setVisible(true);
+            this.dispose();
         } else {
-            JOptionPane.showMessageDialog(this, "You are already subscribed to the sevice");
+            JOptionPane.showMessageDialog(this, "You are already subscribed to the service");
+            CustomerDashboardGUI gui = new CustomerDashboardGUI(customer);
+            gui.setVisible(true);
+            this.dispose();
         }
 
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -105,7 +109,7 @@ public class SubscribeToElectricity extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
