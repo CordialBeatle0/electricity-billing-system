@@ -12,7 +12,15 @@ public class Request {
     private String requestType;
     private String location;
     private LocalDate date;
-
+    
+    public Request(int custID, String custName, String requestType, String location, LocalDate date) {
+        this.custID = custID;
+        this.custName = custName;
+        this.requestType = requestType;
+        this.location = location;
+        this.date = date;
+    }
+    
     public Request(int ID, int custID, String custName, String requestType, String location, LocalDate date) {
         this.ID = ID;
         this.custID = custID;

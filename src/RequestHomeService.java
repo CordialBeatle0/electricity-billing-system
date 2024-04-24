@@ -3,7 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 
-import java.util.ArrayList;
+import javax.swing.*;
+import java.time.LocalDate;
 
 /**
  *
@@ -12,7 +13,6 @@ import java.util.ArrayList;
 public class RequestHomeService extends javax.swing.JFrame {
 
 	Customer customer;
-	ArrayList<String> locations;
 	
 	/**
 	 * Creates new form RequestHomeService
@@ -25,8 +25,6 @@ public class RequestHomeService extends javax.swing.JFrame {
 		initComponents();
 		setLocationRelativeTo(null);
 		customer = c;
-		
-		ArrayList<Technician> employees =  Employee.getEmployeesFromDB("employeeType = Technician");
 	}
 
 	/**
@@ -42,8 +40,6 @@ public class RequestHomeService extends javax.swing.JFrame {
         jButtonRequest = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jComboBoxReasonsForRequest = new javax.swing.JComboBox<>();
-        jLabel3 = new javax.swing.JLabel();
-        jComboBoxLocations = new javax.swing.JComboBox<>();
         jButtonCancel = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -52,14 +48,22 @@ public class RequestHomeService extends javax.swing.JFrame {
         jLabel1.setText("Request Home Service");
 
         jButtonRequest.setText("Request");
+        jButtonRequest.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonRequestActionPerformed(evt);
+            }
+        });
 
         jLabel2.setText("Reason for request");
 
         jComboBoxReasonsForRequest.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Collect Cash Payment", "Service" }));
 
-        jLabel3.setText("Location");
-
         jButtonCancel.setText("Cancel");
+        jButtonCancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCancelActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -73,13 +77,10 @@ public class RequestHomeService extends javax.swing.JFrame {
                 .addGap(55, 55, 55)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jButtonCancel)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3))
+                    .addComponent(jLabel2))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jComboBoxLocations, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jComboBoxReasonsForRequest, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jComboBoxReasonsForRequest, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonRequest, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
@@ -92,11 +93,7 @@ public class RequestHomeService extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jComboBoxReasonsForRequest, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jComboBoxLocations, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonRequest)
                     .addComponent(jButtonCancel))
@@ -105,6 +102,24 @@ public class RequestHomeService extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButtonCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelActionPerformed
+        CustomerDashboardGUI gui = new CustomerDashboardGUI(customer);
+		gui.setVisible(true);
+		this.dispose();
+    }//GEN-LAST:event_jButtonCancelActionPerformed
+
+    private void jButtonRequestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRequestActionPerformed
+		String reasonForRequest = ((String) jComboBoxReasonsForRequest.getSelectedItem());
+		
+		Request request = new Request(customer.getID(), customer.getName(), reasonForRequest, customer.getAddress(), LocalDate.now());
+		request.addRequesttoDB();
+		JOptionPane.showMessageDialog(this, "Thank you for submitting a request, a technician will be with you shortly");
+		
+		CustomerDashboardGUI gui = new CustomerDashboardGUI(customer);
+		gui.setVisible(true);
+		this.dispose();
+    }//GEN-LAST:event_jButtonRequestActionPerformed
 
 	/**
 	 * @param args the command line arguments
@@ -144,10 +159,8 @@ public class RequestHomeService extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonCancel;
     private javax.swing.JButton jButtonRequest;
-    private javax.swing.JComboBox<String> jComboBoxLocations;
     private javax.swing.JComboBox<String> jComboBoxReasonsForRequest;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     // End of variables declaration//GEN-END:variables
 }
