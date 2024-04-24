@@ -1,3 +1,6 @@
+
+import javax.swing.JOptionPane;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
@@ -53,6 +56,11 @@ public class AdminDashboardGUI extends javax.swing.JFrame {
         viewBillButton.setText("View Bills");
 
         calculateBillButton.setText("Calculate Bill");
+        calculateBillButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                calculateBillButtonActionPerformed(evt);
+            }
+        });
 
         updateAccountButton.setText("Update Account");
 
@@ -112,6 +120,13 @@ public class AdminDashboardGUI extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void calculateBillButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calculateBillButtonActionPerformed
+        // TODO add your handling code here:
+       Bill.calculateBill();
+       JOptionPane.showMessageDialog(this, "All Bills have been Calculated.");
+       
+    }//GEN-LAST:event_calculateBillButtonActionPerformed
 
     /**
      * @param args the command line arguments

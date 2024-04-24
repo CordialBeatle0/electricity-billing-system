@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -99,7 +100,7 @@ public class Bill implements Publisher {
 		}
 	}
 
-	public void calculateBill(float amount) {
+	public static void calculateBill() {
 
 		// will carry the result from the databse function with all the customers that are subscribed
 		ArrayList<Customer> allCustomers = Customer.getCustomersFromDB("subscriptionStatus = true");
@@ -109,19 +110,20 @@ public class Bill implements Publisher {
 			// retriving the usage
 			float customerUsage= customer.getMeterReader().calculateUsage();
 			// setting the bills total amount
-			setTotalAmount(customerUsage * customerTax);
+			float billtotalAmount = customerUsage * customerTax;
 			// creating the bill in the database
 			try{
 				Connection connection = DatabaseSingleton.getInstance().getConnection();
 				Statement statement = connection.createStatement();
-				statement.executeUpdate("INSERT INTO bill(totalAmount, date, customer_id) values("+getTotalAmount()+",'"+getDate()+"',"+customer.getID()+")");
+				statement.executeUpdate("INSERT INTO bill(totalAmount, date, customer_id) values("+billtotalAmount+",'"+LocalDate.now()+"',"+customer.getID()+")");
 			}
 			catch (Exception e) {
 				// TODO: write joptionpayne
+                                
 			}
 
 			// set the outstanding fees for the customer ie: adding to the already pending fees incase customer didnt pay
-			customer.setOutstandingFees(totalAmount + customer.getOutstandingFees());
+			customer.setOutstandingFees(billtotalAmount + customer.getOutstandingFees());
 			// updating the outstanding fees of the custmer
 			// creating the bill in the database
 			try{
