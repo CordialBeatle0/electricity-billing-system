@@ -10,11 +10,11 @@ import java.util.ArrayList;
 public class Request {
 
     private int ID;
-    private final int custID;
-    private final String custName;
-    private final String requestType;
-    private final String location;
-    private final LocalDate date;
+    private int custID;
+    private String custName;
+    private String requestType;
+    private String location;
+    private LocalDate date;
     
     public Request(int custID, String custName, String requestType, String location, LocalDate date) {
         this.custID = custID;
