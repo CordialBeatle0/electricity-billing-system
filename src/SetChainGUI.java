@@ -48,11 +48,6 @@ public class SetChainGUI extends javax.swing.JFrame {
         jLabel1.setText("Set Inquiry Handling Order");
 
         fiirstHandler.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Admin", "Customer Service", "Technician", " " }));
-        fiirstHandler.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                fiirstHandlerActionPerformed(evt);
-            }
-        });
 
         thirdHandler.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Admin", "Customer Service", "Technician", " " }));
 
@@ -129,10 +124,6 @@ public class SetChainGUI extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void fiirstHandlerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fiirstHandlerActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_fiirstHandlerActionPerformed
 
     private void confirmButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmButtonActionPerformed
         //get the index of each handler from drop downs

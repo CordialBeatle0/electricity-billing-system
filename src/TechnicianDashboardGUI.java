@@ -93,8 +93,9 @@ public class TechnicianDashboardGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void viewRequestButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewRequestButtonActionPerformed
-        // TODO add your handling code here:
-        
+        ViewRequestGUI gui = new ViewRequestGUI(technician);
+        gui.setVisible(true);
+        dispose();
     }//GEN-LAST:event_viewRequestButtonActionPerformed
 
     /**

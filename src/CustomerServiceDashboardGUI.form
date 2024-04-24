@@ -69,9 +69,6 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="customerServiceNameText">
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="customerServiceNameTextActionPerformed"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="viewInquiryButton">
       <Properties>

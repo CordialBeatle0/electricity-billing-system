@@ -73,18 +73,7 @@ public class UpdateAccount extends javax.swing.JFrame {
             }
         });
 
-        usernamefield.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                usernamefieldActionPerformed(evt);
-            }
-        });
-
         passwordfield.setToolTipText("");
-        passwordfield.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                passwordfieldActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -131,22 +120,12 @@ public class UpdateAccount extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void passwordfieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordfieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_passwordfieldActionPerformed
-
-    private void usernamefieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usernamefieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_usernamefieldActionPerformed
-
     private void SubmitingAccountDetailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SubmitingAccountDetailsActionPerformed
-        // TODO add your handling code here:
         // retriveing what was written in the text field
         String newUsername= usernamefield.getText();
         String newPassword= passwordfield.getText();
         // update the database 
         try{
-            //TODO: add in the databse statements from sign up  
             Connection connection = DatabaseSingleton.getInstance().getConnection();
             Statement statement = connection.createStatement();
             statement.executeUpdate("UPDATE account set username= '" + newUsername + "'");
@@ -154,8 +133,7 @@ public class UpdateAccount extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Account Updated Successfully!");
         }
         catch(Exception e){
-            
-             JOptionPane.showMessageDialog(this, "Error Submitting acoount Details!");
+            JOptionPane.showMessageDialog(this, "Error Submitting acoount Details!");
         }
         
     }//GEN-LAST:event_SubmitingAccountDetailsActionPerformed

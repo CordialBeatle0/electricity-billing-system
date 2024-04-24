@@ -51,23 +51,11 @@ public class RenewSubscriptionGUI extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         jLabel1.setText("Renew Subscription");
 
-        cardText.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cardTextActionPerformed(evt);
-            }
-        });
-
         jLabel2.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jLabel2.setText("Amount:");
 
         jLabel3.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jLabel3.setText("Card Number:");
-
-        amountText.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                amountTextActionPerformed(evt);
-            }
-        });
 
         jButton1.setText("Confirm Payment");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -153,14 +141,6 @@ public class RenewSubscriptionGUI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void cardTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cardTextActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cardTextActionPerformed
-
-    private void amountTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_amountTextActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_amountTextActionPerformed
-
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // reading the paid amount and card info from the text fields
         String s = amountText.getText();
@@ -185,7 +165,6 @@ public class RenewSubscriptionGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
-        // TODO add your handling code here:
         CustomerDashboardGUI dashboard = new CustomerDashboardGUI(customer);
         dashboard.setVisible(true);
         this.dispose();

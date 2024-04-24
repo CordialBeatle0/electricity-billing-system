@@ -128,11 +128,25 @@ public class LoginGUI extends javax.swing.JFrame {
 		
 		if (isCustomer) {
 			Customer customer = Account.custLogin(username, password);
-			//TODO: send customer to their home page
+			CustomerDashboardGUI gui = new CustomerDashboardGUI(customer);
+			gui.setVisible(true);
+			dispose();
 		}
 		if (isEmployee) {
 			Employee employee = Account.empLogin(username, password);
-			//TODO: send employee to their home page
+			switch (employee.getClass().getName()) {
+				case "Admin":
+					AdminDashboardGUI aGui = new AdminDashboardGUI(((Admin) employee));
+					aGui.setVisible(true);
+				case "Technician":
+					TechnicianDashboardGUI tGui = new TechnicianDashboardGUI(((Technician) employee));
+					tGui.setVisible(true);
+				case "CustomerService":
+					CustomerServiceDashboardGUI cGui = new CustomerServiceDashboardGUI(((CustomerService) employee));
+					cGui.setVisible(true);
+				default:
+			}
+			dispose();
 		}
     }//GEN-LAST:event_jButtonLoginActionPerformed
 

@@ -131,7 +131,18 @@ public class RespondToInquiryGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelActionPerformed
-    	//TODO: return to previous gui and set it visible
+		switch (employee.getClass().getName()) {
+			case "Admin":
+				AdminDashboardGUI aGui = new AdminDashboardGUI(((Admin) employee));
+				aGui.setVisible(true);
+			case "Technician":
+				TechnicianDashboardGUI tGui = new TechnicianDashboardGUI(((Technician) employee));
+				tGui.setVisible(true);
+			case "CustomerService":
+				CustomerServiceDashboardGUI cGui = new CustomerServiceDashboardGUI(((CustomerService) employee));
+				cGui.setVisible(true);
+			default:
+		}
 		this.dispose();
     }//GEN-LAST:event_jButtonCancelActionPerformed
 

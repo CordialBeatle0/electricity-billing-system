@@ -92,7 +92,6 @@ Customer cust;
     }// </editor-fold>//GEN-END:initComponents
 
     private void returingtodashbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_returingtodashbtnActionPerformed
-        // TODO add your handling code here:
         CustomerDashboardGUI customerdash= new CustomerDashboardGUI(cust);
         customerdash.setVisible(true);
         this.dispose();

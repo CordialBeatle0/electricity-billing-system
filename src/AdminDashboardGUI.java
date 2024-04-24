@@ -148,7 +148,6 @@ public class AdminDashboardGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void calculateBillButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calculateBillButtonActionPerformed
-        // TODO add your handling code here:
         Bill calculatingBills= new Bill();
         calculatingBills.calculateBill();
        JOptionPane.showMessageDialog(this, "All Bills have been Calculated.");
@@ -180,7 +179,9 @@ public class AdminDashboardGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_categorizeCustomerButton1ActionPerformed
 
     private void updateAccountButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateAccountButtonActionPerformed
-        // TODO add your handling code here:
+        UpdateAccount gui = new UpdateAccount(admin);
+        gui.setVisible(true);
+        dispose();
     }//GEN-LAST:event_updateAccountButtonActionPerformed
 
     /**

@@ -122,11 +122,16 @@ public class AddInquiryGUI extends javax.swing.JFrame {
         inq.addInquiry();
 
         JOptionPane.showMessageDialog(this, "Successfully submitted");
-        // TODO: send customer back to home page
+        
+        CustomerDashboardGUI gui = new CustomerDashboardGUI(cust);
+        gui.setVisible(true);
+        dispose();
     }//GEN-LAST:event_submitBtnActionPerformed
 
     private void cancelBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelBtnActionPerformed
-        //TODO: should be done :)
+        CustomerDashboardGUI gui = new CustomerDashboardGUI(cust);
+        gui.setVisible(true);
+        dispose();
     }//GEN-LAST:event_cancelBtnActionPerformed
 
     /**
