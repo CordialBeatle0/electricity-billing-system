@@ -225,13 +225,4 @@ public class Inquiry implements InquiryROI {
         Employee emp = new CustomerService();
         emp.handle(this);
     }
-
-    public void respondToInquiry(String response, String employeeName) {
-        //TODO: Add implementation
-        //TODO: get employee's inquiry from database and remove the inquiry from their list
-    }
-
-    public ArrayList<Inquiry> inquiryHistory() {
-        //TODO: Add implementation
-    }
 }
