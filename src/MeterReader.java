@@ -79,7 +79,7 @@ public class MeterReader {
 			Connection connection = DatabaseSingleton.getInstance().getConnection();
 			Statement statement = connection.createStatement();
 			ResultSet result = statement.executeQuery("SELECT * FROM meterreader WHERE id = " + id);
-			
+			result.next();
 			int sqlID = result.getInt("id");
 			float sqlUsage = result.getFloat("meterUsage");
 			float sqlPreviousReading = result.getFloat("previousReading");
@@ -87,7 +87,7 @@ public class MeterReader {
 			
 			return new MeterReader(sqlID, sqlUsage, sqlPreviousReading, sqlCurrentReading);
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, "Error retrieving meter reader from database");
+			JOptionPane.showMessageDialog(null, "Error retrieving meter reader from database in meter reader class");
 		}
 		return null;
 	}

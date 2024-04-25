@@ -219,19 +219,27 @@ public class Customer implements Observer {
                 String sqlAddress = result.getString("address");
                 String sqlPhoneNumber = result.getString("phone");
                 boolean sqlIsTimeToPay = result.getBoolean("isTimeToPay");
-
-                // category
-                String category = result.getString("custCategory");
-                Category sqlCategory = switch (category) {
-                    case "Individual" -> new Individual();
-                    case "Company" -> new Company();
-                    case "Factory" -> new Factory();
-                    default -> null;
-                };
-
-                // meter reader
-                int meterReaderID_INT = result.getInt("meterReader_id");
-                MeterReader sqlMeterReader = MeterReader.getMeterReaderFromDB(meterReaderID_INT);
+                
+                Category sqlCategory = null;
+                try {
+                    String category = result.getString("custCategory");
+                    sqlCategory = switch (category) {
+                        case "Individual" -> new Individual();
+                        case "Company" -> new Company();
+                        case "Factory" -> new Factory();
+                        default -> null;
+                    };
+                } catch (NullPointerException e) {
+                    System.out.println("Customer does not have a category while logging in");
+                }
+                
+                MeterReader sqlMeterReader = null;
+                try {
+                    int meterReaderID_INT = result.getInt("meterReader_id");
+                    sqlMeterReader = MeterReader.getMeterReaderFromDB(meterReaderID_INT);
+                } catch (NullPointerException e) {
+                    System.out.println("Customer does not have a meter reader while logging in");
+                }
 
                 float sqlOutstandingFees = result.getFloat("outstandingFees");
 

@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -32,7 +33,13 @@ public class ViewRequestGUI extends javax.swing.JFrame {
         TableModel model = new DefaultTableModel();
         int row = 0;
         int col;
-        for (Request r : Request.viewRequest(tech)) {
+        
+        ArrayList<Request> requests = Request.viewRequest(tech);
+        if (requests.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "There are no requests available");
+            return;
+        }
+        for (Request r : requests) {
             col = 0;
             model.setValueAt(r.getID(), row, col++);
             model.setValueAt(r.getCustID(), row, col++);
@@ -170,6 +177,10 @@ public class ViewRequestGUI extends javax.swing.JFrame {
 
     private void ConfirmCashPaymentBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConfirmCashPaymentBtnActionPerformed
         String requestID = RequestIDTextField.getText();
+        if (requestID.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please select a request");
+        }
+        
         Connection conn = DatabaseSingleton.getInstance().getConnection();
         try {
             Statement stat = conn.createStatement();

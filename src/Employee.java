@@ -126,22 +126,22 @@ public abstract class Employee {
             Statement statement = connection.createStatement();
             ResultSet result;
             if (condition.isEmpty()) {
-                result = statement.executeQuery("SELECT * FROM customer");
+                result = statement.executeQuery("SELECT * FROM employee");
             } else {
-                result = statement.executeQuery("SELECT * FROM customer WHERE " + condition);
+                result = statement.executeQuery("SELECT * FROM employee WHERE " + condition);
             }
             while (result.next()) {
-                int sqlID = result.getInt("id");
-                String employeeType = result.getString("employeeType");
-                String sqlName = result.getString("name");
-                int sqlAge = result.getInt("age");
-                String sqlAddress = result.getString("address");
-                String sqlPhoneNumber = result.getString("phoneNumber");
-                char sqlGender = result.getString("gender").charAt(0);
-                float sqlSalary = result.getFloat("salary");
+                int sqlID = result.getInt(1);
+                String employeeType = result.getString(2);
+                String sqlName = result.getString(3);
+                int sqlAge = result.getInt(4);
+                String sqlAddress = result.getString(5);
+                String sqlPhoneNumber = result.getString(6);
+                char sqlGender = result.getString(7).charAt(0);
+                float sqlSalary = result.getFloat(8);
 
                 // account
-                int accountID_INT = result.getInt("account_id");
+                int accountID_INT = result.getInt(9);
                 Account sqlAccount = Account.getAccountFromDB(accountID_INT);
 
                 Employee employee;
@@ -157,7 +157,7 @@ public abstract class Employee {
                 employees.add(employee);
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error retrieving customer from database");
+            JOptionPane.showMessageDialog(null, "Error retrieving employee from database");
         }
         return employees;
     }
