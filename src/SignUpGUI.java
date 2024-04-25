@@ -195,8 +195,8 @@ public class SignUpGUI extends javax.swing.JFrame {
                 accountId = generatedKeys.getInt(1);
             }
 
-            String createCustomerQuery = "INSERT INTO customer (name, phone, address, account_id) VALUES "
-                    + "('" + name + "', '" + phoneNumber + "', '" + address + "', " + accountId + ")";
+            String createCustomerQuery = "INSERT INTO customer (name, phone, address, isTimeToPay, outstandingFees, subscriptionStatus, account_id) VALUES "
+                    + "('" + name + "', '" + phoneNumber + "', '" + address + "', FALSE, 0, FALSE, " + accountId + ")";
             stmt.executeUpdate(createCustomerQuery);
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Couldn't Sign up");
