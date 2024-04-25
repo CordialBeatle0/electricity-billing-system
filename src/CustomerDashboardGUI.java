@@ -65,7 +65,7 @@ public class CustomerDashboardGUI extends javax.swing.JFrame {
             }
         });
 
-        inquiryHistoryButton.setText("Inquiries");
+        inquiryHistoryButton.setText("Inquiry History");
         inquiryHistoryButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 inquiryHistoryButtonActionPerformed(evt);
