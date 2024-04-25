@@ -3,6 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 
+import javax.swing.*;
+
 /**
  * @author Assar
  */
@@ -209,12 +211,20 @@ public class CustomerDashboardGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_inquiryHistoryButtonActionPerformed
 
     private void renewButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_renewButtonActionPerformed
+        if (customer.getCategory() == null) {
+            JOptionPane.showMessageDialog(this, "You can not renew subscription before you are are categorized by our admins");
+            return;
+        }
         RenewSubscriptionGUI renewGUI = new RenewSubscriptionGUI(customer);
         renewGUI.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_renewButtonActionPerformed
 
     private void inquiryButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inquiryButtonActionPerformed
+        if (customer.getCategory() == null) {
+            JOptionPane.showMessageDialog(this, "You can not add an inquiry before you are are categorized by our admins");
+            return;
+        }
         AddInquiryGUI inquiry = new AddInquiryGUI(customer);
         inquiry.setVisible(true);
         this.dispose();
@@ -233,6 +243,10 @@ public class CustomerDashboardGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_homeServiceButtonActionPerformed
 
     private void usageButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usageButtonActionPerformed
+        if (customer.getMeterReader() == null) {
+            JOptionPane.showMessageDialog(this, "You can not view your usage before you are are categorized by our admins");
+            return;
+        }
         ViewUsageGUI gui = new ViewUsageGUI(customer);
         gui.setVisible(true);
         dispose();

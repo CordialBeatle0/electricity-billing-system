@@ -17,8 +17,6 @@ public class SubscribeToElectricity extends javax.swing.JFrame {
 
     public SubscribeToElectricity() {
         initComponents();
-        Customer customer;
-
     }
 
     public SubscribeToElectricity(Customer cust) {

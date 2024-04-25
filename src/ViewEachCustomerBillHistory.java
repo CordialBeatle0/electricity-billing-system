@@ -25,6 +25,7 @@ public class ViewEachCustomerBillHistory extends javax.swing.JFrame {
     }
     public ViewEachCustomerBillHistory(Customer c) {
         initComponents();
+        setLocationRelativeTo(null);
         cust= c;
         jTable1.setModel(model);
         loadDataToTable();

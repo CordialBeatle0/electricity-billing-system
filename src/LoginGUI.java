@@ -138,12 +138,20 @@ public class LoginGUI extends javax.swing.JFrame {
 
         if (isCustomer) {
             Customer customer = Account.custLogin(username, password);
+            if (customer == null) {
+                JOptionPane.showMessageDialog(this, "Wrong username or password");
+                return;
+            }
             CustomerDashboardGUI gui = new CustomerDashboardGUI(customer);
             gui.setVisible(true);
             dispose();
         }
         if (isEmployee) {
             Employee employee = Account.empLogin(username, password);
+            if (employee == null) {
+                JOptionPane.showMessageDialog(this, "Wrong username or password");
+                return;
+            }
             switch (employee.getClass().getName()) {
                 case "Admin":
                     AdminDashboardGUI aGui = new AdminDashboardGUI(((Admin) employee));

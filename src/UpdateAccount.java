@@ -161,7 +161,6 @@ public class UpdateAccount extends javax.swing.JFrame {
             Connection connection = DatabaseSingleton.getInstance().getConnection();
             Statement statement = connection.createStatement();
             if (cust != null) {
-
                 statement.executeUpdate("UPDATE account JOIN customer ON account.id = account_id set username= '" + newUsername + "' WHERE customer.id = " + id);
                 statement.executeUpdate("UPDATE account JOIN customer ON account.id = account_id set password= '" + newPassword + "' WHERE customer.id = " + id);
             } else {
@@ -170,12 +169,18 @@ public class UpdateAccount extends javax.swing.JFrame {
             }
             JOptionPane.showMessageDialog(this, "Account Updated Successfully!");
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error Submitting acoount Details!");
+            JOptionPane.showMessageDialog(this, "Error Submitting account Details!");
         }
 
     }//GEN-LAST:event_SubmitingAccountDetailsActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        if (cust != null) {
+            CustomerDashboardGUI gui = new CustomerDashboardGUI(cust);
+            gui.setVisible(true);
+            dispose();
+            return;
+        }
         switch (emp.getClass().getName()) {
             case "Admin":
                 AdminDashboardGUI aGui = new AdminDashboardGUI(((Admin) emp));
