@@ -42,6 +42,11 @@
                   </Group>
               </Group>
           </Group>
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
+              <Component id="jButtonSignOut" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+          </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
@@ -57,7 +62,9 @@
                   <Component id="updateAccountButton" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="viewRequestButton" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="105" max="32767" attributes="0"/>
+              <EmptySpace pref="45" max="32767" attributes="0"/>
+              <Component id="jButtonSignOut" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -86,6 +93,14 @@
         <Property name="text" type="java.lang.String" value="Update Account"/>
         <Property name="toolTipText" type="java.lang.String" value=""/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="jButtonSignOut">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Sign Out"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonSignOutActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

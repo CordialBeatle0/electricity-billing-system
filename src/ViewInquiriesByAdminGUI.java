@@ -15,19 +15,19 @@ public class ViewInquiriesByAdminGUI extends javax.swing.JFrame {
 
     Employee employee;
     Inquiry inq = new Inquiry();
+    ArrayList<Inquiry> inquiries;
 
     /**
      * Creates new form ViewInquiriesByAdminGUI
      */
     public ViewInquiriesByAdminGUI() {
         initComponents();
-//        InquiriesTableGUI inquiriesTable = new InquiriesTableGUI();
     }
 
     public ViewInquiriesByAdminGUI(Employee emp) {
         initComponents();
+        setLocationRelativeTo(null);
         employee = emp;
-
     }
 
     /**
@@ -46,6 +46,7 @@ public class ViewInquiriesByAdminGUI extends javax.swing.JFrame {
         SearchBtn = new javax.swing.JButton();
         viewAll_InquiryBtn = new javax.swing.JButton();
         responeBtn = new javax.swing.JButton();
+        jButtonCancel = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -104,12 +105,21 @@ public class ViewInquiriesByAdminGUI extends javax.swing.JFrame {
             }
         });
 
+        jButtonCancel.setText("Cancel");
+        jButtonCancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCancelActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(100, Short.MAX_VALUE)
+                .addGap(16, 16, 16)
+                .addComponent(jButtonCancel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 639, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
@@ -141,7 +151,9 @@ public class ViewInquiriesByAdminGUI extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(SearchBtn)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(responeBtn)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(responeBtn)
+                            .addComponent(jButtonCancel))
                         .addGap(12, 12, 12))))
         );
 
@@ -166,11 +178,11 @@ public class ViewInquiriesByAdminGUI extends javax.swing.JFrame {
 
     private void SearchBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchBtnActionPerformed
         String searchTextField = CustIDTextField.getText();
-        ArrayList<Inquiry> inquiriesList = inq.viewInquiriesByID(Integer.parseInt(searchTextField), employee.getClass().getName());
+        inquiries = inq.viewInquiriesByID(Integer.parseInt(searchTextField), employee.getClass().getName());
         TableModel model = new DefaultTableModel();
         int row = 0;
         int col;
-        for (Inquiry i : inquiriesList) {
+        for (Inquiry i : inquiries) {
             col = 0;
             model.setValueAt(i.getID(), row, col++);
             model.setValueAt(i.getCustName(), row, col++);
@@ -183,8 +195,30 @@ public class ViewInquiriesByAdminGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_SearchBtnActionPerformed
 
     private void responeBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_responeBtnActionPerformed
-
+        int indexSelected = InquiriesJTable.getSelectedRow();
+        Inquiry inquiry = inquiries.get(indexSelected);
+        RespondToInquiryGUI gui = new RespondToInquiryGUI(employee, inquiry);
+        gui.setVisible(true);
+        dispose();
     }//GEN-LAST:event_responeBtnActionPerformed
+
+    private void jButtonCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelActionPerformed
+        switch (employee.getClass().getName()) {
+            case "Admin":
+                AdminDashboardGUI aGui = new AdminDashboardGUI(((Admin) employee));
+                aGui.setVisible(true);
+                break;
+            case "Technician":
+                TechnicianDashboardGUI tGui = new TechnicianDashboardGUI(((Technician) employee));
+                tGui.setVisible(true);
+                break;
+            case "CustomerService":
+                CustomerServiceDashboardGUI cGui = new CustomerServiceDashboardGUI(((CustomerService) employee));
+                cGui.setVisible(true);
+            default:
+        }
+        dispose();
+    }//GEN-LAST:event_jButtonCancelActionPerformed
 
     /**
      * @param args the command line arguments
@@ -226,6 +260,7 @@ public class ViewInquiriesByAdminGUI extends javax.swing.JFrame {
     private javax.swing.JTable InquiriesJTable;
     private javax.swing.JButton SearchBtn;
     private javax.swing.JLabel SearchLabel;
+    private javax.swing.JButton jButtonCancel;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton responeBtn;
     private javax.swing.JButton viewAll_InquiryBtn;

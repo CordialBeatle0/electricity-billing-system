@@ -46,6 +46,7 @@ public class AdminDashboardGUI extends javax.swing.JFrame {
         updateAccountButton = new javax.swing.JButton();
         SetChainButton = new javax.swing.JButton();
         categorizeCustomerButton1 = new javax.swing.JButton();
+        jButtonSignOut = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -94,6 +95,13 @@ public class AdminDashboardGUI extends javax.swing.JFrame {
             }
         });
 
+        jButtonSignOut.setText("Sign Out");
+        jButtonSignOut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonSignOutActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -109,6 +117,10 @@ public class AdminDashboardGUI extends javax.swing.JFrame {
                         .addGap(40, 40, 40)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
+                                .addComponent(jButtonSignOut)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(calculateBillButton))
+                            .addGroup(layout.createSequentialGroup()
                                 .addComponent(SetChainButton)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(categorizeCustomerButton1))
@@ -117,10 +129,7 @@ public class AdminDashboardGUI extends javax.swing.JFrame {
                                 .addGap(23, 23, 23)
                                 .addComponent(viewBillButton)
                                 .addGap(18, 18, 18)
-                                .addComponent(updateAccountButton))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(151, 151, 151)
-                        .addComponent(calculateBillButton)))
+                                .addComponent(updateAccountButton)))))
                 .addContainerGap(32, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -130,18 +139,20 @@ public class AdminDashboardGUI extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(adminNameText))
-                .addGap(76, 76, 76)
+                .addGap(51, 51, 51)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(viewInquiryButton)
                     .addComponent(updateAccountButton)
                     .addComponent(viewBillButton))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(categorizeCustomerButton1)
-                    .addComponent(SetChainButton))
-                .addGap(18, 18, 18)
-                .addComponent(calculateBillButton)
-                .addGap(17, 17, 17))
+                    .addComponent(SetChainButton)
+                    .addComponent(categorizeCustomerButton1))
+                .addGap(39, 39, 39)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(calculateBillButton)
+                    .addComponent(jButtonSignOut))
+                .addGap(24, 24, 24))
         );
 
         pack();
@@ -184,6 +195,12 @@ public class AdminDashboardGUI extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_updateAccountButtonActionPerformed
 
+    private void jButtonSignOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSignOutActionPerformed
+        LoginGUI gui = new LoginGUI();
+        gui.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_jButtonSignOutActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -224,6 +241,7 @@ public class AdminDashboardGUI extends javax.swing.JFrame {
     private javax.swing.JTextField adminNameText;
     private javax.swing.JButton calculateBillButton;
     private javax.swing.JButton categorizeCustomerButton1;
+    private javax.swing.JButton jButtonSignOut;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JButton updateAccountButton;
     private javax.swing.JButton viewBillButton;

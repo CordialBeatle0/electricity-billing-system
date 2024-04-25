@@ -40,6 +40,7 @@ public class TechnicianDashboardGUI extends javax.swing.JFrame {
         technicianNameText = new javax.swing.JTextField();
         viewRequestButton = new javax.swing.JButton();
         updateAccountButton = new javax.swing.JButton();
+        jButtonSignOut = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -55,6 +56,13 @@ public class TechnicianDashboardGUI extends javax.swing.JFrame {
 
         updateAccountButton.setText("Update Account");
         updateAccountButton.setToolTipText("");
+
+        jButtonSignOut.setText("Sign Out");
+        jButtonSignOut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonSignOutActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -74,6 +82,10 @@ public class TechnicianDashboardGUI extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(technicianNameText, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(31, 31, 31)
+                .addComponent(jButtonSignOut)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -86,7 +98,9 @@ public class TechnicianDashboardGUI extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(updateAccountButton)
                     .addComponent(viewRequestButton))
-                .addContainerGap(105, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
+                .addComponent(jButtonSignOut)
+                .addGap(37, 37, 37))
         );
 
         pack();
@@ -97,6 +111,12 @@ public class TechnicianDashboardGUI extends javax.swing.JFrame {
         gui.setVisible(true);
         dispose();
     }//GEN-LAST:event_viewRequestButtonActionPerformed
+
+    private void jButtonSignOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSignOutActionPerformed
+        LoginGUI gui = new LoginGUI();
+        gui.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_jButtonSignOutActionPerformed
 
     /**
      * @param args the command line arguments
@@ -134,6 +154,7 @@ public class TechnicianDashboardGUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButtonSignOut;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JTextField technicianNameText;
     private javax.swing.JButton updateAccountButton;

@@ -33,30 +33,35 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="jButtonSignOut" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel3" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jLabel1" alignment="0" min="-2" pref="41" max="-2" attributes="0"/>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="usageButton" min="-2" pref="157" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
-                              <Component id="inquiryHistoryButton" min="-2" pref="157" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="89" max="-2" attributes="0"/>
+                      <Component id="renewButton" min="-2" pref="157" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="66" max="-2" attributes="0"/>
+                      <Component id="subButtton" min="-2" pref="157" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                          <Group type="102" attributes="0">
+                              <Component id="inquiryButton" min="-2" pref="157" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Component id="homeServiceButton" min="-2" pref="157" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="jLabel1" alignment="0" min="-2" pref="41" max="-2" attributes="0"/>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="usageButton" min="-2" pref="157" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
+                                  <Component id="inquiryHistoryButton" min="-2" pref="157" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
                       </Group>
                       <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
-                      <Component id="BillingHistoryButton" min="-2" pref="157" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="89" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="renewButton" alignment="0" min="-2" pref="157" max="-2" attributes="0"/>
-                          <Component id="inquiryButton" alignment="0" min="-2" pref="157" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="-2" pref="66" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="homeServiceButton" min="-2" pref="157" max="-2" attributes="0"/>
-                          <Component id="subButtton" min="-2" pref="157" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="BillingHistoryButton" pref="157" max="32767" attributes="0"/>
+                          <Component id="jButtonUpdateAccount" max="32767" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -85,6 +90,7 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="inquiryButton" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="homeServiceButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jButtonUpdateAccount" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
@@ -94,7 +100,9 @@
                   <Component id="inquiryHistoryButton" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="BillingHistoryButton" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="76" max="32767" attributes="0"/>
+              <EmptySpace pref="30" max="32767" attributes="0"/>
+              <Component id="jButtonSignOut" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -193,6 +201,22 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="inquiryButtonActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="jButtonSignOut">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Sign Out"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonSignOutActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="jButtonUpdateAccount">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Update Account"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonUpdateAccountActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>
