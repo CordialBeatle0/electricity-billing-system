@@ -205,23 +205,28 @@ public class Inquiry implements InquiryROI {
 
 
     @Override
-    public void addInquiry() {
+    public void addInquiry(int customerID) {
         // hat5od el inquiry mn el GUI then add it to the db table inquiry
         DatabaseSingleton db = DatabaseSingleton.getInstance();
         Connection conn = db.getConnection();
         try {
+            ResultSet generatedKeys;
             // Create the SQL query using values from the Inquiry object
-            String query = "INSERT INTO inquiry (question, custCategory, custName, custID, employeeName, employeeType, date) " +
-                    "VALUES ('" + this.getQuestion() + "', '" + this.getCustCategory() + "', '" + this.getCustName() + "', " +
-                    this.getCustID() + ", '" + this.getEmployeeName() + "', '" + this.getEmployeeType() + "', '" + this.getDate() + "')";
+            String query = "INSERT INTO inquiry (date, question, response, custCategory, employee_id, customer_id) " +
+                    "VALUES ('" + date + "', '" + question + "', '" + null + "', '" +
+                    custCategory + "', " + null + ", " + customerID + ")";
 
             Statement stmt = conn.createStatement();
-            stmt.executeUpdate(query);
+            stmt.executeUpdate(query, Statement.RETURN_GENERATED_KEYS);
             System.out.println("Inquiry added successfully to the database.");
+            
+            generatedKeys = stmt.getGeneratedKeys();
+            generatedKeys.next();
+            ID = generatedKeys.getInt(1);
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error adding inquiry to database");
         }
-
+        
         // you give the inquiry to the Employee to handle it
         Employee emp = new CustomerService();
         emp.handle(this);

@@ -47,6 +47,7 @@ public class ViewInquiriesByAdminGUI extends javax.swing.JFrame {
         viewAll_InquiryBtn = new javax.swing.JButton();
         responeBtn = new javax.swing.JButton();
         jButtonCancel = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -112,6 +113,9 @@ public class ViewInquiriesByAdminGUI extends javax.swing.JFrame {
             }
         });
 
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        jLabel1.setText("View Inquiries");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -134,11 +138,17 @@ public class ViewInquiriesByAdminGUI extends javax.swing.JFrame {
                             .addComponent(responeBtn)
                             .addComponent(SearchBtn))))
                 .addGap(95, 95, 95))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(340, 340, 340)
+                .addComponent(jLabel1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(41, Short.MAX_VALUE)
+                .addContainerGap(23, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -161,7 +171,7 @@ public class ViewInquiriesByAdminGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void viewAll_InquiryBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewAll_InquiryBtnActionPerformed
-        TableModel model = new DefaultTableModel();
+        DefaultTableModel model = ((DefaultTableModel) InquiriesJTable.getModel());
         int row = 0;
         int col;
         for (Inquiry i : Inquiry.viewInquiries(employee.getClass().getName())) {
@@ -173,7 +183,6 @@ public class ViewInquiriesByAdminGUI extends javax.swing.JFrame {
             model.setValueAt(i.getDate(), row, col++);
             row++;
         }
-        InquiriesJTable.setModel(model);
     }//GEN-LAST:event_viewAll_InquiryBtnActionPerformed
 
     private void SearchBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchBtnActionPerformed
@@ -261,6 +270,7 @@ public class ViewInquiriesByAdminGUI extends javax.swing.JFrame {
     private javax.swing.JButton SearchBtn;
     private javax.swing.JLabel SearchLabel;
     private javax.swing.JButton jButtonCancel;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton responeBtn;
     private javax.swing.JButton viewAll_InquiryBtn;

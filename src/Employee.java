@@ -107,10 +107,33 @@ public abstract class Employee {
         Connection conn = db.getConnection();
         try {
             Statement stmt = conn.createStatement();
-            String sql = "UPDATE inquiry SET employeeType = '" + this.getClass().getName() + "' WHERE ID = " + inquiry.getID();
+            // gets all employees of the type assigned (Admin, Technician, CustomerService)
+            // and gets the one with the lowest number of assigned inquiries
+            ArrayList<Integer> employeeIDs = new ArrayList<>();
+            ResultSet result = stmt.executeQuery("SELECT id FROM employee WHERE employeeType = '" + getClass().getName() + "'");
+            while (result.next()){
+                employeeIDs.add(result.getInt(1));
+            }
+            
+            int lowestValue = 100;
+            int lowestValueID = 1; // dummy value
+            for (int id : employeeIDs) {
+                result = stmt.executeQuery("SELECT COUNT(*) AS 'Number of inquiries' FROM inquiry WHERE employee_id = " + id);
+                if (result.next()) {
+                    int currentValue = result.getInt(1);
+                    if (lowestValue > currentValue) {
+                        lowestValueID = id;
+                        lowestValue = currentValue;
+                    }
+                } else {
+                    lowestValue = 0;
+                    lowestValueID = id;
+                }
+            }
+            String sql = "UPDATE inquiry SET employee_id = " + lowestValueID + " WHERE ID = " + inquiry.getID();
             stmt.executeUpdate(sql);
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error updating inquiry in database");
+            JOptionPane.showMessageDialog(null, "Error updating inquiry in assignEmployee function in employee class");
         }
     }
 
@@ -147,7 +170,7 @@ public abstract class Employee {
                 Employee employee;
 
                 if (employeeType.equals("Technician")) {
-                    String sqlAssignedLocation = result.getString("technicianAssignedLocation");
+                    String sqlAssignedLocation = result.getString(10);
                     employee = new Technician(sqlID, sqlName, sqlAge, sqlAddress, sqlPhoneNumber, sqlGender, sqlSalary, sqlAccount, sqlAssignedLocation);
                 } else if (employeeType.equals("Admin")) {
                     employee = new Admin(sqlID, sqlName, sqlAge, sqlAddress, sqlPhoneNumber, sqlGender, sqlSalary, sqlAccount);

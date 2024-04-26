@@ -32,7 +32,7 @@ public class CategorizeCustomerGUI extends javax.swing.JFrame {
         admin = a;
         customers = getCustomers();
 
-        DefaultTableModel model = new DefaultTableModel(0, 3);
+        DefaultTableModel model = ((DefaultTableModel) jTable1.getModel());
         int i = 0;
         for (Customer customer : customers) {
 
@@ -43,7 +43,6 @@ public class CategorizeCustomerGUI extends javax.swing.JFrame {
             i++;
 
         }
-        jTable1.setModel(model);
     }
 
     /**

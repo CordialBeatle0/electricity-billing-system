@@ -47,8 +47,18 @@ public class CustomerServiceDashboardGUI extends javax.swing.JFrame {
         jLabel1.setText("Welcome");
 
         viewInquiryButton.setText("View Inquiries");
+        viewInquiryButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                viewInquiryButtonActionPerformed(evt);
+            }
+        });
 
         updateAccountButton.setText("Update Account");
+        updateAccountButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateAccountButtonActionPerformed(evt);
+            }
+        });
 
         jButtonSignOut.setText("Sign Out");
         jButtonSignOut.addActionListener(new java.awt.event.ActionListener() {
@@ -103,6 +113,18 @@ public class CustomerServiceDashboardGUI extends javax.swing.JFrame {
         gui.setVisible(true);
         dispose();
     }//GEN-LAST:event_jButtonSignOutActionPerformed
+
+    private void viewInquiryButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewInquiryButtonActionPerformed
+        ViewInquiriesByAdminGUI gui = new ViewInquiriesByAdminGUI(customerService);
+        gui.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_viewInquiryButtonActionPerformed
+
+    private void updateAccountButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateAccountButtonActionPerformed
+        UpdateAccount gui = new UpdateAccount(customerService);
+        gui.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_updateAccountButtonActionPerformed
 
     /**
      * @param args the command line arguments

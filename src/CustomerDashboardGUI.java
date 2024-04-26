@@ -207,24 +207,34 @@ public class CustomerDashboardGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void inquiryHistoryButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inquiryHistoryButtonActionPerformed
-        // TODO: add link when page is made
+        ViewInquiriesByCustomerGUI gui = new ViewInquiriesByCustomerGUI(customer);
+        gui.setVisible(true);
+        dispose();
     }//GEN-LAST:event_inquiryHistoryButtonActionPerformed
 
-    private void renewButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_renewButtonActionPerformed
-        if (customer.getCategory() == null) {
-            JOptionPane.showMessageDialog(this, "You can not renew subscription before you are are categorized by our admins");
-            return;
+    private boolean checkSubscription(String message) {
+        if (!customer.getSubscription().isSubscriptionStatus()) {
+            JOptionPane.showMessageDialog(this, "You can not " + message + " before you subscribe");
+            return false;
         }
+        if (customer.getCategory() == null) {
+            JOptionPane.showMessageDialog(this, "You can not " + message + " before you are are categorized by our admins");
+            return false;
+        }
+        return true;
+    }
+    
+    private void renewButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_renewButtonActionPerformed
+        if (!checkSubscription("renew your subscription"))
+            return;
         RenewSubscriptionGUI renewGUI = new RenewSubscriptionGUI(customer);
         renewGUI.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_renewButtonActionPerformed
 
     private void inquiryButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inquiryButtonActionPerformed
-        if (customer.getCategory() == null) {
-            JOptionPane.showMessageDialog(this, "You can not add an inquiry before you are are categorized by our admins");
+        if (!checkSubscription("make an inquiry"))
             return;
-        }
         AddInquiryGUI inquiry = new AddInquiryGUI(customer);
         inquiry.setVisible(true);
         this.dispose();
@@ -243,16 +253,16 @@ public class CustomerDashboardGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_homeServiceButtonActionPerformed
 
     private void usageButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usageButtonActionPerformed
-        if (customer.getMeterReader() == null) {
-            JOptionPane.showMessageDialog(this, "You can not view your usage before you are are categorized by our admins");
+        if (!checkSubscription("view your usage"))
             return;
-        }
         ViewUsageGUI gui = new ViewUsageGUI(customer);
         gui.setVisible(true);
         dispose();
     }//GEN-LAST:event_usageButtonActionPerformed
 
     private void BillingHistoryButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BillingHistoryButtonActionPerformed
+        if (!checkSubscription("view you billing history"))
+            return;
         ViewEachCustomerBillHistory gui = new ViewEachCustomerBillHistory(customer);
         gui.setVisible(true);
         dispose();

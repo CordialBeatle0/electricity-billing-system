@@ -141,7 +141,7 @@ public class RenewSubscriptionGUI extends javax.swing.JFrame {
             paymentType = new Cash();
             //call renew subscription 
             customer.getSubscription().renewSubscription(customer, amount, paymentType);
-        } else if (visaRadio.isSelected()) { //if visa is selected and card info is enetered
+        } else if (visaRadio.isSelected()) { //if visa is selected and card info is entered
             paymentType = new Visa();
             //call renew subscription 
             customer.getSubscription().renewSubscription(customer, amount, paymentType);

@@ -43,7 +43,7 @@ public class Subscription {
         if (cust.isTimeToPay()) {
             //If customer is subscribed and has outstanding fees
             if (cust.getSubscription().subscriptionStatus && cust.getOutstandingFees() > 0) {
-                //verify that the eneterd amount is less than the outsanding fees
+                //verify that the entered amount is less than the outstanding fees
                 if (amount <= cust.getOutstandingFees()) {
                     //set the method of payment (cash or visa)
                     cust.setPaymentType(paymentType);

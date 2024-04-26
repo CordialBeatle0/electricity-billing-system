@@ -103,7 +103,7 @@ public class SubscribeToElectricity extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         //if subscription process is successful
         if (customer.getSubscription().subscribeToElectricity(customer)) {
-            JOptionPane.showMessageDialog(this, "Your Subsrciption Request is accepted and processed by our admins");
+            JOptionPane.showMessageDialog(this, "Your subscription request is accepted and processed by our admins");
             CustomerDashboardGUI gui = new CustomerDashboardGUI(customer);
             gui.setVisible(true);
             this.dispose();
