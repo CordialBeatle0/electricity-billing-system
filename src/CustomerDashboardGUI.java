@@ -261,7 +261,7 @@ public class CustomerDashboardGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_usageButtonActionPerformed
 
     private void BillingHistoryButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BillingHistoryButtonActionPerformed
-        if (!checkSubscription("view you billing history"))
+        if (!checkSubscription("view your billing history"))
             return;
         ViewEachCustomerBillHistory gui = new ViewEachCustomerBillHistory(customer);
         gui.setVisible(true);

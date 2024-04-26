@@ -2,26 +2,23 @@ import javax.swing.*;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.GregorianCalendar;
 
 public class Bill implements Publisher {
-	private static ArrayList<Observer> observers;
+	private static ArrayList<Observer> observers = new ArrayList<>();
 	private int ID;
 	private float totalAmount;
-	private Date date;
+	private LocalDateTime date;
 	private String custName;
 	private String custAddress;
 	private static GregorianCalendar dueDate = new GregorianCalendar(2024, 5, 1);
 	
 	public Bill() {
 	}
-
-	public Bill(int ID, float totalAmount, Date date, String custName, String custAddress) {
+	
+	public Bill(int ID, float totalAmount, LocalDateTime date, String custName, String custAddress) {
 		this.ID = ID;
 		this.totalAmount = totalAmount;
 		this.date = date;
@@ -44,12 +41,12 @@ public class Bill implements Publisher {
 	public void setTotalAmount(float totalAmount) {
 		this.totalAmount = totalAmount;
 	}
-
-	public Date getDate() {
+	
+	public LocalDateTime getDate() {
 		return date;
 	}
-
-	public void setDate(Date date) {
+	
+	public void setDate(LocalDateTime date) {
 		this.date = date;
 	}
 
@@ -88,8 +85,10 @@ public class Bill implements Publisher {
 	}
 
 	public void sendBillingAlert(String message) {
-		for (Observer myobeserveres : observers) {
-			myobeserveres.updateObserver(message);
+		ArrayList<Customer> customers = (Customer.getCustomersFromDB("subscriptionStatus = true"));
+		observers.addAll(customers);
+		for (Observer observer : observers) {
+			observer.updateObserver(message);
 		}
 	}
 
@@ -106,42 +105,41 @@ public class Bill implements Publisher {
 	}
 
 	public void calculateBill() {
-
-		// will carry the result from the databse function with all the customers that are subscribed
-		ArrayList<Customer> allCustomers = Customer.getCustomersFromDB("subscriptionStatus = true");
+		
+		// will carry the result from the database function with all the customers that are subscribed
+		ArrayList<Customer> allCustomers = Customer.getCustomersFromDB("subscriptionStatus = true AND custCategory " +
+				"IS NOT NULL");
 		for (Customer customer : allCustomers) {
-			// retriving the tax calculatio per each category
+			// retrieving the tax calculation per each category
 			float customerTax = customer.getCategory().calculateTax();
-			// retriving the usage
-			float customerUsage= customer.getMeterReader().calculateUsage();
+			// retrieving the usage
+			float customerUsage = customer.getMeterReader().calculateUsage(customer.getID());
 			// setting the bills total amount
 			float billtotalAmount = customerUsage * customerTax;
 			// creating the bill in the database
 			try{
 				Connection connection = DatabaseSingleton.getInstance().getConnection();
 				Statement statement = connection.createStatement();
-				statement.executeUpdate("INSERT INTO bill(totalAmount, date, customer_id) values("+billtotalAmount+",'" + LocalDate.now() + "',"+customer.getID()+")");
+				statement.executeUpdate("INSERT INTO bill(totalAmount, date, customer_id) values(" + billtotalAmount + ", '" + LocalDateTime.now() + "', " + customer.getID() + ")");
 			}
 			catch (Exception e) {
 				JOptionPane.showMessageDialog(null, "Error adding bill to database");
-                                
 			}
-
-			// set the outstanding fees for the customer ie: adding to the already pending fees incase customer didnt pay
+			
+			// set the outstanding fees for the customer ie: adding to the already pending fees in case customer didnt pay
 			customer.setOutstandingFees(billtotalAmount + customer.getOutstandingFees());
-			// updating the outstanding fees of the custmer
+			// updating the outstanding fees of the customer
 			// creating the bill in the database
 			try{
 				Connection connection = DatabaseSingleton.getInstance().getConnection();
 				Statement statement = connection.createStatement();
-				statement.executeUpdate("UPDATE customer set outstandingFees="+ customer.getOutstandingFees()+" WHERE id=' "+customer.getID()+"'");
-				
+				statement.executeUpdate("UPDATE customer set outstandingFees = " + customer.getOutstandingFees() + " WHERE id = " + customer.getID());
 			}
 			catch (Exception e) {
 				JOptionPane.showMessageDialog(null, "Error updating outstanding fees in customer in database");
 			}
 		}
-		// checking if its the due date to send the billing alert
+		// checking if it's the due date to send the billing alert
 		checkDueDate();
 	}
 	
@@ -155,10 +153,8 @@ public class Bill implements Publisher {
 				int sqlID = result.getInt("id");
 				float sqlTotalAmount = result.getFloat("totalAmount");
 				
-				// translates string to long and from long to date (built in)
-				String date_String = result.getString("date");
-				DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-				Date sqlDate = dateFormat.parse(date_String);
+				// parses string to LocalDateTime
+				LocalDateTime sqlDate = result.getTimestamp("date").toLocalDateTime();
 				
 				int custID = result.getInt("customer_id");
 				Customer customer = Customer.getCustomersFromDB("id = " + custID).get(0);

@@ -1,5 +1,7 @@
-
-import javax.swing.JOptionPane;
+import javax.swing.*;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -172,9 +174,20 @@ public class AdminDashboardGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_viewInquiryButtonActionPerformed
 
     private void viewBillButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewBillButtonActionPerformed
-        ViewAllCustomerBills bills = new ViewAllCustomerBills(admin);
-        bills.setVisible(true);
-        this.dispose();
+        try {
+            Connection connection = DatabaseSingleton.getInstance().getConnection();
+            Statement statement = connection.createStatement();
+            ResultSet result = statement.executeQuery("SELECT id FROM bill");
+            if (result.next()) {
+                ViewAllCustomerBills bills = new ViewAllCustomerBills(admin);
+                bills.setVisible(true);
+                this.dispose();
+            } else {
+                JOptionPane.showMessageDialog(this, "No bills exist in database");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error getting bills from database in admin dashboard");
+        }
     }//GEN-LAST:event_viewBillButtonActionPerformed
 
     private void SetChainButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SetChainButtonActionPerformed

@@ -2,6 +2,8 @@ import javax.swing.*;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 
 public class MeterReader {
 	private int ID;
@@ -58,20 +60,33 @@ public class MeterReader {
 				'}';
 	}
 	
-	public float calculateUsage() {
+	public void getCurrentReadingFromTimePassed(int customerID) {
+		try {
+			Connection connection = DatabaseSingleton.getInstance().getConnection();
+			Statement statement = connection.createStatement();
+			ResultSet result = statement.executeQuery("SELECT date FROM bill WHERE id IN (SELECT MAX(id) FROM bill " +
+					"WHERE customer_id = " + customerID + ")");
+			result.next();
+			LocalDateTime previousDate = result.getTimestamp(1).toLocalDateTime();
+			
+			// calculates the difference in time between the last date of the bill and the current date
+			long timeInSeconds = ChronoUnit.SECONDS.between(previousDate, LocalDateTime.now());
+			setCurrentReading(timeInSeconds / 1000f);
+		} catch (Exception e) {
+			System.out.println("Error in getCurrentReadingFromTimePassed function");
+		}
+	}
+	
+	public float calculateUsage(int customerID) {
 		// sets the usage by subtracting the current - previous readings
 		// returns the usage
+		getCurrentReadingFromTimePassed(customerID);
 		setUsage(currentReading - previousReading);
 		return usage;
 	}
-
-	public float viewUsage() {
-		return usage = calculateUsage();
-	}
-
-	public float setTimeInterval() {
-		//TODO: Add implementation
-		return 0;
+	
+	public float viewUsage(int customerID) {
+		return usage = calculateUsage(customerID);
 	}
 	
 	public static MeterReader getMeterReaderFromDB(int id) {
@@ -79,13 +94,15 @@ public class MeterReader {
 			Connection connection = DatabaseSingleton.getInstance().getConnection();
 			Statement statement = connection.createStatement();
 			ResultSet result = statement.executeQuery("SELECT * FROM meterreader WHERE id = " + id);
-			result.next();
-			int sqlID = result.getInt("id");
-			float sqlUsage = result.getFloat("meterUsage");
-			float sqlPreviousReading = result.getFloat("previousReading");
-			float sqlCurrentReading = result.getFloat("currentReading");
-			
-			return new MeterReader(sqlID, sqlUsage, sqlPreviousReading, sqlCurrentReading);
+			if (result.next()) {
+				
+				int sqlID = result.getInt("id");
+				float sqlUsage = result.getFloat("meterUsage");
+				float sqlPreviousReading = result.getFloat("previousReading");
+				float sqlCurrentReading = result.getFloat("currentReading");
+				
+				return new MeterReader(sqlID, sqlUsage, sqlPreviousReading, sqlCurrentReading);
+			}
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "Error retrieving meter reader from database in meter reader class");
 		}

@@ -3,6 +3,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class Inquiry implements InquiryROI {
@@ -14,28 +15,37 @@ public class Inquiry implements InquiryROI {
     private int custID;
     private String employeeName;
     private String employeeType;
-    private String date;
-
+    private LocalDateTime date;
+    
     public Inquiry() {
     }
-
-    public Inquiry(String question, String custCategory, String custName, int custID, String date) {
+    
+    public Inquiry(String question, int ID, String custCategory, String custName, int custID, LocalDateTime date) {
+        this.question = question;
+        this.ID = ID;
+        this.custCategory = custCategory;
+        this.custName = custName;
+        this.custID = custID;
+        this.date = date;
+    }
+    
+    public Inquiry(String question, String custCategory, String custName, int custID, LocalDateTime date) {
         this.question = question;
         this.custCategory = custCategory;
         this.custName = custName;
         this.custID = custID;
         this.date = date;
     }
-
-    public Inquiry(String question, int ID, String custCategory, String custName, String date) {
+    
+    public Inquiry(String question, int ID, String custCategory, String custName, LocalDateTime date) {
         this.question = question;
         this.ID = ID;
         this.custCategory = custCategory;
         this.custName = custName;
         this.date = date;
     }
-
-    public Inquiry(String question, String custCategory, String custName, int custID, String employeeName, String employeeType, String date) {
+    
+    public Inquiry(String question, String custCategory, String custName, int custID, String employeeName, String employeeType, LocalDateTime date) {
         this.question = question;
         this.custCategory = custCategory;
         this.custName = custName;
@@ -44,79 +54,79 @@ public class Inquiry implements InquiryROI {
         this.employeeType = employeeType;
         this.date = date;
     }
-
+    
     public String getQuestion() {
         return question;
     }
-
+    
     public void setQuestion(String question) {
         this.question = question;
     }
-
+    
     public String getResponse() {
         return response;
     }
-
+    
     public void setResponse(String response) {
         this.response = response;
     }
-
+    
     public int getID() {
         return ID;
     }
-
+    
     public void setID(int ID) {
         this.ID = ID;
     }
-
+    
     public String getCustCategory() {
         return custCategory;
     }
-
+    
     public void setCustCategory(String custCategory) {
         this.custCategory = custCategory;
     }
-
+    
     public String getCustName() {
         return custName;
     }
-
+    
     public void setCustName(String custName) {
         this.custName = custName;
     }
-
+    
     public int getCustID() {
         return custID;
     }
-
+    
     public void setCustID(int custID) {
         this.custID = custID;
     }
-
+    
     public String getEmployeeName() {
         return employeeName;
     }
-
+    
     public void setEmployeeName(String employeeName) {
         this.employeeName = employeeName;
     }
-
+    
     public String getEmployeeType() {
         return employeeType;
     }
-
+    
     public void setEmployeeType(String employeeType) {
         this.employeeType = employeeType;
     }
-
-    public String getDate() {
+    
+    public LocalDateTime getDate() {
         return date;
     }
-
-    public void setDate(String date) {
+    
+    public void setDate(LocalDateTime date) {
         this.date = date;
     }
-
+    
     @Override
     public String toString() {
         return "Inquiry{" +
@@ -131,35 +141,22 @@ public class Inquiry implements InquiryROI {
                 ", date='" + date + '\'' +
                 '}';
     }
-
+    
     @Override
-    public ArrayList<Inquiry> viewInquiriesByID(int custID, String empType) {
+    public ArrayList<Inquiry> viewInquiriesByID(int custID, int employeeID) {
         ArrayList<Inquiry> inquiries = new ArrayList<>();
         DatabaseSingleton db = DatabaseSingleton.getInstance();
         Connection conn = db.getConnection();
-        String custCategoryy = "";
-        if (empType.equals("CustomerService")) {
-            custCategoryy = "Individual";
-        } else if (empType.equals("Technician")) {
-            custCategoryy = "Factory";
-        } else if (empType.equals("Admin")) {
-            custCategoryy = "Company";
-        }
-
+        
         try {
             Statement stmt = conn.createStatement();
-            String sql = "SELECT inquiry.id, question, inquiry.custCategory, name, date  FROM inquiry, Customer WHERE inquiry.customer_id = customer.id AND inquiry.custCategory = '" + custCategoryy + "' AND customer.id = " + custID;
+            String sql = "SELECT inquiry.id, customer_id, question, inquiry.custCategory, name, date  FROM inquiry " +
+                    "JOIN electricity_billing_db.customer c on c.id = inquiry.customer_id WHERE employee_id = " + employeeID +
+                    " AND response IS null AND customer_id = " + custID;
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
-                Inquiry inquiry = new Inquiry(
-                        rs.getString("question"),
-                        rs.getString("custCategory"),
-                        rs.getString("name"),
-                        rs.getInt("id"), // Assuming custID corresponds to the ID of the customer
-//                        rs.getString("employeeName"),
-//                        rs.getString("employeeType"),
-                        rs.getString("date")
-                );
+                Inquiry inquiry = new Inquiry(rs.getString(3), rs.getInt(1), rs.getString(4), rs.getString(5),
+                        rs.getInt(2), rs.getTimestamp(6).toLocalDateTime());
                 inquiries.add(inquiry);
             }
         } catch (SQLException e) {
@@ -167,34 +164,21 @@ public class Inquiry implements InquiryROI {
         }
         return inquiries;
     }
-
+    
     // this method is used to view all inquiries in the database by the Admin only
-    static public ArrayList<Inquiry> viewInquiries(String empType) {
+    static public ArrayList<Inquiry> viewInquiries(int employeeID) {
         ArrayList<Inquiry> inquiries = new ArrayList<>();
         DatabaseSingleton db = DatabaseSingleton.getInstance();
         Connection conn = db.getConnection();
-        String custCategoryy = "";
-        if (empType.equals("CustomerService")) {
-            custCategoryy = "Individual";
-        } else if (empType.equals("Technician")) {
-            custCategoryy = "Factory";
-        } else if (empType.equals("Admin")) {
-            custCategoryy = "Company";
-        }
         try {
             Statement stmt = conn.createStatement();
-            String sql = "SELECT inquiry.id, question, inquiry.custCategory, name, date  FROM inquiry, Customer WHERE inquiry.customer_id = customer.id AND inquiry.custCategory = '" + custCategoryy + "'";
+            String sql = "SELECT inquiry.id, customer_id, question, inquiry.custCategory, name, date  FROM inquiry " +
+                    "JOIN electricity_billing_db.customer c on c.id = inquiry.customer_id WHERE employee_id = " + employeeID +
+                    " AND response IS null";
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
-                Inquiry inquiry = new Inquiry(
-                        rs.getString("question"),
-                        rs.getString("custCategory"),
-                        rs.getString("name"),
-                        rs.getInt("id"), // Assuming custID corresponds to the ID of the customer
-//                        rs.getString("employeeName"),
-//                        rs.getString("employeeType"),
-                        rs.getString("date")
-                );
+                Inquiry inquiry = new Inquiry(rs.getString(3), rs.getInt(1), rs.getString(4),
+                        rs.getString(5), rs.getInt(2), rs.getTimestamp(6).toLocalDateTime());
                 inquiries.add(inquiry);
             }
         } catch (SQLException e) {
@@ -202,8 +186,7 @@ public class Inquiry implements InquiryROI {
         }
         return inquiries;
     }
-
-
+    
     @Override
     public void addInquiry(int customerID) {
         // hat5od el inquiry mn el GUI then add it to the db table inquiry
@@ -215,7 +198,7 @@ public class Inquiry implements InquiryROI {
             String query = "INSERT INTO inquiry (date, question, response, custCategory, employee_id, customer_id) " +
                     "VALUES ('" + date + "', '" + question + "', '" + null + "', '" +
                     custCategory + "', " + null + ", " + customerID + ")";
-
+            
             Statement stmt = conn.createStatement();
             stmt.executeUpdate(query, Statement.RETURN_GENERATED_KEYS);
             System.out.println("Inquiry added successfully to the database.");
