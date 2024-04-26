@@ -19,7 +19,7 @@ Customer cust;
         initComponents();
         setLocationRelativeTo(null);
         cust= c;
-        retrievingusagefield.setText(c.getMeterReader().viewUsage()+" ");
+        retrievingusagefield.setText(c.getMeterReader().viewUsage(c.getID()) + "");
     }
 
     /**

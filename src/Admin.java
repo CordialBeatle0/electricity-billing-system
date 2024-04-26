@@ -15,14 +15,6 @@ public class Admin extends Employee {
 			Account account) {
 		super(ID, name, age, address, phoneNumber, gender, salary, account);
 	}
-	
-	public void manageCustStatus(Customer customer) {
-		//TODO: Add implementation
-	}
-
-	public void manageCustCategory(Customer customer) {
-		//TODO: Add implementation
-	}
 
     @Override
     public void handle(Inquiry inquiry) {

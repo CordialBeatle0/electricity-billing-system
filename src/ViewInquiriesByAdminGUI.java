@@ -1,8 +1,6 @@
-
-import java.util.ArrayList;
-import javax.management.modelmbean.ModelMBean;
+import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
+import java.util.ArrayList;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -16,6 +14,7 @@ public class ViewInquiriesByAdminGUI extends javax.swing.JFrame {
     Employee employee;
     Inquiry inq = new Inquiry();
     ArrayList<Inquiry> inquiries;
+    DefaultTableModel model;
 
     /**
      * Creates new form ViewInquiriesByAdminGUI
@@ -28,6 +27,7 @@ public class ViewInquiriesByAdminGUI extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         employee = emp;
+        model = ((DefaultTableModel) InquiriesJTable.getModel());
     }
 
     /**
@@ -56,7 +56,7 @@ public class ViewInquiriesByAdminGUI extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ID", "Question", "Customer Name", "Customer Category", "Date"
+                    "Customer ID", "Question", "Customer Name", "Customer Category", "Date"
             }
         ) {
             Class[] types = new Class [] {
@@ -74,14 +74,8 @@ public class ViewInquiriesByAdminGUI extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        InquiriesJTable.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(InquiriesJTable);
-        if (InquiriesJTable.getColumnModel().getColumnCount() > 0) {
-            InquiriesJTable.getColumnModel().getColumn(0).setResizable(false);
-            InquiriesJTable.getColumnModel().getColumn(1).setResizable(false);
-            InquiriesJTable.getColumnModel().getColumn(2).setResizable(false);
-            InquiriesJTable.getColumnModel().getColumn(3).setResizable(false);
-            InquiriesJTable.getColumnModel().getColumn(4).setResizable(false);
-        }
 
         SearchLabel.setText("Search by Customer ID");
 
@@ -169,42 +163,52 @@ public class ViewInquiriesByAdminGUI extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void viewAll_InquiryBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewAll_InquiryBtnActionPerformed
-        DefaultTableModel model = ((DefaultTableModel) InquiriesJTable.getModel());
+    
+    private void loadDataIntoTable() {
         int row = 0;
         int col;
-        for (Inquiry i : Inquiry.viewInquiries(employee.getClass().getName())) {
+        model.setRowCount(0);
+        for (Inquiry i : inquiries) {
             col = 0;
-            model.setValueAt(i.getID(), row, col++);
+            model.addRow(new Object[]{});
+            model.setValueAt(i.getCustID(), row, col++);
             model.setValueAt(i.getCustName(), row, col++);
             model.setValueAt(i.getQuestion(), row, col++);
             model.setValueAt(i.getCustCategory(), row, col++);
             model.setValueAt(i.getDate(), row, col++);
             row++;
         }
+    }
+    
+    private void viewAll_InquiryBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewAll_InquiryBtnActionPerformed
+        inquiries = Inquiry.viewInquiries(employee.getID());
+        loadDataIntoTable();
     }//GEN-LAST:event_viewAll_InquiryBtnActionPerformed
 
     private void SearchBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchBtnActionPerformed
         String searchTextField = CustIDTextField.getText();
-        inquiries = inq.viewInquiriesByID(Integer.parseInt(searchTextField), employee.getClass().getName());
-        TableModel model = new DefaultTableModel();
-        int row = 0;
-        int col;
-        for (Inquiry i : inquiries) {
-            col = 0;
-            model.setValueAt(i.getID(), row, col++);
-            model.setValueAt(i.getCustName(), row, col++);
-            model.setValueAt(i.getQuestion(), row, col++);
-            model.setValueAt(i.getCustCategory(), row, col++);
-            model.setValueAt(i.getDate(), row, col++);
-            row++;
+        
+        if (searchTextField == null) {
+            JOptionPane.showMessageDialog(this, "Please enter an id in the text box");
+            return;
         }
-        InquiriesJTable.setModel(model);
+        
+        inquiries = inq.viewInquiriesByID(Integer.parseInt(searchTextField), employee.getID());
+        
+        if (inquiries.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Customer does not exist or has not made any inquiries");
+            return;
+        }
+        
+        loadDataIntoTable();
     }//GEN-LAST:event_SearchBtnActionPerformed
 
     private void responeBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_responeBtnActionPerformed
         int indexSelected = InquiriesJTable.getSelectedRow();
+        if (indexSelected == -1) {
+            JOptionPane.showMessageDialog(this, "PLease select a row from the table");
+            return;
+        }
         Inquiry inquiry = inquiries.get(indexSelected);
         RespondToInquiryGUI gui = new RespondToInquiryGUI(employee, inquiry);
         gui.setVisible(true);

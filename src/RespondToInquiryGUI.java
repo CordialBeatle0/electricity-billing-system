@@ -158,9 +158,11 @@ public class RespondToInquiryGUI extends javax.swing.JFrame {
         try {
             Connection connection = DatabaseSingleton.getInstance().getConnection();
             Statement statement = connection.createStatement();
-            statement.executeUpdate("UPDATE inquiry SET response = " + response + ", employee_id = " + employee.getID() + " WHERE id = " + inquiry.getID());
+            statement.executeUpdate("UPDATE inquiry SET response = '" + response + "', employee_id = " + employee.getID() + " WHERE id = " + inquiry.getID());
+            JOptionPane.showMessageDialog(this, "Response submitted");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error updating inquiry in database");
+            return;
         }
 
         switch (employee.getClass().getName()) {

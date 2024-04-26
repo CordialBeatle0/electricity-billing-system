@@ -1,4 +1,5 @@
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import javax.swing.JOptionPane;
 
@@ -112,18 +113,10 @@ public class AddInquiryGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void submitBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitBtnActionPerformed
-
-        // Get the current time in milliseconds
-        long currentTimeMillis = System.currentTimeMillis();
-
-        // Create a Date object using the current time
-        Date currentDate = new Date(currentTimeMillis);
-
         String question = questionTextArea.getText();
         String response = null;
-        String dateOfSubmit = currentDate.toString(); // wanna test this out
 
-        Inquiry inq = new Inquiry(question, cust.getCategory().getClass().getName(), cust.getName(), cust.getID(), dateOfSubmit);
+        Inquiry inq = new Inquiry(question, cust.getCategory().getClass().getName(), cust.getName(), cust.getID(), LocalDateTime.now());
         inq.addInquiry(cust.getID());
 
         JOptionPane.showMessageDialog(this, "Successfully submitted");

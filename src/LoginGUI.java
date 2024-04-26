@@ -123,6 +123,11 @@ public class LoginGUI extends javax.swing.JFrame {
     private void jButtonLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLoginActionPerformed
         boolean isCustomer = jRadioButtonCustomer.isSelected();
         boolean isEmployee = jRadioButtonEmployee.isSelected();
+        
+        if (!isCustomer && !isEmployee) {
+            JOptionPane.showMessageDialog(this, "Select if you are a customer or employee");
+            return;
+        }
 
         String username = jTextFieldUsername.getText();
         String password = jTextFieldPassword.getText();

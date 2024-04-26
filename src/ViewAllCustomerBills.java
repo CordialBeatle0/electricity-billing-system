@@ -5,7 +5,9 @@
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 /**
@@ -15,9 +17,13 @@ import java.util.ArrayList;
 public class ViewAllCustomerBills extends javax.swing.JFrame {
 
 	Admin admin;
-	int customerID = 1;
-	DefaultTableModel model;
-	/**
+    final int firstID = getFirstCustomerFromDB();
+    final int lastID = getLastCustomerFromDB();
+    int customerID = firstID;
+    DefaultTableModel model;
+    ArrayList<Customer> customers;
+    
+    /**
 	 * Creates new form ViewAllCustomerBills
 	 */
 	public ViewAllCustomerBills() {
@@ -179,7 +185,33 @@ public class ViewAllCustomerBills extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
+    private int getFirstCustomerFromDB() {
+        try {
+            Connection connection = DatabaseSingleton.getInstance().getConnection();
+            Statement statement = connection.createStatement();
+            ResultSet result = statement.executeQuery("SELECT MIN(customer_id) FROM bill");
+            result.next();
+            return result.getInt(1);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error retrieving bills from database in view all customer bills gui");
+        }
+        return -1;
+    }
+    
+    private int getLastCustomerFromDB() {
+        try {
+            Connection connection = DatabaseSingleton.getInstance().getConnection();
+            Statement statement = connection.createStatement();
+            ResultSet result = statement.executeQuery("SELECT MAX(customer_id) FROM bill");
+            result.next();
+            return result.getInt(1);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error retrieving bills from database in view all customer bills gui");
+        }
+        return -1;
+    }
+    
     private void jButtonNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNextActionPerformed
 		loadDataToTable(1);
     }//GEN-LAST:event_jButtonNextActionPerformed
@@ -196,29 +228,33 @@ public class ViewAllCustomerBills extends javax.swing.JFrame {
 
 	private void loadDataToTable(int changeInInt) {
 		if (changeInInt == 1) {
-			customerID++;
-			if (!Customer.doesCustomerExist(customerID)) {
-				customerID--;
-				JOptionPane.showMessageDialog(this, "Last customer reached");
-			}
-		} else {
+            customerID++;
+            if (customerID > lastID) {
+                customerID--;
+                JOptionPane.showMessageDialog(this, "Last customer already reached");
+                return;
+            }
+        } else if (changeInInt == -1) {
 			customerID--;
-			if (customerID <= 0) {
+            if (customerID < firstID) {
 				customerID++;
-				JOptionPane.showMessageDialog(this, "First customer reached");
+                JOptionPane.showMessageDialog(this, "First customer already reached");
+                return;
 			}
 		}
 		
 		ArrayList<Bill> bills = Bill.getBillsFromDB(customerID);
 		jTextFieldCustomerName.setText(bills.get(0).getCustName());
-		jLabelCustomerAddress.setText(bills.get(0).getCustAddress());
+        jTextFieldCustomerAddress.setText(bills.get(0).getCustAddress());
 		
 		int columns;
 		int row = 0;
+        model.setRowCount(0);
 		
 		for (Bill bill : bills) {
 			columns = 0;
-			model.setValueAt(bill.getID(), row, columns++);
+            model.addRow(new Object[]{});
+            model.setValueAt(bill.getID(), row, columns++);
 			model.setValueAt(bill.getTotalAmount(), row, columns++);
 			model.setValueAt(bill.getDate(), row, columns++);
 			row++;

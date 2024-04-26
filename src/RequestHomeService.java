@@ -4,7 +4,7 @@
  */
 
 import javax.swing.*;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /**
  *
@@ -107,7 +107,7 @@ public class RequestHomeService extends javax.swing.JFrame {
     private void jButtonRequestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRequestActionPerformed
 		String reasonForRequest = "Service";
 		
-		Request request = new Request(customer.getID(), customer.getName(), reasonForRequest, customer.getAddress(), LocalDate.now());
+		Request request = new Request(customer.getID(), customer.getName(), reasonForRequest, customer.getAddress(), LocalDateTime.now());
 		request.addRequesttoDB();
 		JOptionPane.showMessageDialog(this, "Thank you for submitting a request, a technician will be with you shortly");
 		

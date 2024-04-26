@@ -1,13 +1,12 @@
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 import java.awt.event.ActionEvent;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 /*
@@ -34,12 +33,12 @@ public class ViewRequestGUI extends javax.swing.JFrame {
         technician = tech;
         
         DefaultTableModel model = ((DefaultTableModel) jTable1.getModel());
+        model.setRowCount(0);
         int row = 0;
         int col;
         
         ArrayList<Request> requests = Request.viewRequest(tech);
         if (requests.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "There are no requests available");
             return;
         }
         for (Request r : requests) {
@@ -194,7 +193,7 @@ public class ViewRequestGUI extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(this, "The request type does not match the selected button");
                     return;
                 }
-                Request request = new Request(result.getInt(1), result.getInt(6), result.getString(2), result.getString(3), result.getString(4), LocalDate.now());
+                Request request = new Request(result.getInt(1), result.getInt(6), result.getString(2), result.getString(3), result.getString(4), LocalDateTime.now());
                 ConfirmCashPaymentGUI confirmCashPaymentGUI = new ConfirmCashPaymentGUI(technician, request);
                 confirmCashPaymentGUI.setVisible(true);
                 this.dispose();
