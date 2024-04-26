@@ -2,6 +2,8 @@ import javax.swing.*;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
@@ -118,7 +120,7 @@ public class Bill implements Publisher {
 			try{
 				Connection connection = DatabaseSingleton.getInstance().getConnection();
 				Statement statement = connection.createStatement();
-				statement.executeUpdate("INSERT INTO bill(totalAmount, date, customer_id) values("+billtotalAmount+",'"+LocalDate.now()+"',"+customer.getID()+")");
+				statement.executeUpdate("INSERT INTO bill(totalAmount, date, customer_id) values("+billtotalAmount+",'" + LocalDate.now() + "',"+customer.getID()+")");
 			}
 			catch (Exception e) {
 				JOptionPane.showMessageDialog(null, "Error adding bill to database");
@@ -155,8 +157,8 @@ public class Bill implements Publisher {
 				
 				// translates string to long and from long to date (built in)
 				String date_String = result.getString("date");
-				long date_long = Long.getLong(date_String);
-				Date sqlDate = new Date(date_long);
+				DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+				Date sqlDate = dateFormat.parse(date_String);
 				
 				int custID = result.getInt("customer_id");
 				Customer customer = Customer.getCustomersFromDB("id = " + custID).get(0);

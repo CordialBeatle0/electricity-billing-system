@@ -56,6 +56,11 @@ public class TechnicianDashboardGUI extends javax.swing.JFrame {
 
         updateAccountButton.setText("Update Account");
         updateAccountButton.setToolTipText("");
+        updateAccountButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateAccountButtonActionPerformed(evt);
+            }
+        });
 
         jButtonSignOut.setText("Sign Out");
         jButtonSignOut.addActionListener(new java.awt.event.ActionListener() {
@@ -117,6 +122,12 @@ public class TechnicianDashboardGUI extends javax.swing.JFrame {
         gui.setVisible(true);
         dispose();
     }//GEN-LAST:event_jButtonSignOutActionPerformed
+
+    private void updateAccountButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateAccountButtonActionPerformed
+        UpdateAccount gui = new UpdateAccount(technician);
+        gui.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_updateAccountButtonActionPerformed
 
     /**
      * @param args the command line arguments

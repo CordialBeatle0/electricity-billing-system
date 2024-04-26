@@ -16,7 +16,7 @@ public class ViewAllCustomerBills extends javax.swing.JFrame {
 
 	Admin admin;
 	int customerID = 1;
-	TableModel model = new DefaultTableModel();
+	DefaultTableModel model;
 	/**
 	 * Creates new form ViewAllCustomerBills
 	 */
@@ -28,8 +28,8 @@ public class ViewAllCustomerBills extends javax.swing.JFrame {
 		initComponents();
 		setLocationRelativeTo(null);
 		admin = a;
-		
-		jTable1.setModel(model);
+		model = ((DefaultTableModel) jTable1.getModel());
+		loadDataToTable(0);
 	}
 
 	/**

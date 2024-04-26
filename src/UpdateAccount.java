@@ -38,7 +38,6 @@ public class UpdateAccount extends javax.swing.JFrame {
         id = emp.getID();
         usernamefield.setText(username);
         passwordfield.setText(password);
-
     }
 
     public UpdateAccount(Customer c) {
@@ -153,7 +152,7 @@ public class UpdateAccount extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void SubmitingAccountDetailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SubmitingAccountDetailsActionPerformed
-        // retriveing what was written in the text field
+        // retrieving what was written in the text field
         String newUsername = usernamefield.getText();
         String newPassword = passwordfield.getText();
         // update the database
@@ -168,6 +167,7 @@ public class UpdateAccount extends javax.swing.JFrame {
                 statement.executeUpdate("UPDATE account JOIN employee ON account.id = account_id set password= '" + newPassword + "' WHERE employee.id = " + id);
             }
             JOptionPane.showMessageDialog(this, "Account Updated Successfully!");
+            sendToDashboard();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error Submitting account Details!");
         }
@@ -175,6 +175,10 @@ public class UpdateAccount extends javax.swing.JFrame {
     }//GEN-LAST:event_SubmitingAccountDetailsActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        sendToDashboard();
+    }//GEN-LAST:event_jButton2ActionPerformed
+    
+    private void sendToDashboard() {
         if (cust != null) {
             CustomerDashboardGUI gui = new CustomerDashboardGUI(cust);
             gui.setVisible(true);
@@ -196,7 +200,7 @@ public class UpdateAccount extends javax.swing.JFrame {
             default:
         }
         this.dispose();
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }
 
     /**
      * @param args the command line arguments

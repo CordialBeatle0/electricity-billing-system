@@ -70,15 +70,10 @@ public class Request {
         Connection conn = db.getConnection();
         try {
             Statement stmt = conn.createStatement();
-            String sql = "SELECT request.id, customer_id, location, requestType FROM request, customer WHERE request.customer_id = customer.id AND location = '" + tech.getAssignedLocation() + "'";
+            String sql = "SELECT id, custName, requestType, location, date, customer_id FROM request WHERE location = '" + tech.getAssignedLocation() + "'";
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
-                Request request = new Request(
-                        rs.getInt(1),
-                        rs.getInt(2),
-                        rs.getString(3),
-                        rs.getString(4)
-                );
+                Request request = new Request(rs.getInt(1), rs.getInt(6), rs.getString(2), rs.getString(3), rs.getString(4), LocalDate.now());
                 requests.add(request);
             }
         } catch (SQLException e) {
@@ -96,7 +91,7 @@ public class Request {
         try {
             Connection connection= DatabaseSingleton.getInstance().getConnection();
             Statement statement=  connection.createStatement();
-            statement.executeUpdate("INSERT INTO request(custID, custName, requestType, location, date) values(" + custID + ",'" + custName + "','" + requestType + "','" + location + "','" + date + "')");
+            statement.executeUpdate("INSERT INTO request(customer_id, custName, requestType, location, date) values(" + custID + ",'" + custName + "','" + requestType + "','" + location + "','" + date + "')");
         }
         catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error adding request to database");

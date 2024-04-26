@@ -124,7 +124,7 @@ public class AddInquiryGUI extends javax.swing.JFrame {
         String dateOfSubmit = currentDate.toString(); // wanna test this out
 
         Inquiry inq = new Inquiry(question, cust.getCategory().getClass().getName(), cust.getName(), cust.getID(), dateOfSubmit);
-        inq.addInquiry();
+        inq.addInquiry(cust.getID());
 
         JOptionPane.showMessageDialog(this, "Successfully submitted");
         

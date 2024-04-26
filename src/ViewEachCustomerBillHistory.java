@@ -18,7 +18,7 @@ public class ViewEachCustomerBillHistory extends javax.swing.JFrame {
      * Creates new form ViewEachCustomerBillHistory
      */
     Customer cust;
-    TableModel model = new DefaultTableModel();
+    DefaultTableModel model;
     
     public ViewEachCustomerBillHistory() {
         initComponents();
@@ -27,19 +27,19 @@ public class ViewEachCustomerBillHistory extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         cust= c;
-        jTable1.setModel(model);
+        model = ((DefaultTableModel) jTable1.getModel());
+        model.setRowCount(0);
         loadDataToTable();
-        
-        
     }
     
     private void loadDataToTable(){
         ArrayList<Bill> bills = Bill.getBillsFromDB(cust.getID());
 		int columns;
 		int row = 0;
-		
+  
 		for (Bill bill : bills) {
 			columns = 0;
+            model.addRow(new Object[]{});
 			model.setValueAt(bill.getID(), row, columns++);
 			model.setValueAt(bill.getTotalAmount(), row, columns++);
 			model.setValueAt(bill.getDate(), row, columns++);

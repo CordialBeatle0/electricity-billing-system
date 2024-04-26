@@ -2,10 +2,12 @@
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
+import java.awt.event.ActionEvent;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 /*
@@ -30,7 +32,8 @@ public class ViewRequestGUI extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         technician = tech;
-        TableModel model = new DefaultTableModel();
+        
+        DefaultTableModel model = ((DefaultTableModel) jTable1.getModel());
         int row = 0;
         int col;
         
@@ -41,13 +44,13 @@ public class ViewRequestGUI extends javax.swing.JFrame {
         }
         for (Request r : requests) {
             col = 0;
+            model.addRow(new Object[]{});
             model.setValueAt(r.getID(), row, col++);
             model.setValueAt(r.getCustID(), row, col++);
             model.setValueAt(r.getLocation(), row, col++);
             model.setValueAt(r.getRequestType(), row, col++);
             row++;
         }
-        jTable1.setModel(model);
     }
 
     /**
@@ -175,10 +178,11 @@ public class ViewRequestGUI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void ConfirmCashPaymentBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConfirmCashPaymentBtnActionPerformed
+    private void ConfirmCashPaymentBtnActionPerformed(ActionEvent evt) {//GEN-FIRST:event_ConfirmCashPaymentBtnActionPerformed
         String requestID = RequestIDTextField.getText();
         if (requestID.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Please select a request");
+            JOptionPane.showMessageDialog(this, "Please enter a request id");
+            return;
         }
         
         Connection conn = DatabaseSingleton.getInstance().getConnection();
@@ -186,10 +190,16 @@ public class ViewRequestGUI extends javax.swing.JFrame {
             Statement stat = conn.createStatement();
             ResultSet result = stat.executeQuery("SELECT * FROM request WHERE id = " + requestID);
             if (result.next()) {
-                Request request = new Request(result.getInt("id"), result.getInt("custID"), result.getString("location"), result.getString("requestType"));
+                if (!result.getString("requestType").equals("Collect Cash Payment")) {
+                    JOptionPane.showMessageDialog(this, "The request type does not match the selected button");
+                    return;
+                }
+                Request request = new Request(result.getInt(1), result.getInt(6), result.getString(2), result.getString(3), result.getString(4), LocalDate.now());
                 ConfirmCashPaymentGUI confirmCashPaymentGUI = new ConfirmCashPaymentGUI(technician, request);
                 confirmCashPaymentGUI.setVisible(true);
                 this.dispose();
+            } else {
+                JOptionPane.showMessageDialog(this, "Please select a request id from the ones displayed");
             }
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error retrieving request from database");
@@ -198,12 +208,27 @@ public class ViewRequestGUI extends javax.swing.JFrame {
 
     private void FinalizeServiceBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FinalizeServiceBtnActionPerformed
         String requestID = RequestIDTextField.getText();
+        if (requestID.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please enter a request id");
+            return;
+        }
+        
         Connection conn = DatabaseSingleton.getInstance().getConnection();
         try {
             Statement stat = conn.createStatement();
-            stat.executeQuery("DELETE FROM request WHERE id = " + requestID);
+            ResultSet result = stat.executeQuery("SELECT * FROM request WHERE id = " + requestID);
+            if (result.next()) {
+                if (!result.getString("requestType").equals("Service")) {
+                    JOptionPane.showMessageDialog(this, "The request type does not match the selected button");
+                    return;
+                }
+                stat.executeUpdate("DELETE FROM request WHERE id = " + requestID);
+                JOptionPane.showMessageDialog(this, "Request finalized");
+            } else {
+                JOptionPane.showMessageDialog(this, "Please select a request id from the ones displayed");
+            }
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error retrieving deleting request from database");
+            JOptionPane.showMessageDialog(null, "Request does not exist in database");
         }
     }//GEN-LAST:event_FinalizeServiceBtnActionPerformed
 
