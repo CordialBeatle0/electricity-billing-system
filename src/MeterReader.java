@@ -77,7 +77,8 @@ public class MeterReader {
 					", previousReading = " + currentReading + " WHERE id = " + getID();
 			statement.executeUpdate(sql);
 			
-			currentReading = (timeInSeconds / 1000f);
+			previousReading = currentReading;
+			currentReading = newCurrentReading;
 		} catch (Exception e) {
 			System.out.println("Error in getCurrentReadingFromTimePassed function");
 		}

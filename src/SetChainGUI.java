@@ -1,6 +1,6 @@
 
 import java.util.ArrayList;
-import javax.swing.DefaultComboBoxModel;
+import javax.swing.*;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -175,63 +175,99 @@ public class SetChainGUI extends javax.swing.JFrame {
 
     private void confirmButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmButtonActionPerformed
         //get the index of each handler from drop downs
-        int firstHandler = this.fiirstHandler.getSelectedIndex();
-        int secondHandler = this.secondHandler.getSelectedIndex();
-        int thirdHandler = this.thirdHandler.getSelectedIndex();
-
-        Employee emp1;
-        Employee emp2;
-        Employee emp3;
-
-        //determine the chain order according to eneterd indices
-        switch (firstHandler) {
-            case 0:
-                emp1 = new Admin();
+        int firstHandlerInt = this.fiirstHandler.getSelectedIndex();
+        String firstHandlerString = fiirstHandler.getModel().getElementAt(firstHandlerInt);
+        
+        int secondHandlerInt = this.secondHandler.getSelectedIndex();
+        String secondHandlerString = secondHandler.getModel().getElementAt(secondHandlerInt);
+        
+        int thirdHandlerInt = this.thirdHandler.getSelectedIndex();
+        String thirdHandlerString = thirdHandler.getModel().getElementAt(thirdHandlerInt);
+        
+        boolean isAdminSelected = false;
+        boolean isCustomerServiceSelected = false;
+        boolean isTechnicianSelected = false;
+        
+        ArrayList<Employee> employees = Employee.getEmployeesFromDB("");
+        Admin emp1 = null;
+        CustomerService emp2 = null;
+        Technician emp3 = null;
+        
+        Employee selectedEmp1;
+        Employee selectedEmp2;
+        Employee selectedEmp3;
+        
+        for (Employee employee : employees) {
+            
+            if (isAdminSelected && isTechnicianSelected && isCustomerServiceSelected) {
                 break;
-            case 1:
-                emp1 = new CustomerService();
+            }
+            
+            if (!isAdminSelected && employee.getClass().getName().equals("Admin")) {
+                emp1 = ((Admin) employee);
+                isAdminSelected = true;
+            } else if (!isCustomerServiceSelected && employee.getClass().getName().equals("CustomerService")) {
+                emp2 = ((CustomerService) employee);
+                isCustomerServiceSelected = true;
+            } else if (!isTechnicianSelected && employee.getClass().getName().equals("Technician")) {
+                emp3 = ((Technician) employee);
+                isTechnicianSelected = true;
+            }
+        }
+        
+        //determine the chain order according to entered indices
+        switch (firstHandlerString) {
+            case "Admin":
+                selectedEmp1 = emp1;
                 break;
-            case 2:
-                emp1 = new Technician();
+            case "Customer Service":
+                selectedEmp1 = emp2;
+                break;
+            case "Technician":
+                selectedEmp1 = emp3;
                 break;
             default:
-                emp1 = new CustomerService();
+                selectedEmp1 = emp2;
                 break;
         }
-        switch (secondHandler) {
-            case 0:
-                emp2 = new Admin();
+        switch (secondHandlerString) {
+            case "Admin":
+                selectedEmp2 = emp1;
                 break;
-            case 1:
-                emp2 = new CustomerService();
+            case "Customer Service":
+                selectedEmp2 = emp2;
                 break;
-            case 2:
-                emp2 = new Technician();
+            case "Technician":
+                selectedEmp2 = emp3;
                 break;
             default:
-                emp2 = new Admin();
+                selectedEmp2 = emp1;
                 break;
         }
-        switch (thirdHandler) {
-            case 0:
-                emp3 = new Admin();
+        switch (thirdHandlerString) {
+            case "Admin":
+                selectedEmp3 = emp1;
                 break;
-            case 1:
-                emp3 = new CustomerService();
+            case "Customer Service":
+                selectedEmp3 = emp2;
                 break;
-            case 2:
-                emp3 = new Technician();
+            case "Technician":
+                selectedEmp3 = emp3;
                 break;
             default:
-                emp3 = new Technician();
+                selectedEmp3 = emp3;
                 break;
         }
 
         //set the chain
-        emp1.setHandler(emp2);
-        emp2.setHandler(emp3);
-        emp3.setHandler(null);
-
+        selectedEmp1.setHandler(selectedEmp2);
+        selectedEmp2.setHandler(selectedEmp3);
+        selectedEmp3.setHandler(null);
+        
+        JOptionPane.showMessageDialog(this, "Chain has been set");
+        AdminDashboardGUI gui = new AdminDashboardGUI(admin);
+        gui.setVisible(true);
+        dispose();
     }//GEN-LAST:event_confirmButtonActionPerformed
 
     private void jButtonCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelActionPerformed

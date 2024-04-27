@@ -196,7 +196,7 @@ public class Inquiry implements InquiryROI {
             ResultSet generatedKeys;
             // Create the SQL query using values from the Inquiry object
             String query = "INSERT INTO inquiry (date, question, response, custCategory, employee_id, customer_id) " +
-                    "VALUES ('" + date + "', '" + question + "', '" + null + "', '" +
+                    "VALUES ('" + date + "', '" + question + "', " + null + ", '" +
                     custCategory + "', " + null + ", " + customerID + ")";
             
             Statement stmt = conn.createStatement();

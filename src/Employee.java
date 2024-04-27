@@ -99,7 +99,13 @@ public abstract class Employee {
         Connection conn = DatabaseSingleton.getInstance().getConnection();
         try {
             Statement stmt = conn.createStatement();
-            stmt.executeUpdate("UPDATE employee SET nextEmp = " + employee.getID() + " WHERE employeeType = " + this.getClass().getName());
+            String sql;
+            if (nextEmp == null) {
+                sql = "UPDATE employee SET nextEmp = null WHERE employeeType = '" + this.getClass().getName() + "'";
+            } else {
+                sql = "UPDATE employee SET nextEmp = " + employee.getID() + " WHERE employeeType = '" + this.getClass().getName() + "'";
+            }
+            stmt.executeUpdate(sql);
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error updating employee in setHandler function in employee class");
         }
