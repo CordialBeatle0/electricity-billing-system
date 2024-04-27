@@ -32,6 +32,9 @@ public class Cash implements Payment {
 				if (outstandingFees == 0.0) {
 					JOptionPane.showMessageDialog(null, "Customer with ID "
 							+ custID + " has no outstanding fees.");
+				} else if (payedAmount > outstandingFees) {
+					JOptionPane.showMessageDialog(null, " Amount is grater than outstaanding");
+					return;
 				} else {
 					// Update the customer's outstanding fees to 0
 					String update = "UPDATE customer SET outstandingFees = "
