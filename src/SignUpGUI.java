@@ -1,9 +1,9 @@
-
-import javax.swing.JOptionPane;
+import javax.swing.*;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDateTime;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -181,7 +181,7 @@ public class SignUpGUI extends javax.swing.JFrame {
             String checkUsernameQuery = "SELECT username FROM account WHERE username = '" + username + "'";
             ResultSet rs = stmt.executeQuery(checkUsernameQuery);
             if (rs.next()) {
-                JOptionPane.showMessageDialog(null, "Username already exists");
+                JOptionPane.showMessageDialog(this, "Username already exists");
                 return;
             }
 
@@ -197,9 +197,16 @@ public class SignUpGUI extends javax.swing.JFrame {
 
             String createCustomerQuery = "INSERT INTO customer (name, phone, address, isTimeToPay, outstandingFees, subscriptionStatus, account_id) VALUES "
                     + "('" + name + "', '" + phoneNumber + "', '" + address + "', FALSE, 0, FALSE, " + accountId + ")";
-            stmt.executeUpdate(createCustomerQuery);
+            stmt.executeUpdate(createCustomerQuery, Statement.RETURN_GENERATED_KEYS);
+            generatedKeys = stmt.getGeneratedKeys();
+            int customerId = -1;
+            if (generatedKeys.next()) {
+                customerId = generatedKeys.getInt(1);
+            }
+            
+            stmt.executeUpdate("INSERT INTO bill (totalAmount, date, customer_id) VALUE (0, '" + LocalDateTime.now() + "', " + customerId + ")");
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Couldn't Sign up");
+            JOptionPane.showMessageDialog(this, "Couldn't Sign up");
         }
 
         LoginGUI gui = new LoginGUI();

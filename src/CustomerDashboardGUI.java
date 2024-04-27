@@ -4,6 +4,10 @@
  */
 
 import javax.swing.*;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
 
 /**
  * @author Assar
@@ -14,6 +18,8 @@ public class CustomerDashboardGUI extends javax.swing.JFrame {
      * Creates new form CustomerDashboardGUI
      */
     Customer customer;
+    ArrayList<String> notifications = new ArrayList<>();
+    ArrayList<Integer> ids = new ArrayList<>();
 
     public CustomerDashboardGUI() {
         initComponents();
@@ -26,6 +32,7 @@ public class CustomerDashboardGUI extends javax.swing.JFrame {
         customer = c;
         CustomerNameField.setText(customer.getName());
         CustomerNameField.setEditable(false);
+        loadNotifications();
     }
 
 
@@ -52,6 +59,8 @@ public class CustomerDashboardGUI extends javax.swing.JFrame {
         inquiryButton = new javax.swing.JButton();
         jButtonSignOut = new javax.swing.JButton();
         jButtonUpdateAccount = new javax.swing.JButton();
+        jButtonNextNotification = new javax.swing.JButton();
+        jButtonViewRequest = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -82,7 +91,7 @@ public class CustomerDashboardGUI extends javax.swing.JFrame {
         });
 
         jLabel1.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
-        jLabel1.setText("View");
+        jLabel1.setText("Views");
 
         renewButton.setText("Renew Subscription");
         renewButton.addActionListener(new java.awt.event.ActionListener() {
@@ -132,6 +141,20 @@ public class CustomerDashboardGUI extends javax.swing.JFrame {
             }
         });
 
+        jButtonNextNotification.setText("View Next Notification");
+        jButtonNextNotification.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonNextNotificationActionPerformed(evt);
+            }
+        });
+
+        jButtonViewRequest.setText("View Ongoing Requests");
+        jButtonViewRequest.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonViewRequestActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -143,32 +166,39 @@ public class CustomerDashboardGUI extends javax.swing.JFrame {
                 .addComponent(CustomerNameField, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
-                .addGap(32, 32, 32)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButtonSignOut)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel2)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(89, 89, 89)
-                        .addComponent(renewButton, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(66, 66, 66)
-                        .addComponent(subButtton, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGap(32, 32, 32)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel2)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(inquiryButton, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(homeServiceButton, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(usageButton, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(43, 43, 43)
-                                    .addComponent(inquiryHistoryButton, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(40, 40, 40)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(BillingHistoryButton, javax.swing.GroupLayout.DEFAULT_SIZE, 157, Short.MAX_VALUE)
-                            .addComponent(jButtonUpdateAccount, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                .addGap(89, 89, 89)
+                                .addComponent(renewButton, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(66, 66, 66)
+                                .addComponent(subButtton, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(inquiryButton, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(homeServiceButton, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(usageButton, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGap(43, 43, 43)
+                                            .addComponent(inquiryHistoryButton, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING))
+                                    .addComponent(jButtonSignOut))
+                                .addGap(40, 40, 40)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(BillingHistoryButton, javax.swing.GroupLayout.DEFAULT_SIZE, 157, Short.MAX_VALUE)
+                                    .addComponent(jButtonUpdateAccount, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(122, 122, 122)
+                        .addComponent(jButtonNextNotification, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(46, 46, 46)
+                        .addComponent(jButtonViewRequest)))
                 .addContainerGap(36, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -198,7 +228,11 @@ public class CustomerDashboardGUI extends javax.swing.JFrame {
                     .addComponent(usageButton)
                     .addComponent(inquiryHistoryButton)
                     .addComponent(BillingHistoryButton))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                .addGap(28, 28, 28)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonNextNotification)
+                    .addComponent(jButtonViewRequest))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
                 .addComponent(jButtonSignOut)
                 .addGap(23, 23, 23))
         );
@@ -211,6 +245,21 @@ public class CustomerDashboardGUI extends javax.swing.JFrame {
         gui.setVisible(true);
         dispose();
     }//GEN-LAST:event_inquiryHistoryButtonActionPerformed
+    
+    private void loadNotifications() {
+        try {
+            Connection connection = DatabaseSingleton.getInstance().getConnection();
+            Statement statement = connection.createStatement();
+            ResultSet result =
+                    statement.executeQuery("SELECT * FROM notification WHERE customer_id = " + customer.getID());
+            while (result.next()) {
+                notifications.add(result.getString(2));
+                ids.add(result.getInt(1));
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error displaying notifications");
+        }
+    }
 
     private boolean checkSubscription(String message) {
         if (!customer.getSubscription().isSubscriptionStatus()) {
@@ -279,7 +328,24 @@ public class CustomerDashboardGUI extends javax.swing.JFrame {
         gui.setVisible(true);
         dispose();
     }//GEN-LAST:event_jButtonUpdateAccountActionPerformed
-
+    
+    private void jButtonNextNotificationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNextNotificationActionPerformed
+        if (notifications.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "You have no more notifications");
+            return;
+        }
+        JOptionPane.showMessageDialog(this, notifications.get(0));
+        customer.removeNotificationFromDB(ids.get(0));
+        notifications.remove(0);
+        ids.remove(0);
+    }//GEN-LAST:event_jButtonNextNotificationActionPerformed
+    
+    private void jButtonViewRequestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonViewRequestActionPerformed
+        ViewRequestCustomerGUI gui = new ViewRequestCustomerGUI(customer);
+        gui.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_jButtonViewRequestActionPerformed
+    
     /**
      * @param args the command line arguments
      */
@@ -322,8 +388,10 @@ public class CustomerDashboardGUI extends javax.swing.JFrame {
     private javax.swing.JButton homeServiceButton;
     private javax.swing.JButton inquiryButton;
     private javax.swing.JButton inquiryHistoryButton;
+    private javax.swing.JButton jButtonNextNotification;
     private javax.swing.JButton jButtonSignOut;
     private javax.swing.JButton jButtonUpdateAccount;
+    private javax.swing.JButton jButtonViewRequest;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
