@@ -1,5 +1,4 @@
-
-import javax.swing.JOptionPane;
+import javax.swing.*;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -133,7 +132,7 @@ public class RenewSubscriptionGUI extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Please enter an amount");
             return;
         }
-        int amount = Integer.parseInt(s);
+        float amount = Float.parseFloat(s);
         
         //get payment type from radio buttons
         Payment paymentType;

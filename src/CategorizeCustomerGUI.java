@@ -5,11 +5,10 @@
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
-import java.util.ArrayList;
 import java.sql.Connection;
-import java.sql.Statement;
 import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
 
 /**
  * @author pitos
@@ -18,7 +17,8 @@ public class CategorizeCustomerGUI extends javax.swing.JFrame {
 
     Admin admin;
     ArrayList<Customer> customers;
-
+    DefaultTableModel model;
+    
     /**
      * Creates new form CategorizeCustomerGUI
      */
@@ -31,18 +31,8 @@ public class CategorizeCustomerGUI extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         admin = a;
         customers = getCustomers();
-
-        DefaultTableModel model = ((DefaultTableModel) jTable1.getModel());
-        int i = 0;
-        for (Customer customer : customers) {
-
-            model.addRow(new Object[]{});
-            model.setValueAt(customer.getName(), i, 0);
-            model.setValueAt(customer.getPhoneNumber(), i, 1);
-            model.setValueAt(customer.getAddress(), i, 2);
-            i++;
-
-        }
+        model = ((DefaultTableModel) jTable1.getModel());
+        loadDataToTable();
     }
 
     /**
@@ -68,32 +58,32 @@ public class CategorizeCustomerGUI extends javax.swing.JFrame {
         jLabelTitle.setText("Categorize Customer");
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
-                new Object[][]{
+            new Object [][] {
 
-                },
-                new String[]{
-                        "Name", "Phone Number", "Address"
-                }
+            },
+            new String [] {
+                "Name", "Phone Number", "Address"
+            }
         ) {
-            Class[] types = new Class[]{
-                    java.lang.String.class, java.lang.String.class, java.lang.String.class
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
-            boolean[] canEdit = new boolean[]{
-                    false, false, false
+            boolean[] canEdit = new boolean [] {
+                false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
-                return types[columnIndex];
+                return types [columnIndex];
             }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit[columnIndex];
+                return canEdit [columnIndex];
             }
         });
         jTable1.setColumnSelectionAllowed(true);
         jTable1.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(jTable1);
-        jTable1.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jTable1.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
         if (jTable1.getColumnModel().getColumnCount() > 0) {
             jTable1.getColumnModel().getColumn(0).setResizable(false);
             jTable1.getColumnModel().getColumn(1).setResizable(false);
@@ -102,7 +92,7 @@ public class CategorizeCustomerGUI extends javax.swing.JFrame {
 
         jLabelSetCategory.setText("Set Category");
 
-        jComboBoxCategories.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"Individual", "Company", "Factory"}));
+        jComboBoxCategories.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Individual", "Company", "Factory" }));
 
         jButtonCancel.setText("Cancel");
         jButtonCancel.addActionListener(new java.awt.event.ActionListener() {
@@ -121,40 +111,40 @@ public class CategorizeCustomerGUI extends javax.swing.JFrame {
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(layout.createSequentialGroup()
-                                                .addGap(172, 172, 172)
-                                                .addComponent(jLabelTitle))
-                                        .addGroup(layout.createSequentialGroup()
-                                                .addGap(66, 66, 66)
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                        .addGroup(layout.createSequentialGroup()
-                                                                .addComponent(jButtonCancel)
-                                                                .addGap(18, 18, 18)
-                                                                .addComponent(jLabelSetCategory)
-                                                                .addGap(18, 18, 18)
-                                                                .addComponent(jComboBoxCategories, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                                .addComponent(jButtonSetCategoryToCustomer))
-                                                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                .addContainerGap(66, Short.MAX_VALUE))
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(172, 172, 172)
+                        .addComponent(jLabelTitle))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(66, 66, 66)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jButtonCancel)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabelSetCategory)
+                                .addGap(18, 18, 18)
+                                .addComponent(jComboBoxCategories, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButtonSetCategoryToCustomer))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(66, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                                .addGap(24, 24, 24)
-                                .addComponent(jLabelTitle)
-                                .addGap(18, 18, 18)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(jLabelSetCategory)
-                                        .addComponent(jComboBoxCategories, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jButtonCancel)
-                                        .addComponent(jButtonSetCategoryToCustomer))
-                                .addGap(20, 20, 20))
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addComponent(jLabelTitle)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabelSetCategory)
+                    .addComponent(jComboBoxCategories, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonCancel)
+                    .addComponent(jButtonSetCategoryToCustomer))
+                .addGap(20, 20, 20))
         );
 
         pack();
@@ -165,7 +155,18 @@ public class CategorizeCustomerGUI extends javax.swing.JFrame {
         gui.setVisible(true);
         dispose();
     }//GEN-LAST:event_jButtonCancelActionPerformed
-
+    
+    private void loadDataToTable() {
+        int row = 0;
+        for (Customer customer : customers) {
+            model.addRow(new Object[]{});
+            model.setValueAt(customer.getName(), row, 0);
+            model.setValueAt(customer.getPhoneNumber(), row, 1);
+            model.setValueAt(customer.getAddress(), row, 2);
+            row++;
+        }
+    }
+    
     private ArrayList<Customer> getCustomers() {
         ArrayList<Customer> customers = new ArrayList<>();
         try {
@@ -198,7 +199,9 @@ public class CategorizeCustomerGUI extends javax.swing.JFrame {
         int selectedCustomer = jTable1.getSelectedRow();
         Customer customer = customers.get(selectedCustomer);
         category.categorizeCustomer(customer);
-
+        
+        customers.remove(selectedCustomer);
+        model.removeRow(selectedCustomer);
     }//GEN-LAST:event_jButtonSetCategoryToCustomerActionPerformed
 
     /**

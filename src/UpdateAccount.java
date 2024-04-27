@@ -1,8 +1,5 @@
-
-import java.util.ArrayList;
-import javax.swing.JOptionPane;
+import javax.swing.*;
 import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.Statement;
 
 /*
@@ -33,9 +30,12 @@ public class UpdateAccount extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         emp = e;
+        
         username = emp.getAccount().getUsername();
         password = emp.getAccount().getPassword();
+        
         id = emp.getID();
+        
         usernamefield.setText(username);
         passwordfield.setText(password);
     }
