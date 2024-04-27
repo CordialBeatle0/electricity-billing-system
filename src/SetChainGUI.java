@@ -1,10 +1,13 @@
+
+import java.util.ArrayList;
+import javax.swing.DefaultComboBoxModel;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 
 /**
- *
  * @author Shero
  */
 public class SetChainGUI extends javax.swing.JFrame {
@@ -42,17 +45,36 @@ public class SetChainGUI extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         confirmButton = new javax.swing.JButton();
         jButtonCancel = new javax.swing.JButton();
+        resetBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         jLabel1.setText("Set Inquiry Handling Order");
 
-        fiirstHandler.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Admin", "Customer Service", "Technician", " " }));
+        fiirstHandler.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"Admin", "Customer Service", "Technician"}));
+        fiirstHandler.setSelectedIndex(-1);
+        fiirstHandler.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fiirstHandlerActionPerformed(evt);
+            }
+        });
 
-        thirdHandler.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Admin", "Customer Service", "Technician", " " }));
+        thirdHandler.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"Admin", "Customer Service", "Technician"}));
+        thirdHandler.setSelectedIndex(-1);
+        thirdHandler.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                thirdHandlerActionPerformed(evt);
+            }
+        });
 
-        secondHandler.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Admin", "Customer Service", "Technician", " " }));
+        secondHandler.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"Admin", "Customer Service", "Technician"}));
+        secondHandler.setSelectedIndex(-1);
+        secondHandler.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                secondHandlerActionPerformed(evt);
+            }
+        });
 
         jLabel2.setText("Second Handler");
 
@@ -74,67 +96,78 @@ public class SetChainGUI extends javax.swing.JFrame {
             }
         });
 
+        resetBtn.setText("Reset");
+        resetBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                resetBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(79, 79, 79))
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(45, 45, 45)
-                        .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(44, 44, 44)
-                        .addComponent(fiirstHandler, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(thirdHandler, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(19, 19, 19)
-                        .addComponent(secondHandler, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 168, Short.MAX_VALUE)))
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addComponent(jButtonCancel)
-                .addGap(58, 58, 58)
-                .addComponent(confirmButton, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel1)
+                                .addGap(79, 79, 79))
+                        .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addGap(45, 45, 45)
+                                                .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addGap(44, 44, 44)
+                                                .addComponent(fiirstHandler, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addGap(18, 18, 18)
+                                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(18, 18, 18)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                        .addGroup(layout.createSequentialGroup()
+                                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                                        .addComponent(resetBtn)
+                                                                        .addComponent(thirdHandler, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                                .addGap(0, 0, Short.MAX_VALUE))))
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addGap(19, 19, 19)
+                                                .addComponent(secondHandler, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(0, 168, Short.MAX_VALUE)))
+                                .addContainerGap())
+                        .addGroup(layout.createSequentialGroup()
+                                .addGap(30, 30, 30)
+                                .addComponent(jButtonCancel)
+                                .addGap(58, 58, 58)
+                                .addComponent(confirmButton, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addGap(71, 71, 71)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(fiirstHandler, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(secondHandler, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(thirdHandler, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(confirmButton)
-                        .addGap(43, 43, 43))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jButtonCancel)
-                        .addGap(27, 27, 27))))
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jLabel1)
+                                .addGap(71, 71, 71)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(fiirstHandler, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(secondHandler, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(thirdHandler, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                                .addComponent(confirmButton)
+                                                .addGap(43, 43, 43))
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                        .addComponent(jButtonCancel)
+                                                        .addComponent(resetBtn))
+                                                .addGap(27, 27, 27))))
         );
 
         pack();
@@ -207,6 +240,47 @@ public class SetChainGUI extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_jButtonCancelActionPerformed
 
+    private void fiirstHandlerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fiirstHandlerActionPerformed
+        // TODO add your handling code here:
+        Object obj1 = fiirstHandler.getSelectedItem();
+        this.secondHandler.removeItem(obj1);
+        this.thirdHandler.removeItem(obj1);
+    }//GEN-LAST:event_fiirstHandlerActionPerformed
+
+    private void secondHandlerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_secondHandlerActionPerformed
+        // TODO add your handling code here:
+        Object obj2 = secondHandler.getSelectedItem();
+        this.fiirstHandler.removeItem(obj2);
+        this.thirdHandler.removeItem(obj2);
+    }//GEN-LAST:event_secondHandlerActionPerformed
+
+    private void thirdHandlerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_thirdHandlerActionPerformed
+        // TODO add your handling code here:
+        Object obj3 = thirdHandler.getSelectedItem();
+        this.secondHandler.removeItem(obj3);
+        this.fiirstHandler.removeItem(obj3);
+    }//GEN-LAST:event_thirdHandlerActionPerformed
+
+    private void resetBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetBtnActionPerformed
+        // TODO add your handling code here:
+        ArrayList<String> choices = new ArrayList<>();
+        choices.add("Admin");
+        choices.add("CustomerService");
+        choices.add("Technician");
+
+        this.fiirstHandler.removeAll();
+        this.secondHandler.removeAll();
+        this.thirdHandler.removeAll();
+
+        this.fiirstHandler.setModel(new DefaultComboBoxModel(choices.toArray()));
+        this.secondHandler.setModel(new DefaultComboBoxModel(choices.toArray()));
+        this.thirdHandler.setModel(new DefaultComboBoxModel(choices.toArray()));
+
+        this.fiirstHandler.setSelectedIndex(-1);
+        this.secondHandler.setSelectedIndex(-1);
+        this.thirdHandler.setSelectedIndex(-1);
+    }//GEN-LAST:event_resetBtnActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -214,7 +288,7 @@ public class SetChainGUI extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -250,6 +324,7 @@ public class SetChainGUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JButton resetBtn;
     private javax.swing.JComboBox<String> secondHandler;
     private javax.swing.JComboBox<String> thirdHandler;
     // End of variables declaration//GEN-END:variables
