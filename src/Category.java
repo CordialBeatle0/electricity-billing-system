@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.time.LocalDateTime;
 
 public abstract class Category {
     public Category() {
@@ -23,6 +24,9 @@ public abstract class Category {
                 meterReaderID = generatedKeys.getInt(1);
             }
             statement.executeUpdate("UPDATE customer SET meterReader_id =  " + meterReaderID + " WHERE id = " + customer.getID());
+            
+            statement.executeUpdate("INSERT INTO bill (totalAmount, date, customer_id) VALUE (0, '" + LocalDateTime.now() +
+                    "', " + customer.getID() + ")");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error updating customer in database");
         }

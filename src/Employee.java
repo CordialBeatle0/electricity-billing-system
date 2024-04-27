@@ -14,8 +14,7 @@ public abstract class Employee {
     private char gender;
     private float salary;
     private Account account;
-
-    public Employee nextEmp;
+    protected Employee nextEmp;
 
     public Employee(int ID, String name, int age, String address, String phoneNumber, char gender, float salary, Account account) {
         this.ID = ID;

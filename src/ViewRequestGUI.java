@@ -19,6 +19,7 @@ import java.util.ArrayList;
 public class ViewRequestGUI extends javax.swing.JFrame {
 
     Technician technician;
+    DefaultTableModel model;
 
     /**
      * Creates new form ViewRequestGUI
@@ -30,9 +31,10 @@ public class ViewRequestGUI extends javax.swing.JFrame {
     public ViewRequestGUI(Technician tech) {
         initComponents();
         setLocationRelativeTo(null);
+        
         technician = tech;
         
-        DefaultTableModel model = ((DefaultTableModel) jTable1.getModel());
+        model = ((DefaultTableModel) jTable1.getModel());
         model.setRowCount(0);
         int row = 0;
         int col;
@@ -64,8 +66,6 @@ public class ViewRequestGUI extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jLabel2 = new javax.swing.JLabel();
-        RequestIDTextField = new javax.swing.JTextField();
         FinalizeServiceBtn = new javax.swing.JButton();
         ConfirmCashPaymentBtn = new javax.swing.JButton();
         jButtonCancel = new javax.swing.JButton();
@@ -104,9 +104,6 @@ public class ViewRequestGUI extends javax.swing.JFrame {
         jTable1.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(jTable1);
 
-        jLabel2.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jLabel2.setText("Request ID");
-
         FinalizeServiceBtn.setText("Finalize Service");
         FinalizeServiceBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -138,11 +135,6 @@ public class ViewRequestGUI extends javax.swing.JFrame {
                         .addGap(195, 195, 195)
                         .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(112, 112, 112)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(RequestIDTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(28, 28, 28)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jButtonCancel)
@@ -161,28 +153,24 @@ public class ViewRequestGUI extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(RequestIDTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGap(35, 35, 35)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(ConfirmCashPaymentBtn)
                     .addComponent(FinalizeServiceBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jButtonCancel)
-                .addContainerGap(11, Short.MAX_VALUE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void ConfirmCashPaymentBtnActionPerformed(ActionEvent evt) {//GEN-FIRST:event_ConfirmCashPaymentBtnActionPerformed
-        String requestID = RequestIDTextField.getText();
-        if (requestID.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Please enter a request id");
-            return;
+        int selectedRow = jTable1.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "Please select a row");
         }
+        int requestID = ((int) jTable1.getModel().getValueAt(selectedRow, 0));
         
         Connection conn = DatabaseSingleton.getInstance().getConnection();
         try {
@@ -206,11 +194,11 @@ public class ViewRequestGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_ConfirmCashPaymentBtnActionPerformed
 
     private void FinalizeServiceBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FinalizeServiceBtnActionPerformed
-        String requestID = RequestIDTextField.getText();
-        if (requestID.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Please enter a request id");
-            return;
+        int selectedRow = jTable1.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "Please select a row");
         }
+        int requestID = ((int) jTable1.getModel().getValueAt(selectedRow, 0));
         
         Connection conn = DatabaseSingleton.getInstance().getConnection();
         try {
@@ -223,6 +211,7 @@ public class ViewRequestGUI extends javax.swing.JFrame {
                 }
                 stat.executeUpdate("DELETE FROM request WHERE id = " + requestID);
                 JOptionPane.showMessageDialog(this, "Request finalized");
+                model.removeRow(selectedRow);
             } else {
                 JOptionPane.showMessageDialog(this, "Please select a request id from the ones displayed");
             }
@@ -275,10 +264,8 @@ public class ViewRequestGUI extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton ConfirmCashPaymentBtn;
     private javax.swing.JButton FinalizeServiceBtn;
-    private javax.swing.JTextField RequestIDTextField;
     private javax.swing.JButton jButtonCancel;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables

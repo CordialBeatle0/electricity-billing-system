@@ -39,24 +39,24 @@ public class Subscription {
     }
 
     public void renewSubscription(Customer cust, float amount, Payment paymentType) {
-        //check if it is time to pay
+        // check if it is time to pay
         if (cust.isTimeToPay()) {
-            //If customer is subscribed and has outstanding fees
+            // If customer is subscribed and has outstanding fees
             if (cust.getSubscription().subscriptionStatus && cust.getOutstandingFees() > 0) {
-                //verify that the entered amount is less than the outstanding fees
+                // verify that the entered amount is less than the outstanding fees
                 if (amount <= cust.getOutstandingFees()) {
-                    //set the method of payment (cash or visa)
+                    // set the method of payment (cash or visa)
                     cust.setPaymentType(paymentType);
-                    //call make payment in the interface of strategy
+                    // call make payment in the interface of strategy
                     paymentType.makePayment(cust, amount);
                 } else {
                     JOptionPane.showMessageDialog(null, "Paid Amount Should not Exceed Outstanding Fees");
                 }
-            } //if customer not subscribed
+            } // if customer not subscribed
             else {
                 JOptionPane.showMessageDialog(null, "You must subscribe first to use the service");
             }
-        } //if its not time to pay
+        } // if it's not time to pay
         else {
             JOptionPane.showMessageDialog(null, "You cannot pay now, wait for a notification when it's time to pay");
         }

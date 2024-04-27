@@ -86,7 +86,9 @@ public class Bill implements Publisher {
 
 	public void sendBillingAlert(String message) {
 		ArrayList<Customer> customers = (Customer.getCustomersFromDB("subscriptionStatus = true"));
-		observers.addAll(customers);
+		for (Customer c : customers) {
+			addObserver(c);
+		}
 		for (Observer observer : observers) {
 			observer.updateObserver(message);
 		}
@@ -95,13 +97,22 @@ public class Bill implements Publisher {
 	@Override
 	public void checkDueDate() {
 		GregorianCalendar currentDate = new GregorianCalendar();
-	
-		if (dueDate.get((GregorianCalendar.DAY_OF_MONTH)) == currentDate.get((GregorianCalendar.DAY_OF_MONTH))) {
+		
+		// This is a fake scenario for testing renew subscription
+		if (true) {
 			// call send billing alert that alerts all observers of a pending bill
 			sendBillingAlert("You have Pending Fees to pay!");
 			// resets the new due date to the one of next month
 			dueDate.add((GregorianCalendar.MONTH), 1);
 		}
+		
+		// This is the real scenario
+		//		if (dueDate.get((GregorianCalendar.DAY_OF_MONTH)) == currentDate.get((GregorianCalendar.DAY_OF_MONTH))) {
+		//			// call send billing alert that alerts all observers of a pending bill
+		//			sendBillingAlert("You have Pending Fees to pay!");
+		//			// resets the new due date to the one of next month
+		//			dueDate.add((GregorianCalendar.MONTH), 1);
+		//		}
 	}
 
 	public void calculateBill() {
