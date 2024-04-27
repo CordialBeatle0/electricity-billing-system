@@ -188,7 +188,7 @@ public class CategorizeCustomerGUI extends javax.swing.JFrame {
 
     private void jButtonSetCategoryToCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSetCategoryToCustomerActionPerformed
         String categoryString = (String) jComboBoxCategories.getSelectedItem();
-
+        
         Category category = switch (categoryString) {
             case "Individual" -> new Individual();
             case "Company" -> new Company();
@@ -197,6 +197,10 @@ public class CategorizeCustomerGUI extends javax.swing.JFrame {
         };
 
         int selectedCustomer = jTable1.getSelectedRow();
+        if (selectedCustomer == -1) {
+            JOptionPane.showMessageDialog(this, "Please Select a Customer to Categorise!");
+            return;
+        }
         Customer customer = customers.get(selectedCustomer);
         category.categorizeCustomer(customer);
         
