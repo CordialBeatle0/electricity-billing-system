@@ -97,6 +97,13 @@ public abstract class Employee {
 
     public void setHandler(Employee employee) {
         nextEmp = employee;
+        Connection conn = DatabaseSingleton.getInstance().getConnection();
+        try {
+            Statement stmt = conn.createStatement();
+            stmt.executeUpdate("UPDATE employee SET nextEmp = " + employee.getID() + " WHERE employeeType = " + this.getClass().getName());
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error updating employee in setHandler function in employee class");
+        }
     }
 
     public abstract void handle(Inquiry inquiry);
@@ -111,10 +118,10 @@ public abstract class Employee {
             // and gets the one with the lowest number of assigned inquiries
             ArrayList<Integer> employeeIDs = new ArrayList<>();
             ResultSet result = stmt.executeQuery("SELECT id FROM employee WHERE employeeType = '" + getClass().getName() + "'");
-            while (result.next()){
+            while (result.next()) {
                 employeeIDs.add(result.getInt(1));
             }
-            
+
             int lowestValue = 100;
             int lowestValueID = 1; // dummy value
             for (int id : employeeIDs) {
