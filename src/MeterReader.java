@@ -71,7 +71,7 @@ public class MeterReader {
 			
 			// calculates the difference in time between the last date of the bill and the current date
 			long timeInSeconds = ChronoUnit.SECONDS.between(previousDate, LocalDateTime.now());
-			float newCurrentReading = (timeInSeconds / 1000f) + getCurrentReading();
+			float newCurrentReading = (timeInSeconds / 100f) + getCurrentReading();
 			
 			String sql = "UPDATE meterreader SET currentReading = " + newCurrentReading +
 					", previousReading = " + currentReading + " WHERE id = " + getID();

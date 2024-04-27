@@ -3,6 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 
+import javax.swing.*;
+
 /**
  *
  * @author Amir
@@ -107,7 +109,12 @@ public class ConfirmCashPaymentGUI extends javax.swing.JFrame {
 
     private void confirmBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmBtnActionPerformed
         float payedAmount = Float.parseFloat(EnterAmountTextField.getText());
+        if (payedAmount <= 0) {
+            JOptionPane.showMessageDialog(this, "Please Enter a positive value! ");
+            return;
+        }
         Cash cash = new Cash();
+        
         cash.confirmCashPayment(technician, request, payedAmount);
     }//GEN-LAST:event_confirmBtnActionPerformed
 
