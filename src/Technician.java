@@ -5,7 +5,7 @@ import java.sql.Statement;
 import javax.swing.JOptionPane;
 
 public class Technician extends Employee {
-    private static int maxCapacity;
+    private static int maxCapacity = 10;
     private String assignedLocation;
 
     public Technician() {
@@ -33,13 +33,15 @@ public class Technician extends Employee {
     }
 
     public void assignTechnician(Request request) {
-        Technician technician = (Technician)Employee.getEmployeesFromDB("employeeType = 'Technician' AND technicianAssignedLocation = " + request.getLocation()).get(0);
+        Technician technician = (Technician) Employee.getEmployeesFromDB("employeeType = 'Technician' AND " +
+                "technicianAssignedLocation = '" + request.getLocation() + "'").get(0);
         
         try {
             Connection connection = DatabaseSingleton.getInstance().getConnection();
             Statement statement = connection.createStatement();
             ResultSet result = statement.executeQuery("SELECT COUNT(*) FROM request WHERE location = '" + technician.assignedLocation + "'");
-            int numberOfRequests = result.getInt(0);
+            result.next();
+            int numberOfRequests = result.getInt(1);
             if (numberOfRequests < maxCapacity) {
                 request.addRequesttoDB();
                 JOptionPane.showMessageDialog(null, "Your request has been made successfully");
@@ -67,6 +69,13 @@ public class Technician extends Employee {
                     this.assignEmployee(inquiry);
                 } else {
                     // pass to the next in chain
+                    ResultSet result = stmt.executeQuery("SELECT nextEmployee FROM employee WHERE id = " + getID());
+                    if (!result.next()) {
+                        JOptionPane.showMessageDialog(null, "The chain has not been set yet");
+                    }
+                    
+                    int nextEmployeeHandle = result.getInt(1);
+                    nextEmp = Employee.getEmployeesFromDB(nextEmployeeHandle + "").get(0);
                     nextEmp.handle(inquiry);
                 }
             } else {
@@ -74,41 +83,6 @@ public class Technician extends Employee {
             }
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error retrieving customer from database");
-        }
-    }
-
-    public void confirmCashPayment(Request request, float payedAmount) {
-        int custID = request.getCustID();
-        DatabaseSingleton db = DatabaseSingleton.getInstance();
-        Connection conn = db.getConnection();
-        try {
-            Statement stmt = conn.createStatement();
-            String sql = "SELECT * FROM customer WHERE id = " + custID;
-            ResultSet rs = stmt.executeQuery(sql);
-            if (rs.next()) {
-                float outstandingFees = rs.getFloat("outstandingFees");
-                if (outstandingFees == 0.0) {
-                    JOptionPane.showMessageDialog(null, "Customer with ID "
-                            + custID + " has no outstanding fees.");
-                } else {
-                    // Update the customer's outstanding fees to 0
-                    String update = "UPDATE customer SET outstandingFees = "
-                            + (outstandingFees - payedAmount) + " WHERE id = " + custID;
-                    stmt.executeUpdate(update);
-                    String delete = "DELETE FROM request WHERE id = " + request.getID();
-                    stmt.executeUpdate(delete);
-                    String isTimeToPayFalse = "UPDATE customer SET isTimeToPay = FALSE WHERE id = " + custID;
-                    stmt.executeUpdate(isTimeToPayFalse);
-                    JOptionPane.showMessageDialog(null, "Customer with ID "
-                            + custID + " has paid "
-                            + payedAmount + " remaining fees: " + (outstandingFees - payedAmount) + "$. ");
-                }
-            } else {
-                System.out.println("Customer with ID " + custID + " not found.");
-                JOptionPane.showMessageDialog(null, "Customer with ID " + custID + " not found.");
-            }
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error editing or retrieving customer from database");
         }
     }
 }

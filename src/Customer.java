@@ -163,14 +163,14 @@ public class Customer implements Observer {
 
     @Override
     public void updateObserver(String message) {
-        addNotificationToDB(message);
         try {
             Connection connection = DatabaseSingleton.getInstance().getConnection();
             Statement statement = connection.createStatement();
             String isTimeToPayTrue = "UPDATE customer SET isTimeToPay = TRUE WHERE id = " + ID;
-            statement.executeQuery(isTimeToPayTrue);
+            statement.executeUpdate(isTimeToPayTrue);
+            addNotificationToDB(message);
         } catch (Exception e) {
-            //TOD: write exception joptionpayne
+            JOptionPane.showMessageDialog(null, "Error updating customer in update observer function");
         }
     }
 
@@ -257,19 +257,5 @@ public class Customer implements Observer {
             JOptionPane.showMessageDialog(null, "Error retrieving customer from database");
         }
         return customers;
-    }
-
-    public static boolean doesCustomerExist(int id) {
-        try {
-            Connection connection = DatabaseSingleton.getInstance().getConnection();
-            Statement statement = connection.createStatement();
-            ResultSet result = statement.executeQuery("SELECT name FROM customer WHERE " + id);
-            if (result.next()) {
-                return true;
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error retrieving customer from database");
-        }
-        return false;
     }
 }

@@ -17,7 +17,7 @@ public class Visa implements Payment {
             Connection connection = DatabaseSingleton.getInstance().getConnection();
             Statement statement = connection.createStatement();
             statement.executeUpdate("UPDATE customer set outstandingFees = " + customer.getOutstandingFees() + " WHERE id = " + customer.getID());
-            statement.executeUpdate("UPDATE customer set isTimeToPay=" + customer.isTimeToPay() + " WHERE id = " + customer.getID());
+            statement.executeUpdate("UPDATE customer set isTimeToPay = FALSE WHERE id = " + customer.getID());
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error updating customer outstanding fees in database");
         }

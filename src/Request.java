@@ -39,24 +39,6 @@ public class Request {
         this.requestType = requestType;
     }
     
-    public static ArrayList<Request> viewRequest(Technician tech) {
-        ArrayList<Request> requests = new ArrayList<>();
-        DatabaseSingleton db = DatabaseSingleton.getInstance();
-        Connection conn = db.getConnection();
-        try {
-            Statement stmt = conn.createStatement();
-            String sql = "SELECT id, custName, requestType, location, date, customer_id FROM request WHERE location = '" + tech.getAssignedLocation() + "'";
-            ResultSet rs = stmt.executeQuery(sql);
-            while (rs.next()) {
-                Request request = new Request(rs.getInt(1), rs.getInt(6), rs.getString(2), rs.getString(3), rs.getString(4), LocalDateTime.now());
-                requests.add(request);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return requests;
-    }
-    
     public int getID() {
         return ID;
     }
@@ -79,6 +61,24 @@ public class Request {
     
     public LocalDateTime getDate() {
         return date;
+    }
+    
+    public static ArrayList<Request> viewRequest(Technician tech) {
+        ArrayList<Request> requests = new ArrayList<>();
+        DatabaseSingleton db = DatabaseSingleton.getInstance();
+        Connection conn = db.getConnection();
+        try {
+            Statement stmt = conn.createStatement();
+            String sql = "SELECT id, custName, requestType, location, date, customer_id FROM request WHERE location = '" + tech.getAssignedLocation() + "'";
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                Request request = new Request(rs.getInt(1), rs.getInt(6), rs.getString(2), rs.getString(3), rs.getString(4), LocalDateTime.now());
+                requests.add(request);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return requests;
     }
     
     public void requestHomeService() {

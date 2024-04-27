@@ -107,7 +107,8 @@ public class ConfirmCashPaymentGUI extends javax.swing.JFrame {
 
     private void confirmBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmBtnActionPerformed
         float payedAmount = Float.parseFloat(EnterAmountTextField.getText());
-        technician.confirmCashPayment(request, payedAmount);
+        Cash cash = new Cash();
+        cash.confirmCashPayment(technician, request, payedAmount);
     }//GEN-LAST:event_confirmBtnActionPerformed
 
     private void cancelBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelBtnActionPerformed
