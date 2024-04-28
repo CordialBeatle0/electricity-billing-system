@@ -21,7 +21,6 @@ public class Customer implements Observer {
     public Customer() {
     }
 
-
     public Customer(int ID, String name, String address, String phoneNumber, boolean isTimeToPay, Category category, MeterReader meterReader, float outstandingFees, Account account, Subscription subscription) {
         this.ID = ID;
         this.name = name;
