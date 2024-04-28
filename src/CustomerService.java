@@ -27,6 +27,13 @@ public class CustomerService extends Employee {
                     this.assignEmployee(inquiry);
                 } else {
                     // pass to the next in chain
+                    ResultSet result = stmt.executeQuery("SELECT nextEmployee FROM employee WHERE id = " + getID());
+                    if (!result.next()) {
+                        JOptionPane.showMessageDialog(null, "The chain has not been set yet");
+                    }
+                    
+                    int nextEmployeeHandle = result.getInt(1);
+                    nextEmp = Employee.getEmployeesFromDB(nextEmployeeHandle + "").get(0);
                     nextEmp.handle(inquiry);
                 }
             } else {
