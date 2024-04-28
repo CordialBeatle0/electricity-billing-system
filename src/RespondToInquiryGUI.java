@@ -165,9 +165,11 @@ public class RespondToInquiryGUI extends javax.swing.JFrame {
             case "Admin":
                 AdminDashboardGUI aGui = new AdminDashboardGUI(((Admin) employee));
                 aGui.setVisible(true);
+                break;
             case "Technician":
                 TechnicianDashboardGUI tGui = new TechnicianDashboardGUI(((Technician) employee));
                 tGui.setVisible(true);
+                break;
             case "CustomerService":
                 CustomerServiceDashboardGUI cGui = new CustomerServiceDashboardGUI(((CustomerService) employee));
                 cGui.setVisible(true);
