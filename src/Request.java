@@ -86,7 +86,7 @@ public class Request {
         tech.assignTechnician(this);
     }
     
-    public void addRequesttoDB() {
+    public void addRequestToDB() {
         try {
             Connection connection = DatabaseSingleton.getInstance().getConnection();
             Statement statement = connection.createStatement();

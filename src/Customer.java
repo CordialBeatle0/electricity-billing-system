@@ -16,10 +16,10 @@ public class Customer implements Observer {
     private Account account;
     private Payment paymentType;
     private Subscription subscription;
+    private InquiryROI inquiryROI;
 
     public Customer() {
     }
-
 
     public Customer(int ID, String name, String address, String phoneNumber, boolean isTimeToPay, Category category, MeterReader meterReader, float outstandingFees, Account account, Subscription subscription) {
         this.ID = ID;
@@ -147,7 +147,15 @@ public class Customer implements Observer {
     public void setSubscription(Subscription subscription) {
         this.subscription = subscription;
     }
-
+    
+    public InquiryROI getInquiryROI() {
+        return inquiryROI;
+    }
+    
+    public void setInquiryROI(InquiryROI inquiryROI) {
+        this.inquiryROI = inquiryROI;
+    }
+    
     @Override
     public String toString() {
         return "Customer{" +
@@ -176,6 +184,10 @@ public class Customer implements Observer {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error updating customer in update observer function");
         }
+    }
+    
+    public void addInquiry(int customerID) {
+        inquiryROI.addInquiry(customerID);
     }
 
     public void addNotificationToDB(String message) {

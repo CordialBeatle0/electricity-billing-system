@@ -108,7 +108,7 @@ public class RequestHomeService extends javax.swing.JFrame {
 		String reasonForRequest = "Service";
 		
 		Request request = new Request(customer.getID(), customer.getName(), reasonForRequest, customer.getAddress(), LocalDateTime.now());
-		request.addRequesttoDB();
+		request.addRequestToDB();
 		JOptionPane.showMessageDialog(this, "Thank you for submitting a request, a technician will be with you shortly");
 		
 		CustomerDashboardGUI gui = new CustomerDashboardGUI(customer);

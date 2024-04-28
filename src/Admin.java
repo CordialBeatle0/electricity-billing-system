@@ -5,11 +5,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class Admin extends Employee {
-	
-
+    
     public Admin() {
     }
-
 
 	public Admin(int ID, String name, int age, String address, String phoneNumber, char gender, float salary,
 			Account account) {

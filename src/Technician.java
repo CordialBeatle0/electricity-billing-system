@@ -43,7 +43,7 @@ public class Technician extends Employee {
             result.next();
             int numberOfRequests = result.getInt(1);
             if (numberOfRequests < maxCapacity) {
-                request.addRequesttoDB();
+                request.addRequestToDB();
                 JOptionPane.showMessageDialog(null, "Your request has been made successfully");
             } //if technician can not take any more requests, end the process
             else {

@@ -118,12 +118,10 @@ public class AddInquiryGUI extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Please enter a question");
             return;
         }
-        String response = null;
-
-        Inquiry inq = new Inquiry(question, cust.getCategory().getClass().getName(), cust.getName(), cust.getID(), LocalDateTime.now());
-        inq.addInquiry(cust.getID());
-
-        JOptionPane.showMessageDialog(this, "Successfully submitted");
+        
+        InquiryROI inq = new Inquiry(question, cust.getCategory().getClass().getName(), cust.getName(), cust.getID(), LocalDateTime.now());
+        cust.setInquiryROI(inq);
+        cust.addInquiry(cust.getID());
 
         CustomerDashboardGUI gui = new CustomerDashboardGUI(cust);
         gui.setVisible(true);

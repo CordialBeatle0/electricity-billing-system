@@ -154,14 +154,8 @@ public class RespondToInquiryGUI extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Response can not be empty");
             return;
         }
-
-        try {
-            Connection connection = DatabaseSingleton.getInstance().getConnection();
-            Statement statement = connection.createStatement();
-            statement.executeUpdate("UPDATE inquiry SET response = '" + response + "', employee_id = " + employee.getID() + " WHERE id = " + inquiry.getID());
-            JOptionPane.showMessageDialog(this, "Response submitted");
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error updating inquiry in database");
+        
+        if (!inquiry.respondToInquiry(employee.getID(), inquiry.getID())) {
             return;
         }
 
