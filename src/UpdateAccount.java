@@ -30,12 +30,12 @@ public class UpdateAccount extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         emp = e;
-        
+
         username = emp.getAccount().getUsername();
         password = emp.getAccount().getPassword();
-        
+
         id = emp.getID();
-        
+
         usernamefield.setText(username);
         passwordfield.setText(password);
     }
@@ -160,8 +160,9 @@ public class UpdateAccount extends javax.swing.JFrame {
             Connection connection = DatabaseSingleton.getInstance().getConnection();
             Statement statement = connection.createStatement();
             if (cust != null) {
-                statement.executeUpdate("UPDATE account JOIN customer ON account.id = account_id set username= '" + newUsername + "' WHERE customer.id = " + id);
-                statement.executeUpdate("UPDATE account JOIN customer ON account.id = account_id set password= '" + newPassword + "' WHERE customer.id = " + id);
+//                statement.executeUpdate("UPDATE account JOIN customer ON account.id = account_id set username= '" + newUsername + "' WHERE customer.id = " + id);
+//                statement.executeUpdate("UPDATE account JOIN customer ON account.id = account_id set password= '" + newPassword + "' WHERE customer.id = " + id);
+                cust.getAccount().updateAccount(cust, newUsername, newPassword);
             } else {
                 statement.executeUpdate("UPDATE account JOIN employee ON account.id = account_id set username= '" + newUsername + "' WHERE employee.id = " + id);
                 statement.executeUpdate("UPDATE account JOIN employee ON account.id = account_id set password= '" + newPassword + "' WHERE employee.id = " + id);
@@ -177,7 +178,7 @@ public class UpdateAccount extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         sendToDashboard();
     }//GEN-LAST:event_jButton2ActionPerformed
-    
+
     private void sendToDashboard() {
         if (cust != null) {
             CustomerDashboardGUI gui = new CustomerDashboardGUI(cust);
