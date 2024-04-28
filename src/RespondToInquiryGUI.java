@@ -154,7 +154,9 @@ public class RespondToInquiryGUI extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Response can not be empty");
             return;
         }
-        
+
+        inquiry.setResponse(response);
+
         if (!inquiry.respondToInquiry(employee.getID(), inquiry.getID())) {
             return;
         }
