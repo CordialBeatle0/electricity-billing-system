@@ -142,6 +142,20 @@ public class Inquiry implements InquiryROI {
                 '}';
     }
     
+    public boolean respondToInquiry(int employeeID, int inquiryID) {
+        try {
+            Connection connection = DatabaseSingleton.getInstance().getConnection();
+            Statement statement = connection.createStatement();
+            statement.executeUpdate("UPDATE inquiry SET response = '" + response + "', employee_id = " + employeeID
+                    + " WHERE id = " + inquiryID);
+            JOptionPane.showMessageDialog(null, "Response submitted");
+            return true;
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error updating inquiry in database");
+        }
+        return false;
+    }
+    
     @Override
     public ArrayList<Inquiry> viewInquiriesByID(int custID, int employeeID) {
         ArrayList<Inquiry> inquiries = new ArrayList<>();
@@ -202,6 +216,7 @@ public class Inquiry implements InquiryROI {
             Statement stmt = conn.createStatement();
             stmt.executeUpdate(query, Statement.RETURN_GENERATED_KEYS);
             System.out.println("Inquiry added successfully to the database.");
+            JOptionPane.showMessageDialog(null, "Successfully submitted");
             
             generatedKeys = stmt.getGeneratedKeys();
             generatedKeys.next();
