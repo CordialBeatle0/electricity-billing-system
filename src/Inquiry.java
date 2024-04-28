@@ -227,7 +227,8 @@ public class Inquiry implements InquiryROI {
         }
 
         // you give the inquiry to the Employee to handle it
-        Employee emp = new CustomerService();
+        String sql = "employeeType = 'CustomerService'";
+        Employee emp = Employee.getEmployeesFromDB(sql).get(0);
         emp.handle(this);
     }
 }

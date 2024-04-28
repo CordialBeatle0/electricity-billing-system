@@ -72,10 +72,11 @@ public class Technician extends Employee {
                     ResultSet result = stmt.executeQuery("SELECT nextEmp FROM employee WHERE id = " + getID());
                     if (!result.next()) {
                         JOptionPane.showMessageDialog(null, "The chain has not been set yet");
+                        return;
                     }
                     
                     int nextEmployeeHandle = result.getInt(1);
-                    nextEmp = Employee.getEmployeesFromDB(nextEmployeeHandle + "").get(0);
+                    nextEmp = Employee.getEmployeesFromDB("id = " + nextEmployeeHandle).get(0);
                     nextEmp.handle(inquiry);
                 }
             } else {
