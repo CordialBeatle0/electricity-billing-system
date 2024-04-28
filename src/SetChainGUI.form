@@ -119,10 +119,8 @@
     <Component class="javax.swing.JComboBox" name="fiirstHandler">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="3">
-            <StringItem index="0" value="Admin"/>
-            <StringItem index="1" value="Customer Service"/>
-            <StringItem index="2" value="Technician"/>
+          <StringArray count="1">
+            <StringItem index="0" value="Customer Service"/>
           </StringArray>
         </Property>
         <Property name="selectedIndex" type="int" value="-1"/>
@@ -137,10 +135,9 @@
     <Component class="javax.swing.JComboBox" name="thirdHandler">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="3">
+          <StringArray count="2">
             <StringItem index="0" value="Admin"/>
-            <StringItem index="1" value="Customer Service"/>
-            <StringItem index="2" value="Technician"/>
+            <StringItem index="1" value="Technician"/>
           </StringArray>
         </Property>
         <Property name="selectedIndex" type="int" value="-1"/>
@@ -155,10 +152,9 @@
     <Component class="javax.swing.JComboBox" name="secondHandler">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="3">
+          <StringArray count="2">
             <StringItem index="0" value="Admin"/>
-            <StringItem index="1" value="Customer Service"/>
-            <StringItem index="2" value="Technician"/>
+            <StringItem index="1" value="Technician"/>
           </StringArray>
         </Property>
         <Property name="selectedIndex" type="int" value="-1"/>
