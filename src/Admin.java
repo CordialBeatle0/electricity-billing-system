@@ -29,7 +29,7 @@ public class Admin extends Employee {
                     this.assignEmployee(inquiry);
                 } else {
                     // pass to the next in chain
-                    ResultSet result = stmt.executeQuery("SELECT nextEmployee FROM employee WHERE id = " + getID());
+                    ResultSet result = stmt.executeQuery("SELECT nextEmp FROM employee WHERE id = " + getID());
                     if (!result.next()) {
                         JOptionPane.showMessageDialog(null, "The chain has not been set yet");
                     }
