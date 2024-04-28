@@ -300,14 +300,11 @@ public class SetChainGUI extends javax.swing.JFrame {
         // TODO add your handling code here:
         ArrayList<String> choices = new ArrayList<>();
         choices.add("Admin");
-        choices.add("CustomerService");
         choices.add("Technician");
 
-        this.fiirstHandler.removeAll();
         this.secondHandler.removeAll();
         this.thirdHandler.removeAll();
 
-        this.fiirstHandler.setModel(new DefaultComboBoxModel(choices.toArray()));
         this.secondHandler.setModel(new DefaultComboBoxModel(choices.toArray()));
         this.thirdHandler.setModel(new DefaultComboBoxModel(choices.toArray()));
 
