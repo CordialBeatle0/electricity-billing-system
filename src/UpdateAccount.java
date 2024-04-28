@@ -160,8 +160,6 @@ public class UpdateAccount extends javax.swing.JFrame {
             Connection connection = DatabaseSingleton.getInstance().getConnection();
             Statement statement = connection.createStatement();
             if (cust != null) {
-//                statement.executeUpdate("UPDATE account JOIN customer ON account.id = account_id set username= '" + newUsername + "' WHERE customer.id = " + id);
-//                statement.executeUpdate("UPDATE account JOIN customer ON account.id = account_id set password= '" + newPassword + "' WHERE customer.id = " + id);
                 cust.getAccount().updateAccount(cust, newUsername, newPassword);
             } else {
                 statement.executeUpdate("UPDATE account JOIN employee ON account.id = account_id set username= '" + newUsername + "' WHERE employee.id = " + id);
