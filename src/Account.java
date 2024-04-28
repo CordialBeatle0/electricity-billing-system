@@ -47,7 +47,7 @@ public class Account {
                 ", password='" + password + '\'' +
                 '}';
     }
-    
+
     public static Customer custLogin(String username, String password) {
         ArrayList<Customer> customers = Customer.getCustomersFromDB("");
         for (Customer customer : customers) {
@@ -58,7 +58,7 @@ public class Account {
         }
         return null;
     }
-    
+
     public static Employee empLogin(String username, String password) {
         ArrayList<Employee> employees = Employee.getEmployeesFromDB("");
         for (Employee employee : employees) {
@@ -85,5 +85,18 @@ public class Account {
             JOptionPane.showMessageDialog(null, "Error retrieving account from database");
         }
         return null;
+    }
+
+    public void updateAccount(Customer cust, String newUsername, String newPassword) {
+        try {
+            Connection connection = DatabaseSingleton.getInstance().getConnection();
+            Statement statement = connection.createStatement();
+            if (cust != null) {
+                statement.executeUpdate("UPDATE account JOIN customer ON account.id = account_id set username= '" + newUsername + "' WHERE customer.id = " + cust.getID());
+                statement.executeUpdate("UPDATE account JOIN customer ON account.id = account_id set password= '" + newPassword + "' WHERE customer.id = " + cust.getID());
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error Submitting account Details!");
+        }
     }
 }

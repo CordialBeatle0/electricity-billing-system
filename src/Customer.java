@@ -17,6 +17,10 @@ public class Customer implements Observer {
     private Payment paymentType;
     private Subscription subscription;
 
+    public Customer() {
+    }
+
+
     public Customer(int ID, String name, String address, String phoneNumber, boolean isTimeToPay, Category category, MeterReader meterReader, float outstandingFees, Account account, Subscription subscription) {
         this.ID = ID;
         this.name = name;
@@ -36,7 +40,7 @@ public class Customer implements Observer {
         this.address = address;
         this.phoneNumber = phoneNumber;
     }
-
+    
     public Customer(int ID, String name, String address, String phoneNumber, Account account) {
         this.ID = ID;
         this.name = name;
@@ -219,7 +223,7 @@ public class Customer implements Observer {
                 String sqlAddress = result.getString("address");
                 String sqlPhoneNumber = result.getString("phone");
                 boolean sqlIsTimeToPay = result.getBoolean("isTimeToPay");
-                
+
                 Category sqlCategory = null;
                 try {
                     String category = result.getString("custCategory");
@@ -232,7 +236,7 @@ public class Customer implements Observer {
                 } catch (NullPointerException e) {
                     System.out.println("Customer does not have a category while logging in");
                 }
-                
+
                 MeterReader sqlMeterReader = null;
                 try {
                     int meterReaderID_INT = result.getInt("meterReader_id");
