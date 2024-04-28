@@ -148,7 +148,8 @@ public class Inquiry implements InquiryROI {
             Statement statement = connection.createStatement();
             statement.executeUpdate("UPDATE inquiry SET response = '" + response + "', employee_id = " + employeeID
                     + " WHERE id = " + inquiryID);
-            statement.executeUpdate("INSERT INTO notification (message, customer_id) VALUES ('An employee has responded to your inquiry', " + ID + ");");
+            statement.executeUpdate("INSERT INTO notification (message, customer_id) VALUES ('An employee has " +
+                    "responded to your inquiry', " + getCustID() + ");");
             JOptionPane.showMessageDialog(null, "Response submitted");
             return true;
         } catch (Exception e) {
